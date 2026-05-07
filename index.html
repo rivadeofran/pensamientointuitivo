@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EPI — Escuela del Pensamiento Intuitivo (V2)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ============= NEURAL CURSOR ============= -->
+<canvas id="neuralCursor"></canvas>
+
+<!-- ============= PRELOADER ============= -->
+<div id="preloader">
+  <video src="uploads/logo_video.mp4" class="preloader-logo" id="preloaderLogo" autoplay loop muted playsinline></video>
+  <canvas id="preloaderCanvas"></canvas>
+  <div class="preloader-phrases">
+    <div class="phrase" id="phrase1">Tu mente no busca la verdad.</div>
+    <div class="phrase" id="phrase2">Busca confirmar lo que ya cree.</div>
+    <div class="phrase" id="phrase3">Actualizando sistema de percepción...</div>
+  </div>
+</div>
+
+<!-- ============= HEADER FLOATING ============= -->
+<header class="header-floating" id="header" data-screen-label="Header">
+  <div class="header-logo-video" id="headerLogoVideo">
+    <video src="uploads/logo_video.mp4" autoplay loop muted playsinline></video>
+  </div>
+  <nav class="nav-pill">
+    <a href="#hero" class="active">INICIO</a>
+    <a href="#experiencia">EXPERIENCIA</a>
+    <a href="#tecnologia">MÉTODO</a>
+    <a href="#programas">PROGRAMAS</a>
+    <a href="#footer">CONTACTO</a>
+  </nav>
+  <button class="btn-pill magnetic-btn">COMENZAR <span class="arrow"></span></button>
+</header>
+
+<!-- ============= HERO ============= -->
+<section class="hero" id="hero" data-screen-label="01 Hero">
+  <!-- Hero Background Video -->
+  <video class="hero-video" src="uploads/video%20heroe.mp4" autoplay loop muted playsinline></video>
+  
+  <div class="hero-overlay"></div>
+  
+  <!-- Subtle floating particles overlay -->
+  <canvas class="hero-particles" id="heroParticles"></canvas>
+
+  <div class="hero-inner gs_reveal_hero hero-content-grid">
+    <div class="hero-text">
+      <div class="hero-eyebrow split-line">ACTUALIZÁ TU SISTEMA DE PERCEPCIÓN</div>
+      <h1 class="hero-h1 split-title">Volvé a elegir<br><em>cómo pensás.</em></h1>
+      <div class="hero-brand-title" id="heroBrandTitle">
+        <span class="brand-word">Escuela del Pensamiento</span>
+        <span class="brand-word brand-word--accent">Intuitivo</span>
+      </div>
+      <div class="hero-divider line-grow"></div>
+      <p class="hero-sub split-line">Tu realidad no cambia hasta que<br>cambia tu percepción.</p>
+      <div class="hero-ctas split-line">
+        <button class="btn btn-primary magnetic-btn">INICIAR PROCESO <span class="arrow"></span></button>
+        <button class="btn btn-outline magnetic-btn">VER EXPERIENCIA</button>
+      </div>
+    </div>
+
+    <!-- Premium Announcement Panel -->
+    <div class="announcement-panel gs_reveal gs_right" id="heroAnnouncement">
+      <canvas id="panelParticles"></canvas>
+      <div class="panel-content">
+        <div class="panel-header">
+          <span class="pulse-node"></span>
+          <span class="panel-label" id="annLabel">NUEVO</span>
+        </div>
+        <h3 class="panel-title serif" id="annTitle">Cargando...</h3>
+        <p class="panel-desc" id="annDesc">Conectando con la base de datos...</p>
+        <div class="panel-meta" id="annMeta">
+          <span class="meta-item">Conectando...</span>
+        </div>
+        <a href="#" class="panel-cta magnetic-btn" id="annCtaUrl">
+          <span id="annCtaText">ESPERAR</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <a href="#escuela" class="scroll-cue">
+    <span class="ring"><span class="down-arrow"></span></span>
+    DESCUBRÍ MÁS
+  </a>
+</section>
+
+<!-- ============= MARQUEE PROGRAMAS ============= -->
+<section class="marquee-band gs_reveal" data-screen-label="01b Marquee">
+  <div class="marquee-track">
+    <div class="marquee-content">
+      <span class="m-item">PROYECCIÓN — MENTORÍA</span><span class="m-sep"></span>
+      <span class="m-item">SESIONES 1·1</span><span class="m-sep"></span>
+      <span class="m-item">FORMACIÓN PRESENCIAL</span><span class="m-sep"></span>
+      <span class="m-item">ACOMPAÑANTE MCI · 2027</span><span class="m-sep"></span>
+      <span class="m-item">INSPIRACCIÓN · NIVEL 1</span><span class="m-sep"></span>
+      <span class="m-item">INSPIRACCIÓN · NIVEL 2</span><span class="m-sep"></span>
+      <span class="m-item">MENTORÍA DE VIDA &amp; PROYECTOS</span><span class="m-sep"></span>
+    </div>
+    <div class="marquee-content" aria-hidden="true">
+      <span class="m-item">PROYECCIÓN — MENTORÍA</span><span class="m-sep"></span>
+      <span class="m-item">SESIONES 1·1</span><span class="m-sep"></span>
+      <span class="m-item">FORMACIÓN PRESENCIAL</span><span class="m-sep"></span>
+      <span class="m-item">ACOMPAÑANTE MCI · 2027</span><span class="m-sep"></span>
+      <span class="m-item">INSPIRACCIÓN · NIVEL 1</span><span class="m-sep"></span>
+      <span class="m-item">INSPIRACCIÓN · NIVEL 2</span><span class="m-sep"></span>
+      <span class="m-item">MENTORÍA DE VIDA &amp; PROYECTOS</span><span class="m-sep"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============= FLOATING ICONS (WhatsApp, Spotify, Instagram, YouTube) ============= -->
+<div class="fab-container" id="fabContainer">
+  <a class="fab-btn fab-wa magnetic-btn" href="https://wa.me/5493412523655" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <div class="fab-tooltip">WhatsApp</div>
+    <svg viewBox="0 0 24 24" fill="#fff"><path d="M20.5 3.5A11.4 11.4 0 0 0 12.1 0C5.7 0 .6 5.1.6 11.5c0 2 .5 4 1.6 5.7L.5 24l7-1.8a11.4 11.4 0 0 0 4.6 1A11.4 11.4 0 0 0 23.6 11.5c0-3-1.2-5.9-3.1-8ZM12.1 21.2a9.5 9.5 0 0 1-4.8-1.3l-.4-.2-4.1 1 1-4-.2-.4a9.5 9.5 0 1 1 8.5 4.9Zm5.4-7.1c-.3-.2-1.7-.9-2-1s-.4 0-.6.2c-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.8-1.5-4-3.4-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.5-.5-.5-.6-.5h-.6c-.2 0-.5 0-.8.4-.3.3-1.1 1.1-1.1 2.7 0 1.6 1.1 3.1 1.3 3.3.2.2 2.3 3.5 5.6 4.9 2 .9 2.8 1 3.8.8.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.1-1.4 0-.1-.2-.2-.5-.4Z"/></svg>
+    <span class="fab-pulse"></span>
+  </a>
+  <a class="fab-btn fab-sp magnetic-btn" href="https://open.spotify.com/show/4oYU4F9AIJzqrt7inBHLhk" target="_blank" rel="noopener" aria-label="Spotify">
+    <div class="fab-tooltip">Spotify</div>
+    <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zM19.08 10.5c-3.96-2.34-10.44-2.58-14.28-1.44-.6.18-1.2-.18-1.38-.78-.18-.6.18-1.2.78-1.38 4.44-1.32 11.52-1.02 16.08 1.68.54.36.72 1.08.36 1.62-.36.6-1.08.78-1.62.3z"/></svg>
+    <span class="fab-pulse"></span>
+  </a>
+  <a class="fab-btn fab-ig magnetic-btn" href="https://www.instagram.com/agustintrowell/" target="_blank" rel="noopener" aria-label="Instagram">
+    <div class="fab-tooltip">Instagram</div>
+    <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    <span class="fab-pulse"></span>
+  </a>
+  <a class="fab-btn fab-yt magnetic-btn" href="https://www.youtube.com/@AgustinTrowell" target="_blank" rel="noopener" aria-label="YouTube">
+    <div class="fab-tooltip">YouTube</div>
+    <svg viewBox="0 0 24 24" fill="#fff"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+    <span class="fab-pulse"></span>
+  </a>
+</div>
+
+<!-- ============= ESCUELA ============= -->
+<section class="escuela" id="escuela" data-screen-label="02 La Escuela">
+  <div class="escuela-grid">
+    <div class="gs_reveal gs_left">
+      <div class="esc-eyebrow">UNA ESCUELA PARA LA VIDA REAL</div>
+      <h2 class="esc-h2">Liberá tu mente del<br>loop automático</h2>
+      <p class="esc-p">En EPI aprendés a observar tu patrón mental, entender tu percepción y actualizar tu sistema interno para crear una realidad con sentido, claridad y coherencia.</p>
+
+      <div class="pillars">
+        <div class="pillar gs_stagger">
+          <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="16" cy="16" r="6"/><path d="M2 16 C 6 8, 26 8, 30 16 C 26 24, 6 24, 2 16 Z"/></svg>
+          <div class="pillar-title">OBSERVÁ</div>
+          <div class="esc-divider"></div>
+          <div class="pillar-text">Tomá conciencia de cómo funcionás.</div>
+        </div>
+        <div class="pillar gs_stagger">
+          <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M11 6 C 6 6, 4 11, 6 15 C 3 18, 5 23, 9 23 C 10 26, 16 27, 16 24 V 8 C 16 5, 12 4, 11 6 Z"/><path d="M21 6 C 26 6, 28 11, 26 15 C 29 18, 27 23, 23 23 C 22 26, 16 27, 16 24"/></svg>
+          <div class="pillar-title">ENTENDÉ</div>
+          <div class="esc-divider"></div>
+          <div class="pillar-text">Comprendé tu mente y tu percepción.</div>
+        </div>
+        <div class="pillar gs_stagger">
+          <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 12 a 11 11 0 0 1 19 -3 M27 20 a 11 11 0 0 1 -19 3"/><path d="M22 6 v 6 h -6 M10 26 v -6 h 6"/></svg>
+          <div class="pillar-title">ACTUALIZÁ</div>
+          <div class="esc-divider"></div>
+          <div class="pillar-text">Rompé el loop automático.</div>
+        </div>
+        <div class="pillar gs_stagger">
+          <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M16 3 V 29 M3 16 H 29 M7 7 L 25 25 M25 7 L 7 25"/></svg>
+          <div class="pillar-title">CREÁ</div>
+          <div class="esc-divider"></div>
+          <div class="pillar-text">Diseñá una vida con sentido.</div>
+        </div>
+      </div>
+
+      <button class="btn-gold gs_stagger magnetic-btn">CONOCÉ LA ESCUELA <span class="arrow"></span></button>
+    </div>
+
+    <div class="esc-media gs_reveal gs_right">
+      <video autoplay muted loop playsinline preload="metadata">
+        <source src="assets/video1.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- banner full bleed quote -->
+<section class="banner-strip gs_reveal" data-screen-label="02b Banner">
+  <img src="assets/banner.jpg" alt="" id="bannerImg" class="parallax-bg">
+  <div class="banner-quote gs_reveal gs_up">
+    <p>"Tu mente no busca la verdad. Busca confirmar lo que ya cree."</p>
+    <span>— AGUSTÍN TROWELL</span>
+  </div>
+</section>
+
+<!-- ============= LOOP / TECNOLOGÍA ============= -->
+<section class="loop-section" id="tecnologia" data-screen-label="03 Loop">
+  <div class="loop-inner">
+    <div class="loop-eyebrow gs_reveal">TECNOLOGÍA INTERNA</div>
+    <h2 class="loop-h2 gs_reveal">El loop que crea tu realidad —<br><em style="color:var(--gold-pastel);font-style:italic;font-weight:300">y cómo romperlo.</em></h2>
+    <p class="loop-sub gs_reveal">Toda emoción se convierte en recuerdo, se transforma en idea y se manifiesta como realidad. Aprendé a interrumpir la cadena.</p>
+
+    <div class="loop-flow gs_reveal">
+      <div class="loop-line"></div>
+
+      <div class="loop-node gs_node">
+        <div class="loop-dot violet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(168,140,200,.95)" stroke-width="1.2"><path d="M12 21s-7-5.5-7-11a4.5 4.5 0 0 1 7-3.7A4.5 4.5 0 0 1 19 10c0 5.5-7 11-7 11Z"/></svg>
+        </div>
+        <div class="loop-step">01 — SE ACTIVA</div>
+        <div class="loop-name">Emoción</div>
+        <div class="loop-desc">Una sensación corporal que organiza tu atención sin que lo notes.</div>
+      </div>
+
+      <div class="loop-node gs_node">
+        <div class="loop-dot gold">
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(230,194,122,.95)" stroke-width="1.2"><path d="M5 6h14M5 12h10M5 18h14"/><circle cx="20" cy="12" r="1.6" fill="rgba(230,194,122,.95)"/></svg>
+        </div>
+        <div class="loop-step">02 — SE GRABA</div>
+        <div class="loop-name">Recuerdo</div>
+        <div class="loop-desc">Tu sistema archiva la experiencia y la convierte en patrón.</div>
+      </div>
+
+      <div class="loop-node gs_node">
+        <div class="loop-dot blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(140,170,220,.95)" stroke-width="1.2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg>
+        </div>
+        <div class="loop-step">03 — SE PIENSA</div>
+        <div class="loop-name">Idea</div>
+        <div class="loop-desc">Una creencia se vuelve juicio y guía tu próxima decisión.</div>
+      </div>
+
+      <div class="loop-node gs_node">
+        <div class="loop-dot green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(120,200,160,.95)" stroke-width="1.2"><path d="M3 12c4-8 14-8 18 0M3 12c4 8 14 8 18 0"/><circle cx="12" cy="12" r="2.5"/></svg>
+        </div>
+        <div class="loop-step">04 — SE MANIFIESTA</div>
+        <div class="loop-name">Realidad</div>
+        <div class="loop-desc">El loop se cierra, se repite y construye tu vida cotidiana.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= PROGRAMAS ============= -->
+<section class="programas" id="programas" data-screen-label="04 Programas">
+  <div class="programas-head gs_reveal gs_up">
+    <div>
+      <div class="prog-eyebrow">PROGRAMAS</div>
+      <h2 class="prog-h2">Caminos para entrenar<br>tu percepción</h2>
+    </div>
+    <p class="prog-intro">Programas diseñados para cada etapa de tu proceso. Desde el autoconocimiento hasta la creación consciente de tu vida y proyectos.</p>
+  </div>
+
+  <div class="prog-cards">
+    <article class="prog-card gs_card" data-speed="1.05">
+      <div class="prog-card-img">
+        <img src="assets/exp4.jpg" alt="">
+        <div class="prog-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="3.6"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/></svg>
+        </div>
+      </div>
+      <div class="prog-card-body">
+        <span class="prog-num">01</span>
+        <h3 class="prog-name">Acompañamiento<br>1 a 1</h3>
+        <div class="prog-line"></div>
+        <p class="prog-text">Un espacio personalizado para trabajar tus bloqueos, patrones y objetivos con profundidad y claridad.</p>
+        <a class="prog-link" href="#">MÁS INFORMACIÓN <span class="arrow"></span></a>
+      </div>
+    </article>
+
+    <article class="prog-card gs_card" data-speed="1.1">
+      <div class="prog-card-img">
+        <video autoplay muted loop playsinline preload="metadata"><source src="assets/video1.mp4" type="video/mp4"></video>
+        <div class="prog-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 4v16M5 12h14M8 8l8 8M16 8l-8 8"/></svg>
+        </div>
+      </div>
+      <div class="prog-card-body">
+        <span class="prog-num">02</span>
+        <h3 class="prog-name">InspirAcción<br>Nivel 1</h3>
+        <div class="prog-line"></div>
+        <p class="prog-text">Aprendé a observar tu mente, gestionar tu energía y romper el loop automático que limita tu vida.</p>
+        <a class="prog-link" href="#">MÁS INFORMACIÓN <span class="arrow"></span></a>
+      </div>
+    </article>
+
+    <article class="prog-card gs_card" data-speed="1.05">
+      <div class="prog-card-img">
+        <video autoplay muted loop playsinline preload="metadata"><source src="assets/video2.mp4" type="video/mp4"></video>
+        <div class="prog-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v18M3 12h18"/></svg>
+        </div>
+      </div>
+      <div class="prog-card-body">
+        <span class="prog-num">03</span>
+        <h3 class="prog-name">InspirAcción<br>Nivel 2</h3>
+        <div class="prog-line"></div>
+        <p class="prog-text">Profundizá tu capacidad de percepción y reprogramá tu sistema interno para crear con intención.</p>
+        <a class="prog-link" href="#">MÁS INFORMACIÓN <span class="arrow"></span></a>
+      </div>
+    </article>
+
+    <article class="prog-card gs_card" data-speed="1.15">
+      <div class="prog-card-img">
+        <img src="assets/exp2.jpg" alt="">
+        <div class="prog-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 20l6-10 4 6 3-4 5 8z"/></svg>
+        </div>
+      </div>
+      <div class="prog-card-body">
+        <span class="prog-num">04</span>
+        <h3 class="prog-name">Mentoría de Vida<br>y Proyectos</h3>
+        <div class="prog-line"></div>
+        <p class="prog-text">Acompañamiento estratégico y espiritual para alinear tu propósito, tu vida y tus proyectos.</p>
+        <a class="prog-link" href="#">MÁS INFORMACIÓN <span class="arrow"></span></a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============= CINEMATIC NEURAL PROG BAND ============= -->
+<section class="prog-band neural-separator" id="neuralSep" data-screen-label="04b Programas Band">
+  <canvas class="neural-canvas" id="neuralCanvas"></canvas>
+  <div class="neural-vignette"></div>
+  <div class="neural-glow-left"></div>
+  <div class="neural-glow-center"></div>
+  <div class="prog-band-inner" style="position:relative; z-index:10;">
+    <div>
+      <div class="band-eyebrow">NO HAY UNA ÚNICA VERDAD.</div>
+      <h3 class="band-h">Hay una percepción que te<br>acerca a tu verdad.</h3>
+    </div>
+    <p class="band-text">Estos programas son una invitación a mirarte distinto, expandir tu conciencia y vivir con más claridad, coherencia y sentido.</p>
+    <button class="btn btn-primary magnetic-btn">VER TODOS LOS PROGRAMAS <span class="arrow"></span></button>
+  </div>
+</section>
+
+<!-- ============= EXPERIENCIA ============= -->
+<section class="experiencia" id="experiencia" data-screen-label="05 Experiencia">
+  <div class="exp-head gs_reveal gs_up">
+    <div class="exp-eyebrow">EXPERIENCIA</div>
+    <h2 class="exp-h2">Una experiencia documental,<br>cinematográfica y real.</h2>
+  </div>
+  <div class="exp-grid">
+    <div class="exp-cell exp-c1 gs_exp" data-speed="1.2">
+      <img src="assets/exp1.jpg" alt="" class="gs_parallax">
+      <div class="label"><small>TALLERES PRESENCIALES</small><h4>Espacios para volver a habitar tu mente.</h4></div>
+    </div>
+    <div class="exp-cell exp-c2 gs_exp" data-speed="1.05">
+      <img src="assets/exp3.jpg" alt="" class="gs_parallax">
+      <div class="label"><small>RETIROS</small><h4>Naturaleza y silencio.</h4></div>
+    </div>
+    <div class="exp-cell exp-c3 gs_exp" data-speed="1.15">
+      <img src="assets/exp2.jpg" alt="" class="gs_parallax">
+      <div class="label"><small>PEDAGOGÍA</small><h4>Mente, percepción y estado alfa.</h4></div>
+    </div>
+    <div class="exp-cell exp-c4 gs_exp" data-speed="1.1">
+      <img src="assets/exp4.jpg" alt="" class="gs_parallax">
+      <div class="label"><small>PROCESOS PROFUNDOS</small><h4>Donde la teoría se vuelve experiencia.</h4></div>
+    </div>
+  </div>
+
+  <div class="exp-stats gs_reveal gs_up">
+    <div class="stat">
+      <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="9" cy="8" r="3.4"/><circle cx="17" cy="9" r="2.6"/><path d="M3 20c0-3 3-5.5 6-5.5s6 2.5 6 5.5M14 20c0-2 2-4 4.5-4s4.5 1.5 4.5 3.5"/></svg>
+      <div class="stat-num counter" data-target="2500">0</div>
+      <div class="stat-label">ESTUDIANTES</div>
+    </div>
+    <div class="stat">
+      <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
+      <div class="stat-num counter" data-target="35">0</div>
+      <div class="stat-label">PAÍSES</div>
+    </div>
+    <div class="stat">
+      <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 2v20M2 12h20M5 5l14 14M19 5l-14 14"/></svg>
+      <div class="stat-num counter" data-target="12">0</div>
+      <div class="stat-label">AÑOS DE CAMINO</div>
+    </div>
+    <div class="stat">
+      <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>
+      <div class="stat-num">100%</div>
+      <div class="stat-label">TRANSFORMACIÓN APLICADA</div>
+    </div>
+    <div class="stat-quote">
+      <p>"Entendí por primera vez cómo funciona mi mente. No es teoría, es algo que se vive y transforma todo."</p>
+      <span>— SOFÍA, 34 AÑOS</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============= CTA FINAL ============= -->
+<section class="cta-final" id="recursos" data-screen-label="06 CTA Final">
+  <div class="cta-bg parallax-bg"></div>
+  <div class="cta-overlay"></div>
+  <canvas class="cta-particles" id="ctaParticles"></canvas>
+  <div class="cta-inner">
+    <div class="gs_reveal gs_left">
+      <h2 class="cta-h2">La claridad<br>no se busca.<br><em>Se revela.</em></h2>
+      <div class="cta-divider"></div>
+      <p class="cta-text">Si sentís que es momento de actualizar tu sistema de percepción, este es tu primer paso.</p>
+      <div class="cta-buttons">
+        <button class="btn btn-primary magnetic-btn">AGENDAR PRIMER PASO <span class="arrow"></span></button>
+        <button class="btn btn-outline magnetic-btn">HABLAR CON EL EQUIPO</button>
+      </div>
+    </div>
+    <div class="cta-side gs_reveal gs_right" id="agustin">
+      <h5>RECURSOS &amp; CONTACTO</h5>
+      <div class="cta-list">
+        <a href="#"><span>Agustín Trowell — Bio</span><small>SOBRE</small></a>
+        <a href="#"><span>Charlas y artículos</span><small>RECURSOS</small></a>
+        <a href="#"><span>Preguntas frecuentes</span><small>FAQ</small></a>
+        <a href="#"><span>Hablar con el equipo</span><small>CONTACTO</small></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= FOOTER ============= -->
+<footer class="footer gs_reveal">
+  <div class="footer-grid">
+    <div class="footer-brand gs_stagger">
+      <a href="#" class="logo">
+        <span class="logo-mark spin" aria-hidden="true">
+          <svg viewBox="-30 -30 60 60">
+            <circle cx="0" cy="0" r="22" class="l1"/>
+            <circle cx="0" cy="0" r="14" class="l2"/>
+            <path d="M-22 0 L22 0 M0 -22 L0 22 M-15.5 -15.5 L15.5 15.5 M-15.5 15.5 L15.5 -15.5" class="l3"/>
+            <path d="M0 -22 L19 11 L-19 11 Z" class="l4"/>
+          </svg>
+        </span>
+        <span>
+          <span class="logo-text">EPI</span>
+          <span class="logo-sub" style="color:rgba(245,243,238,.55)">ESCUELA DEL<br>PENSAMIENTO<br>INTUITIVO</span>
+        </span>
+      </a>
+      <p>Una escuela para liberar tu mente del loop automático y diseñar una vida con sentido.</p>
+    </div>
+    <div class="footer-col gs_stagger">
+      <h6>LA ESCUELA</h6>
+      <ul>
+        <li><a href="#escuela">Qué es EPI</a></li>
+        <li><a href="#tecnologia">Metodología</a></li>
+        <li><a href="#agustin">Agustín Trowell</a></li>
+        <li><a href="#experiencia">Testimonios</a></li>
+      </ul>
+    </div>
+    <div class="footer-col gs_stagger">
+      <h6>PROGRAMAS</h6>
+      <ul>
+        <li><a href="#programas">Acompañamiento 1 a 1</a></li>
+        <li><a href="#programas">InspirAcción Nivel 1</a></li>
+        <li><a href="#programas">InspirAcción Nivel 2</a></li>
+        <li><a href="#programas">Mentoría de Vida</a></li>
+      </ul>
+    </div>
+    <div class="footer-col gs_stagger">
+      <h6>RECURSOS</h6>
+      <ul>
+        <li><a href="#">Artículos</a></li>
+        <li><a href="#">Charlas</a></li>
+        <li><a href="#">Preguntas frecuentes</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col gs_stagger">
+      <h6>SEGUIR</h6>
+      <div class="socials">
+        <a class="social-link magnetic-btn" href="https://www.youtube.com/@AgustinTrowell" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.5 12 4.5 12 4.5s-7 0-8.9.6A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1C5 19.5 12 19.5 12 19.5s7 0 8.9-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23.5 12 31 31 0 0 0 23 7.2ZM9.8 15.5V8.5l6 3.5Z"/></svg>
+          YOUTUBE
+        </a>
+        <a class="social-link magnetic-btn" href="https://www.instagram.com/agustintrowell/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          INSTAGRAM
+        </a>
+        <a class="social-link magnetic-btn" href="https://open.spotify.com/show/4oYU4F9AIJzqrt7inBHLhk" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.7.7 0 0 1-1 .25c-2.7-1.65-6.1-2-10.1-1.1a.7.7 0 1 1-.3-1.4c4.4-1 8.2-.6 11.2 1.25.35.2.45.65.2 1Zm1.2-2.7a.85.85 0 0 1-1.2.3c-3.1-1.9-7.8-2.45-11.5-1.35a.85.85 0 1 1-.5-1.65c4.2-1.25 9.4-.65 13 1.5.4.25.55.8.2 1.2Zm.1-2.8c-3.7-2.2-9.85-2.4-13.4-1.3a1 1 0 1 1-.6-1.95c4.05-1.25 10.85-1 15.05 1.5a1 1 0 0 1-1.05 1.75Z"/></svg>
+          SPOTIFY
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 EPI — ESCUELA DEL PENSAMIENTO INTUITIVO</span>
+    <div>
+      <a href="#">PRIVACIDAD</a>
+      <a href="#">TÉRMINOS</a>
+      <a href="#">CRÉDITOS</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts: GSAP + Lenis + Particles + Main -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+<!-- SplitType for the text reveal -->
+<script src="https://unpkg.com/split-type"></script>
+<!-- Our custom scripts -->
+<script src="cursor.js"></script>
+<script src="panel_particles.js"></script>
+<script src="particles.js"></script>
+<script src="neural_separator.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>

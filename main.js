@@ -117,7 +117,29 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   }
 
-  // 5. Dynamic Announcement Panel Logic
+  // 5. Dynamic Announcement Panel Logic — Conectado a Google Sheets
+  const SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTkmDyxyWLYdonFBidesVWPA2wkHiWGvyd2Qra-uZWGLJP06_5wWwMRgmAq55nDmCnvB3Xwd7Zbp1KG/pub?gid=0&single=true&output=csv';
+
+  function parseCSV(csvText) {
+    const lines = csvText.trim().split('\n');
+    if (lines.length < 2) return null;
+    const headers = lines[0].split(',').map(h => h.trim().replace(/\r/g, ''));
+    const values = [];
+    let current = '';
+    let inQuotes = false;
+    // Parse CSV respecting quoted fields (descriptions may contain commas)
+    for (let i = 0; i < lines[1].length; i++) {
+      const char = lines[1][i];
+      if (char === '"') { inQuotes = !inQuotes; continue; }
+      if (char === ',' && !inQuotes) { values.push(current.trim().replace(/\r/g, '')); current = ''; continue; }
+      current += char;
+    }
+    values.push(current.trim().replace(/\r/g, ''));
+    const result = {};
+    headers.forEach((h, i) => { result[h] = values[i] || ''; });
+    return result;
+  }
+
   async function fetchLiveAnnouncement() {
     const annPanel = document.getElementById('heroAnnouncement');
     if (!annPanel) return;
@@ -131,40 +153,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const elCtaText = document.getElementById('annCtaText');
 
     try {
-      // PLACHOLDER: Simulando petición a Google Sheets CSV
-      // En el futuro, reemplaza este bloque con un fetch real al CSV publicado
-      await new Promise(resolve => setTimeout(resolve, 800)); // Simulate network latency
-      
-      const mockData = {
-        label: "NUEVO PROGRAMA",
-        title: "Mentoría de Vida",
-        description: "Un espacio de acompañamiento profundo para romper el loop, cuestionar tus patrones y rediseñar tu perspectiva.",
-        meta1: "Plazas Limitadas",
-        meta2: "Modalidad Online",
-        ctaText: "MÁS INFORMACIÓN",
-        ctaUrl: "#programas"
-      };
+      // Fetch real data from Google Sheets (published CSV)
+      const response = await fetch(SHEETS_CSV_URL);
+      if (!response.ok) throw new Error('Network response was not ok');
+      const csvText = await response.text();
+      const data = parseCSV(csvText);
+      if (!data) throw new Error('No data found in CSV');
 
-      // Fade out
+      // Fade out current content
       panelContent.style.opacity = 0;
       
       setTimeout(() => {
-        // Update DOM
-        elLabel.textContent = mockData.label;
-        elTitle.textContent = mockData.title;
-        elDesc.textContent = mockData.description;
-        elMeta.innerHTML = `<span class="meta-item">${mockData.meta1}</span><span class="meta-item">•</span><span class="meta-item">${mockData.meta2}</span>`;
-        elCtaText.textContent = mockData.ctaText;
-        elCtaUrl.href = mockData.ctaUrl;
+        // Update DOM with live data from Google Sheets
+        if (elLabel) elLabel.textContent = data.label || 'ANUNCIO';
+        if (elTitle) elTitle.textContent = data.title || '';
+        if (elDesc) elDesc.textContent = data.description || '';
+        if (elMeta) elMeta.innerHTML = `<span class="meta-item">${data.meta1 || ''}</span><span class="meta-item">•</span><span class="meta-item">${data.meta2 || ''}</span>`;
+        if (elCtaText) elCtaText.textContent = data.ctaText || 'VER MÁS';
+        if (elCtaUrl) elCtaUrl.href = data.ctaUrl || '#';
         
-        // Fade in
+        // Fade in new content
         panelContent.style.opacity = 1;
-      }, 600); // Wait for fade out CSS transition (0.6s)
+      }, 600);
 
     } catch (error) {
-      console.error("Error fetching announcement data:", error);
-      elTitle.textContent = "Error de conexión";
-      elDesc.textContent = "No pudimos cargar el anuncio en este momento.";
+      console.error('Error fetching announcement from Google Sheets:', error);
+      // Fallback: mantener el contenido que ya está en el HTML
     }
   }
 

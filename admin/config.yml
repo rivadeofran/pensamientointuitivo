@@ -5,8 +5,8 @@ backend:
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
 
-site_url: https://example.netlify.app
-display_url: https://example.netlify.app
+site_url: https://franrivadeo.netlify.app
+display_url: https://franrivadeo.netlify.app
 logo_url: /assets/banner.jpg
 
 locale: 'es'

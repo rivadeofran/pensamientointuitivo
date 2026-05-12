@@ -1,0 +1,61 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+site_url: https://example.netlify.app
+display_url: https://example.netlify.app
+logo_url: /assets/banner.jpg
+
+locale: 'es'
+
+collections:
+  - name: "programas"
+    label: "Programas (los 4)"
+    files:
+      - file: "content/programas.json"
+        label: "Los 4 programas"
+        name: "programas"
+        fields:
+          - label: "Programas"
+            name: "items"
+            widget: "list"
+            min: 4
+            max: 4
+            summary: "{{fields.num}} — {{fields.nombre}}"
+            fields:
+              - { label: "Número (01, 02, 03, 04)", name: "num", widget: "string" }
+              - { label: "Nombre del programa", name: "nombre", widget: "string" }
+              - { label: "Modalidad (texto del tag)", name: "modalidad", widget: "string", hint: "Ej: ONLINE · 1 A 1" }
+              - { label: "Tipo de modalidad", name: "modalidad_tipo", widget: "select", options: ["online", "hybrid"], default: "online" }
+              - { label: "Descripción (reverso de la card)", name: "descripcion", widget: "text" }
+              - { label: "Imagen o video de portada", name: "media", widget: "file", required: false, hint: "Subí una imagen .jpg o video .mp4. Si lo dejás vacío, queda el actual." }
+              - { label: "Texto del WhatsApp al hacer click en EMPEZAR", name: "whatsapp_text", widget: "string", hint: "Ej: Hola Agustín, me interesa el Acompañamiento 1 a 1. ¿Me contás más?" }
+
+  - name: "portadas"
+    label: "Portadas y fotos generales"
+    files:
+      - file: "content/portadas.json"
+        label: "Banner principal"
+        name: "portadas"
+        fields:
+          - { label: "Imagen del banner (entre Escuela y Loop)", name: "banner", widget: "image" }
+
+  - name: "stats"
+    label: "Métricas / Stats"
+    files:
+      - file: "content/stats.json"
+        label: "Números de la sección Experiencia"
+        name: "stats"
+        fields:
+          - label: "Stats"
+            name: "items"
+            widget: "list"
+            min: 4
+            max: 4
+            summary: "{{fields.value}} — {{fields.label}}"
+            fields:
+              - { label: "Valor (con + si querés)", name: "value", widget: "string", hint: "Ej: +2.500 o +100%" }
+              - { label: "Etiqueta debajo", name: "label", widget: "string", hint: "Ej: ESTUDIANTES" }

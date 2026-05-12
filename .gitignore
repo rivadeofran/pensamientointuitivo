@@ -1,0 +1,6 @@
+.DS_Store
+_originals/
+uploads_BACKUP_ORIGINAL/
+*.backup.html
+node_modules/
+hero_base64.js

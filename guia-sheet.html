@@ -1,0 +1,1263 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>EPI — Guía del Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #0f1f1a;
+    --green-jungle: #1a2f23;
+    --soft-black: #0a0f0c;
+    --gold: #d4af37;
+    --gold-pastel: #e6c27a;
+    --cream: #f5f3ee;
+    --cream-warm: #ebe6da;
+    --ink: rgba(15, 31, 26, 0.88);
+    --ink-soft: rgba(15, 31, 26, 0.62);
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Schibsted Grotesk', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--gold-pastel); color: var(--green-deep); }
+
+  /* Grain overlay (mismo lenguaje del sitio) */
+  .grain {
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.08;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 200px 200px;
+  }
+
+  /* Container */
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+
+  /* Hero */
+  .doc-hero {
+    padding: 110px 0 70px;
+    border-bottom: 1px solid rgba(15, 31, 26, 0.08);
+  }
+  .stamp {
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: rgba(212, 175, 55, 0.95);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .stamp::before {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--gold);
+  }
+  .doc-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 6vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--green-deep);
+    font-weight: 400;
+    margin-bottom: 22px;
+  }
+  .doc-h1 em { font-style: italic; color: var(--gold); font-weight: 300; }
+  .doc-lead {
+    font-size: clamp(16px, 1.2vw, 19px);
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 640px;
+    font-weight: 300;
+  }
+  .doc-links { margin-top: 38px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .doc-link {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: 1px solid rgba(212, 175, 55, 0.55);
+    background: transparent;
+    color: var(--green-deep);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.4s var(--ease);
+  }
+  .doc-link:hover {
+    background: var(--green-deep);
+    color: var(--gold-pastel);
+    border-color: var(--green-deep);
+    transform: translateY(-2px);
+  }
+  .doc-link svg { width: 14px; height: 14px; }
+
+  /* Section base */
+  .sec {
+    padding: 110px 0 90px;
+    border-bottom: 1px solid rgba(15, 31, 26, 0.08);
+  }
+  .sec-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    color: rgba(212, 175, 55, 0.9);
+    font-weight: 500;
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+  .sec-h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 4vw, 56px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--green-deep);
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
+  .sec-h2 em { font-style: italic; color: var(--gold); font-weight: 300; }
+  .sec-sub {
+    font-size: clamp(14px, 1vw, 16px);
+    color: var(--ink-soft);
+    line-height: 1.65;
+    max-width: 720px;
+    margin-bottom: 56px;
+  }
+
+  /* Flow diagram (Sección 2) */
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .flow-step {
+    padding: 32px 24px;
+    border: 1px solid rgba(15, 31, 26, 0.12);
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(8px);
+    transition: all 0.5s var(--ease);
+    position: relative;
+    cursor: pointer;
+  }
+  .flow-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -14px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: 22px;
+    z-index: 2;
+    background: var(--cream);
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+  }
+  .flow-step:hover {
+    background: rgba(255, 255, 255, 0.92);
+    transform: translateY(-4px);
+    box-shadow: 0 18px 36px -16px rgba(15, 31, 26, 0.18);
+  }
+  .flow-icon {
+    width: 44px; height: 44px;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+  .flow-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--green-deep);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .flow-desc {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .flow-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(212, 175, 55, 0.9);
+    letter-spacing: 0.1em;
+    padding-top: 14px;
+    border-top: 1px solid rgba(15, 31, 26, 0.08);
+  }
+  .flow-detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s var(--ease), margin-top 0.5s var(--ease);
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .flow-step:hover .flow-detail { max-height: 240px; margin-top: 14px; }
+
+  /* Glossary (Sección 3) */
+  .glossary-filters {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .filter-btn {
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: 1px solid rgba(15, 31, 26, 0.15);
+    background: transparent;
+    color: var(--ink-soft);
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.35s var(--ease);
+  }
+  .filter-btn:hover {
+    border-color: var(--gold);
+    color: var(--green-deep);
+  }
+  .filter-btn.active {
+    background: var(--green-deep);
+    color: var(--gold-pastel);
+    border-color: var(--green-deep);
+  }
+  .glossary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  .gloss-card {
+    padding: 24px 22px;
+    background: #fff;
+    border: 1px solid rgba(15, 31, 26, 0.08);
+    border-radius: 10px;
+    transition: all 0.45s var(--ease);
+  }
+  .gloss-card.is-hidden { display: none; }
+  .gloss-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(212, 175, 55, 0.5);
+    box-shadow: 0 16px 32px -16px rgba(15, 31, 26, 0.18);
+  }
+  .gloss-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--green-deep);
+    background: rgba(212, 175, 55, 0.12);
+    padding: 6px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+  .gloss-modes {
+    display: flex; gap: 4px; flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .gloss-mode-tag {
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: rgba(15, 31, 26, 0.06);
+    color: var(--ink-soft);
+  }
+  .gloss-mode-tag.anuncio { background: rgba(212, 175, 55, 0.18); color: #8a6d1c; }
+  .gloss-mode-tag.video   { background: rgba(168, 140, 200, 0.2); color: #6c4f9a; }
+  .gloss-mode-tag.podcast { background: rgba(120, 200, 160, 0.2); color: #2b6e4f; }
+  .gloss-what {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .gloss-row {
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+  .gloss-row b {
+    font-weight: 600;
+    color: var(--green-deep);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    margin-right: 4px;
+  }
+  .gloss-example {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    background: rgba(15, 31, 26, 0.04);
+    border-left: 2px solid var(--gold);
+    padding: 8px 10px;
+    margin-top: 6px;
+    color: var(--green-deep);
+    word-break: break-word;
+  }
+
+  /* Modes section (Sección 4) */
+  .modes-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 38px;
+    flex-wrap: wrap;
+  }
+  .mode-tab {
+    padding: 16px 28px;
+    border-radius: 999px;
+    border: 1px solid rgba(15, 31, 26, 0.12);
+    background: transparent;
+    cursor: pointer;
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ink-soft);
+    transition: all 0.35s var(--ease);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .mode-tab:hover { border-color: var(--gold); color: var(--green-deep); }
+  .mode-tab.active {
+    background: var(--green-deep);
+    color: var(--gold-pastel);
+    border-color: var(--green-deep);
+  }
+  .mode-tab .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+  .mode-tab[data-mode="anuncio"] .dot { background: var(--gold); }
+  .mode-tab[data-mode="video"]   .dot { background: #a88cc8; }
+  .mode-tab[data-mode="podcast"] .dot { background: #78c8a0; }
+
+  .mode-panel {
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .mode-panel.active { display: grid; }
+  .mode-panel-left h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: var(--green-deep);
+    margin-bottom: 12px;
+    font-weight: 400;
+  }
+  .mode-panel-left h3 em { font-style: italic; color: var(--gold); }
+  .mode-panel-left p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    margin-bottom: 26px;
+  }
+
+  /* Sheet mock visual */
+  .sheet-mock {
+    background: #fff;
+    border: 1px solid rgba(15, 31, 26, 0.12);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 16px 40px -20px rgba(15, 31, 26, 0.15);
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 11px;
+  }
+  .sheet-mock-header {
+    background: rgba(15, 31, 26, 0.04);
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(15, 31, 26, 0.1);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-soft);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sheet-mock-row { display: flex; }
+  .sheet-mock-cell {
+    flex: 1;
+    padding: 8px 10px;
+    border-right: 1px solid rgba(15, 31, 26, 0.06);
+    border-bottom: 1px solid rgba(15, 31, 26, 0.06);
+    font-size: 10.5px;
+    line-height: 1.45;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--ink);
+    min-width: 0;
+  }
+  .sheet-mock-cell.header {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    background: rgba(15, 31, 26, 0.05);
+    color: var(--green-deep);
+    font-size: 10px;
+  }
+  .sheet-mock-cell.used { background: rgba(212, 175, 55, 0.08); }
+  .sheet-mock-cell.unused { color: rgba(15, 31, 26, 0.28); }
+
+  /* Panel preview (reproduce el panel real visualmente) */
+  .panel-preview {
+    background: linear-gradient(135deg, var(--green-deep) 0%, #0a1612 100%);
+    border-radius: 18px;
+    padding: 32px 28px;
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    box-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.5);
+    min-height: 360px;
+  }
+  .panel-preview::before {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    background: radial-gradient(circle at 30% 20%, rgba(212, 175, 55, 0.15), transparent 50%);
+    pointer-events: none;
+  }
+  .pp-content { position: relative; z-index: 2; }
+  .pp-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .pp-pulse {
+    width: 8px; height: 8px;
+    background: var(--gold-pastel);
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(230, 194, 122, 0.7);
+    animation: ppPulse 2s ease-in-out infinite;
+  }
+  @keyframes ppPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .pp-label {
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold-pastel);
+    font-weight: 600;
+  }
+  .pp-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 12px;
+    font-weight: 400;
+  }
+  .pp-desc {
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(245, 243, 238, 0.75);
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+  .pp-meta {
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245, 243, 238, 0.55);
+    margin-bottom: 22px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .pp-meta .dot { color: var(--gold); }
+  .pp-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: 1px solid rgba(230, 194, 122, 0.55);
+    color: var(--gold-pastel);
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.35s var(--ease);
+  }
+  .pp-cta:hover { background: var(--gold-pastel); color: var(--green-deep); }
+  .pp-embed {
+    margin: 14px 0 18px;
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(245, 243, 238, 0.4);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    border: 1px dashed rgba(230, 194, 122, 0.2);
+  }
+  .pp-embed.podcast { aspect-ratio: 16 / 5; }
+
+  /* Sandbox (Sección 5) */
+  .sandbox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .sandbox-form {
+    background: #fff;
+    border: 1px solid rgba(15, 31, 26, 0.08);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .sb-actions {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+  .sb-btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid rgba(15, 31, 26, 0.15);
+    background: transparent;
+    cursor: pointer;
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--green-deep);
+    transition: all 0.3s var(--ease);
+  }
+  .sb-btn:hover {
+    border-color: var(--gold);
+    background: rgba(212, 175, 55, 0.08);
+  }
+  .sb-btn.primary {
+    background: var(--green-deep);
+    color: var(--gold-pastel);
+    border-color: var(--green-deep);
+  }
+  .sb-field {
+    margin-bottom: 14px;
+  }
+  .sb-field label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+    letter-spacing: 0.04em;
+  }
+  .sb-field input,
+  .sb-field select,
+  .sb-field textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid rgba(15, 31, 26, 0.15);
+    border-radius: 6px;
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 13px;
+    color: var(--green-deep);
+    background: #fdfcfa;
+    transition: border-color 0.3s var(--ease);
+  }
+  .sb-field textarea { min-height: 60px; resize: vertical; }
+  .sb-field input:focus,
+  .sb-field select:focus,
+  .sb-field textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: #fff;
+  }
+  .sb-field.is-irrelevant { opacity: 0.35; }
+  .sb-field.is-irrelevant input,
+  .sb-field.is-irrelevant textarea { background: rgba(15, 31, 26, 0.03); }
+  .sb-field--highlight {
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 8px;
+    padding: 14px 14px 12px;
+    margin: 6px -14px 18px;
+  }
+  .sb-field--highlight label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .sb-hint {
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 11px;
+    color: rgba(15, 31, 26, 0.7);
+    line-height: 1.5;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+
+  /* Closing */
+  .closing {
+    padding: 90px 0 120px;
+    text-align: left;
+  }
+  .closing p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(20px, 1.8vw, 28px);
+    color: var(--ink-soft);
+    max-width: 720px;
+    line-height: 1.5;
+    margin-bottom: 28px;
+  }
+  .closing .note {
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-style: normal;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(15, 31, 26, 0.08);
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 32px; right: 32px;
+    background: var(--green-deep);
+    color: var(--gold-pastel);
+    padding: 14px 22px;
+    border-radius: 8px;
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    box-shadow: 0 16px 40px -16px rgba(15, 31, 26, 0.4);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s var(--ease);
+    pointer-events: none;
+    z-index: 10000;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .flow { grid-template-columns: repeat(2, 1fr); }
+    .flow-step:nth-child(2)::after { display: none; }
+    .mode-panel { grid-template-columns: 1fr; }
+    .sandbox { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 0 20px; }
+    .doc-hero { padding: 80px 0 50px; }
+    .sec { padding: 70px 0 60px; }
+    .flow { grid-template-columns: 1fr; gap: 14px; }
+    .flow-step::after { display: none; }
+    .glossary-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ============= HERO ============= -->
+<header class="doc-hero">
+  <div class="wrap">
+    <div class="stamp">EPI · Manual de uso interno</div>
+    <h1 class="doc-h1">Cómo funciona el<br><em>Sheet de la web.</em></h1>
+    <p class="doc-lead">El panel holográfico del Hero se alimenta de una hoja de Google Sheets. Esta guía te muestra cómo se conecta, qué hace cada columna, cómo cambiar entre los tres modos (anuncio, video, podcast) y cómo se ve el resultado.</p>
+    <div class="doc-links">
+      <a class="doc-link" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTkmDyxyWLYdonFBidesVWPA2wkHiWGvyd2Qra-uZWGLJP06_5wWwMRgmAq55nDmCnvB3Xwd7Zbp1KG/pub?gid=0&single=true&output=csv" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18l6-6-6-6"/></svg>
+        Ver CSV publicado
+      </a>
+      <a class="doc-link" href="index.html" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
+        Abrir la web
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============= SECCIÓN 2: FLUJO ============= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-num">01 — Flujo</div>
+    <h2 class="sec-h2">Del Sheet al <em>panel hero</em>.</h2>
+    <p class="sec-sub">Cuando editás una celda en el Sheet, esto sucede detrás de escena. Pasá el mouse sobre cada paso para ver el detalle.</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <svg class="flow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+        <div class="flow-title">1. Google Sheet</div>
+        <div class="flow-desc">Vos editás las celdas en la hoja "Panel".</div>
+        <div class="flow-meta">EDICIÓN MANUAL</div>
+        <div class="flow-detail">Una sola fila (la primera después del header) contiene todos los valores que se muestran en el panel hero. Hay 10 columnas en total.</div>
+      </div>
+      <div class="flow-step">
+        <svg class="flow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+        <div class="flow-title">2. CSV publicado</div>
+        <div class="flow-desc">Google sirve la hoja como un CSV público en una URL fija.</div>
+        <div class="flow-meta">CACHÉ 1-3 MIN</div>
+        <div class="flow-detail">El Sheet ya fue publicado una vez vía "Archivo → Compartir → Publicar en la web → CSV". No hace falta volver a publicar; los cambios se reflejan automáticamente, con un retardo de 1-3 minutos.</div>
+      </div>
+      <div class="flow-step">
+        <svg class="flow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+        <div class="flow-title">3. fetch en main.js</div>
+        <div class="flow-desc">Al cargar la página, JS pide el CSV y lo parsea.</div>
+        <div class="flow-meta">CLIENT-SIDE</div>
+        <div class="flow-detail">La función <code style="font-family:'JetBrains Mono',monospace;font-size:11px;background:rgba(15,31,26,.06);padding:1px 5px;border-radius:3px;">fetchLiveAnnouncement()</code> en main.js hace un GET al CSV, lo convierte a objeto, y según el valor de <code style="font-family:'JetBrains Mono',monospace;font-size:11px;">tipo</code> elige uno de los tres modos.</div>
+      </div>
+      <div class="flow-step">
+        <svg class="flow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
+        <div class="flow-title">4. Panel hero</div>
+        <div class="flow-desc">Los datos llenan los elementos visuales del panel.</div>
+        <div class="flow-meta">RENDER FINAL</div>
+        <div class="flow-detail">El panel del hero (la "pantalla holográfica" a la derecha del título principal) se actualiza con los textos, el video o el embed de Spotify según corresponda.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= SECCIÓN 3: GLOSARIO ============= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-num">02 — Glosario</div>
+    <h2 class="sec-h2">Qué hace <em>cada columna</em>.</h2>
+    <p class="sec-sub">Cada celda del Sheet controla un elemento visual o de comportamiento. Usá los filtros para ver solo las columnas relevantes a un modo.</p>
+
+    <div class="glossary-filters">
+      <button class="filter-btn active" data-filter="todos">Todas las columnas</button>
+      <button class="filter-btn" data-filter="anuncio">📢 Modo Anuncio</button>
+      <button class="filter-btn" data-filter="video">🎬 Modo Video</button>
+      <button class="filter-btn" data-filter="podcast">🎧 Modo Podcast</button>
+    </div>
+
+    <div class="glossary-grid" id="glossaryGrid"></div>
+  </div>
+</section>
+
+<!-- ============= SECCIÓN 4: MODOS ============= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-num">03 — Modos</div>
+    <h2 class="sec-h2">Tres caras del mismo <em>panel.</em></h2>
+    <p class="sec-sub">El valor de la columna <code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(15,31,26,.06);padding:2px 8px;border-radius:4px;">tipo</code> define cómo se ve el panel. Tocá una pestaña para ver cómo se configura cada uno y cómo se renderiza.</p>
+
+    <div class="modes-tabs">
+      <button class="mode-tab active" data-mode="anuncio"><span class="dot"></span>📢 Anuncio</button>
+      <button class="mode-tab" data-mode="video"><span class="dot"></span>🎬 Video</button>
+      <button class="mode-tab" data-mode="podcast"><span class="dot"></span>🎧 Podcast</button>
+    </div>
+
+    <!-- MODE: ANUNCIO -->
+    <div class="mode-panel active" id="modePanel-anuncio">
+      <div class="mode-panel-left">
+        <h3>El modo <em>por defecto</em>.</h3>
+        <p>Usalo cuando quieras destacar una inscripción abierta, una próxima cohorte, o cualquier anuncio editorial con un botón de acción. Es el modo más "comercial". Llená estas columnas:</p>
+        <div class="sheet-mock">
+          <div class="sheet-mock-header">PANEL · fila 1</div>
+          <div class="sheet-mock-row">
+            <div class="sheet-mock-cell header">tipo</div>
+            <div class="sheet-mock-cell header">label</div>
+            <div class="sheet-mock-cell header">title</div>
+            <div class="sheet-mock-cell header">description</div>
+            <div class="sheet-mock-cell header">meta1</div>
+            <div class="sheet-mock-cell header">meta2</div>
+            <div class="sheet-mock-cell header">ctaText</div>
+            <div class="sheet-mock-cell header">ctaUrl</div>
+            <div class="sheet-mock-cell header">videoUrl</div>
+            <div class="sheet-mock-cell header">spotifyUrl</div>
+          </div>
+          <div class="sheet-mock-row">
+            <div class="sheet-mock-cell used">anuncio</div>
+            <div class="sheet-mock-cell used">INSCRIPCIONES ABIERTAS</div>
+            <div class="sheet-mock-cell used">InspirAcción Nivel 1</div>
+            <div class="sheet-mock-cell used">Programa de entrenamiento grupal donde te guío a usar tus emociones como puente entre la Inspiración y la Acción.</div>
+            <div class="sheet-mock-cell used">Plazas Limitadas</div>
+            <div class="sheet-mock-cell used">Modalidad Online</div>
+            <div class="sheet-mock-cell used">MÁS INFORMACIÓN</div>
+            <div class="sheet-mock-cell used">#programas</div>
+            <div class="sheet-mock-cell unused">—</div>
+            <div class="sheet-mock-cell unused">—</div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-preview" id="previewAnuncio">
+        <div class="pp-content">
+          <div class="pp-header"><span class="pp-pulse"></span><span class="pp-label">INSCRIPCIONES ABIERTAS</span></div>
+          <h3 class="pp-title">InspirAcción Nivel 1</h3>
+          <p class="pp-desc">Programa de entrenamiento grupal donde te guío a usar tus emociones como puente entre la Inspiración y la Acción.</p>
+          <div class="pp-meta"><span>Plazas Limitadas</span><span class="dot">•</span><span>Modalidad Online</span></div>
+          <a class="pp-cta" href="#" onclick="return false">MÁS INFORMACIÓN →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODE: VIDEO -->
+    <div class="mode-panel" id="modePanel-video">
+      <div class="mode-panel-left">
+        <h3>Cuando querés mostrar <em>un video</em>.</h3>
+        <p>Carga un video de YouTube embebido dentro del panel. Ideal para teasers, charlas o material visual. Llená:</p>
+        <div class="sheet-mock">
+          <div class="sheet-mock-header">PANEL · fila 1</div>
+          <div class="sheet-mock-row">
+            <div class="sheet-mock-cell header">tipo</div>
+            <div class="sheet-mock-cell header">label</div>
+            <div class="sheet-mock-cell header">title</div>
+            <div class="sheet-mock-cell header">description</div>
+            <div class="sheet-mock-cell header">meta1</div>
+            <div class="sheet-mock-cell header">meta2</div>
+            <div class="sheet-mock-cell header">ctaText</div>
+            <div class="sheet-mock-cell header">ctaUrl</div>
+            <div class="sheet-mock-cell header">videoUrl</div>
+            <div class="sheet-mock-cell header">spotifyUrl</div>
+          </div>
+          <div class="sheet-mock-row">
+            <div class="sheet-mock-cell used">video</div>
+            <div class="sheet-mock-cell used">VIDEO RECOMENDADO</div>
+            <div class="sheet-mock-cell used">Cómo romper el loop emocional</div>
+            <div class="sheet-mock-cell unused">—</div>
+            <div class="sheet-mock-cell unused">—</div>
+            <div class="sheet-mock-cell unused">—</div>
+            <div class="sheet-mock-cell used">INSCRIBITE</div>
+            <div class="sheet-mock-cell used">https://forms.gle/inscripcion</div>
+            <div class="sheet-mock-cell used">https://youtube.com/watch?v=dQw4w9WgXcQ</div>
+            <div class="sheet-mock-cell unused">—</div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-preview" id="previewVideo">
+        <div class="pp-content">
+          <div class="pp-header"><span class="pp-pulse"></span><span class="pp-label">VIDEO RECOMENDADO</span></div>
+          <h3 class="pp-title">Cómo romper el loop emocional</h3>
+          <div class="pp-embed">▶ Video de YouTube embebido</div>
+          <a class="pp-cta" href="#" onclick="return false">VER EN YOUTUBE →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODE: PODCAST -->
+    <div class="mode-panel" id="modePanel-podcast">
+      <div class="mode-panel-left">
+        <h3>Para destacar <em>un podcast</em>.</h3>
+        <p>Embebe un episodio o show de Spotify. El usuario puede escucharlo desde la misma página. Llená:</p>
+        <div class="sheet-mock">
+          <div class="sheet-mock-header">PANEL · fila 1</div>
+          <div class="sheet-mock-row">
+            <div class="sheet-mock-cell header">tipo</div>
+            <div class="sheet-mock-cell header">label</div>
+            <div class="sheet-mock-cell header">title</div>
+            <div class="sheet-mock-cell header">description</div>
+            <div class="sheet-mock-cell header">meta1</div>
+            <div class="sheet-mock-cell header">meta2</div>
+            <div class="sheet-mock-cell header">ctaText</div>
+            <div class="sheet-mock-cell header">ctaUrl</div>
+            <div class="sheet-mock-cell header">videoUrl</div>
+            <div class="sheet-mock-cell header">spotifyUrl</div>
+          </div>
+          <div class="sheet-mock-row">
+            <div class="sheet-mock-cell used">podcast</div>
+            <div class="sheet-mock-cell used">EPISODIO NUEVO</div>
+            <div class="sheet-mock-cell used">Pensar al revés</div>
+            <div class="sheet-mock-cell used">Conversación sobre por qué la mente intuitiva contradice al sentido común.</div>
+            <div class="sheet-mock-cell unused">—</div>
+            <div class="sheet-mock-cell unused">—</div>
+            <div class="sheet-mock-cell used">HABLAR CON AGUSTÍN</div>
+            <div class="sheet-mock-cell used">https://wa.me/5584981811901</div>
+            <div class="sheet-mock-cell unused">—</div>
+            <div class="sheet-mock-cell used">https://open.spotify.com/episode/XYZ</div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-preview" id="previewPodcast">
+        <div class="pp-content">
+          <div class="pp-header"><span class="pp-pulse"></span><span class="pp-label">EPISODIO NUEVO</span></div>
+          <h3 class="pp-title">Pensar al revés</h3>
+          <p class="pp-desc">Conversación sobre por qué la mente intuitiva contradice al sentido común.</p>
+          <div class="pp-embed podcast">🎧 Reproductor Spotify embebido</div>
+          <a class="pp-cta" href="#" onclick="return false">ESCUCHAR EN SPOTIFY →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= SECCIÓN 5: SANDBOX ============= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-num">04 — Sandbox</div>
+    <h2 class="sec-h2">Probá <em>antes de editar</em>.</h2>
+    <p class="sec-sub">Editá los campos del formulario y mirá cómo cambia el panel en vivo. Cuando te guste, copiá la fila al portapapeles y pegala en el Sheet.</p>
+
+    <div class="sandbox">
+      <div class="sandbox-form">
+        <div class="sb-actions">
+          <button class="sb-btn" id="btnEjemplo">🎲 Cargar ejemplo</button>
+          <button class="sb-btn primary" id="btnCopiarCSV">📋 Copiar fila CSV</button>
+          <button class="sb-btn" id="btnLimpiar">✕ Vaciar</button>
+        </div>
+
+        <div class="sb-field">
+          <label for="f-tipo">tipo</label>
+          <select id="f-tipo">
+            <option value="anuncio">anuncio</option>
+            <option value="video">video</option>
+            <option value="podcast">podcast</option>
+          </select>
+        </div>
+        <div class="sb-field"><label for="f-label">label</label><input id="f-label" value="INSCRIPCIONES ABIERTAS" /></div>
+        <div class="sb-field"><label for="f-title">title</label><input id="f-title" value="InspirAcción Nivel 1" /></div>
+        <div class="sb-field" id="field-description"><label for="f-description">description</label><textarea id="f-description">Programa de entrenamiento grupal donde te guío a usar tus emociones como puente entre la Inspiración y la Acción.</textarea></div>
+        <div class="sb-field" id="field-meta1"><label for="f-meta1">meta1</label><input id="f-meta1" value="Plazas Limitadas" /></div>
+        <div class="sb-field" id="field-meta2"><label for="f-meta2">meta2</label><input id="f-meta2" value="Modalidad Online" /></div>
+        <div class="sb-field"><label for="f-ctaText">ctaText</label><input id="f-ctaText" value="MÁS INFORMACIÓN" /></div>
+        <div class="sb-field sb-field--highlight" id="field-ctaUrl">
+          <label for="f-ctaUrl">ctaUrl <span class="sb-hint">✨ Funciona en cualquier modo. Si lo dejás vacío, el botón cae al fallback natural (videoUrl en video, spotifyUrl en podcast, #programas en anuncio).</span></label>
+          <input id="f-ctaUrl" value="#programas" placeholder="https://forms.gle/...  |  https://wa.me/...  |  #programas" />
+        </div>
+        <div class="sb-field is-irrelevant" id="field-videoUrl"><label for="f-videoUrl">videoUrl</label><input id="f-videoUrl" placeholder="https://youtube.com/watch?v=..." /></div>
+        <div class="sb-field is-irrelevant" id="field-spotifyUrl"><label for="f-spotifyUrl">spotifyUrl</label><input id="f-spotifyUrl" placeholder="https://open.spotify.com/episode/..." /></div>
+      </div>
+
+      <div>
+        <div class="panel-preview" id="sandboxPreview" style="position: sticky; top: 32px;">
+          <div class="pp-content">
+            <div class="pp-header"><span class="pp-pulse"></span><span class="pp-label" id="pv-label">INSCRIPCIONES ABIERTAS</span></div>
+            <h3 class="pp-title" id="pv-title">InspirAcción Nivel 1</h3>
+            <p class="pp-desc" id="pv-desc">Programa de entrenamiento grupal donde te guío a usar tus emociones como puente entre la Inspiración y la Acción.</p>
+            <div class="pp-meta" id="pv-meta"><span id="pv-meta1">Plazas Limitadas</span><span class="dot">•</span><span id="pv-meta2">Modalidad Online</span></div>
+            <div class="pp-embed" id="pv-embed" style="display:none">▶ Video</div>
+            <a class="pp-cta" id="pv-cta" href="#" onclick="return false">MÁS INFORMACIÓN →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= CIERRE ============= -->
+<section class="closing">
+  <div class="wrap">
+    <p>"Cualquier cambio que hagas en el Sheet aparece en la web en <span style="color: var(--gold); font-style: normal; font-weight: 600;">1 a 3 minutos.</span>"</p>
+    <p class="note">Más adelante podemos sumar un panel admin con escritura directa al Sheet (Google Apps Script Web App) que tenga preview en vivo y guardado con un click. Por ahora, esta guía sirve como referencia visual del sistema actual.</p>
+  </div>
+</section>
+
+<div class="toast" id="toast">Copiado al portapapeles ✓</div>
+
+<script>
+(function() {
+  /* ============================================
+     GLOSARIO — datos y render
+  ============================================ */
+  const columns = [
+    {
+      name: 'tipo',
+      modes: ['anuncio', 'video', 'podcast'],
+      what: 'Elige el modo del panel. Define qué columnas usar y cómo se renderiza.',
+      example: 'anuncio | video | podcast',
+      fallback: 'anuncio (default).'
+    },
+    {
+      name: 'label',
+      modes: ['anuncio', 'video', 'podcast'],
+      what: 'Etiqueta pequeña que aparece arriba del título, con tracking amplio. Estilo "kicker" editorial.',
+      example: 'INSCRIPCIONES ABIERTAS',
+      fallback: 'ANUNCIO / VIDEO / PODCAST según modo.'
+    },
+    {
+      name: 'title',
+      modes: ['anuncio', 'video', 'podcast'],
+      what: 'Título principal del panel. Aparece grande en serif italic.',
+      example: 'InspirAcción Nivel 1',
+      fallback: 'Texto vacío (se ve raro). Llenalo siempre.'
+    },
+    {
+      name: 'description',
+      modes: ['anuncio', 'podcast'],
+      what: 'Texto descriptivo bajo el título. Para anuncios y podcasts. En video no se usa.',
+      example: 'Programa de entrenamiento grupal donde te guío a...',
+      fallback: 'Texto vacío.'
+    },
+    {
+      name: 'meta1',
+      modes: ['anuncio'],
+      what: 'Primer chip informativo abajo de la descripción.',
+      example: 'Plazas Limitadas',
+      fallback: 'Vacío (no se muestra).'
+    },
+    {
+      name: 'meta2',
+      modes: ['anuncio'],
+      what: 'Segundo chip informativo. Separado del primero por un punto dorado.',
+      example: 'Modalidad Online',
+      fallback: 'Vacío.'
+    },
+    {
+      name: 'ctaText',
+      modes: ['anuncio', 'video', 'podcast'],
+      what: 'Texto del botón final del panel. Define la acción que se ofrece.',
+      example: 'MÁS INFORMACIÓN | VER EN YOUTUBE | ESCUCHAR EN SPOTIFY',
+      fallback: 'VER MÁS (en anuncio) / VER EN YOUTUBE / ESCUCHAR EN SPOTIFY.'
+    },
+    {
+      name: 'ctaUrl',
+      modes: ['anuncio', 'video', 'podcast'],
+      what: 'A dónde va el botón final del panel — en CUALQUIER modo. Si lo dejás vacío, cae al fallback natural del modo (videoUrl, spotifyUrl o #programas según corresponda). Útil para mostrar un video o podcast pero llevar al usuario a un form de inscripción.',
+      example: 'https://forms.gle/abc123 | #programas | https://wa.me/...',
+      fallback: 'En anuncio: #programas. En video: link al YouTube. En podcast: link al Spotify. Si arranca con http://, abre en pestaña nueva.'
+    },
+    {
+      name: 'videoUrl',
+      modes: ['video'],
+      what: 'URL del video de YouTube. Acepta watch?v=, youtu.be/, embed/ o solo el ID de 11 caracteres.',
+      example: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      fallback: 'Si está vacío, el panel se ve sin video.'
+    },
+    {
+      name: 'spotifyUrl',
+      modes: ['podcast'],
+      what: 'URL de un episodio o show de Spotify. Se embebe en el panel.',
+      example: 'https://open.spotify.com/episode/4oYU4F9AIJzqrt7inBHLhk',
+      fallback: 'Si está vacío, el panel se ve sin reproductor.'
+    }
+  ];
+
+  const grid = document.getElementById('glossaryGrid');
+  function renderGloss(filter) {
+    grid.innerHTML = '';
+    columns.forEach(col => {
+      const hidden = filter !== 'todos' && !col.modes.includes(filter);
+      const card = document.createElement('div');
+      card.className = 'gloss-card' + (hidden ? ' is-hidden' : '');
+      card.innerHTML = `
+        <span class="gloss-name">${col.name}</span>
+        <div class="gloss-modes">
+          ${col.modes.map(m => `<span class="gloss-mode-tag ${m}">${m}</span>`).join('')}
+        </div>
+        <p class="gloss-what">${col.what}</p>
+        <div class="gloss-row"><b>Ejemplo:</b></div>
+        <div class="gloss-example">${col.example}</div>
+        <div class="gloss-row" style="margin-top:12px"><b>Si está vacío:</b> ${col.fallback}</div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+  renderGloss('todos');
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderGloss(btn.dataset.filter);
+    });
+  });
+
+  /* ============================================
+     TABS de modos
+  ============================================ */
+  document.querySelectorAll('.mode-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const mode = tab.dataset.mode;
+      document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.mode-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('modePanel-' + mode).classList.add('active');
+    });
+  });
+
+  /* ============================================
+     SANDBOX — preview en vivo + acciones
+  ============================================ */
+  const fields = {
+    tipo: document.getElementById('f-tipo'),
+    label: document.getElementById('f-label'),
+    title: document.getElementById('f-title'),
+    description: document.getElementById('f-description'),
+    meta1: document.getElementById('f-meta1'),
+    meta2: document.getElementById('f-meta2'),
+    ctaText: document.getElementById('f-ctaText'),
+    ctaUrl: document.getElementById('f-ctaUrl'),
+    videoUrl: document.getElementById('f-videoUrl'),
+    spotifyUrl: document.getElementById('f-spotifyUrl')
+  };
+  const fieldsWrap = {
+    description: document.getElementById('field-description'),
+    meta1: document.getElementById('field-meta1'),
+    meta2: document.getElementById('field-meta2'),
+    ctaUrl: document.getElementById('field-ctaUrl'),
+    videoUrl: document.getElementById('field-videoUrl'),
+    spotifyUrl: document.getElementById('field-spotifyUrl')
+  };
+  const pv = {
+    label: document.getElementById('pv-label'),
+    title: document.getElementById('pv-title'),
+    desc: document.getElementById('pv-desc'),
+    meta1: document.getElementById('pv-meta1'),
+    meta2: document.getElementById('pv-meta2'),
+    metaWrap: document.getElementById('pv-meta'),
+    cta: document.getElementById('pv-cta'),
+    embed: document.getElementById('pv-embed')
+  };
+
+  function setRelevance(mode) {
+    // por defecto todo opaco
+    Object.values(fieldsWrap).forEach(w => w.classList.add('is-irrelevant'));
+    // ctaUrl ahora aplica a los 3 modos (cambio reciente: libertad total del botón)
+    fieldsWrap.ctaUrl.classList.remove('is-irrelevant');
+    if (mode === 'anuncio') {
+      ['description', 'meta1', 'meta2'].forEach(k => fieldsWrap[k].classList.remove('is-irrelevant'));
+    } else if (mode === 'video') {
+      fieldsWrap.videoUrl.classList.remove('is-irrelevant');
+    } else if (mode === 'podcast') {
+      ['description', 'spotifyUrl'].forEach(k => fieldsWrap[k].classList.remove('is-irrelevant'));
+    }
+  }
+
+  function updatePreview() {
+    const mode = fields.tipo.value;
+    setRelevance(mode);
+
+    pv.label.textContent = fields.label.value || (mode === 'anuncio' ? 'ANUNCIO' : mode.toUpperCase());
+    pv.title.textContent = fields.title.value || '';
+    pv.cta.textContent = (fields.ctaText.value || (mode === 'video' ? 'VER EN YOUTUBE' : mode === 'podcast' ? 'ESCUCHAR EN SPOTIFY' : 'VER MÁS')) + ' →';
+
+    if (mode === 'anuncio') {
+      pv.desc.style.display = '';
+      pv.desc.textContent = fields.description.value || '';
+      pv.metaWrap.style.display = (fields.meta1.value || fields.meta2.value) ? '' : 'none';
+      pv.meta1.textContent = fields.meta1.value || '';
+      pv.meta2.textContent = fields.meta2.value || '';
+      pv.embed.style.display = 'none';
+    } else if (mode === 'video') {
+      pv.desc.style.display = 'none';
+      pv.metaWrap.style.display = 'none';
+      pv.embed.style.display = '';
+      pv.embed.className = 'pp-embed';
+      pv.embed.textContent = fields.videoUrl.value ? '▶ ' + fields.videoUrl.value : '▶ Video de YouTube embebido';
+    } else if (mode === 'podcast') {
+      pv.desc.style.display = '';
+      pv.desc.textContent = fields.description.value || '';
+      pv.metaWrap.style.display = 'none';
+      pv.embed.style.display = '';
+      pv.embed.className = 'pp-embed podcast';
+      pv.embed.textContent = fields.spotifyUrl.value ? '🎧 ' + fields.spotifyUrl.value : '🎧 Reproductor Spotify embebido';
+    }
+  }
+
+  Object.values(fields).forEach(f => f.addEventListener('input', updatePreview));
+  updatePreview();
+
+  // Botones
+  const examples = {
+    anuncio: {
+      tipo: 'anuncio',
+      label: 'INSCRIPCIONES ABIERTAS',
+      title: 'InspirAcción Nivel 1',
+      description: 'Programa de entrenamiento grupal donde te guío a usar tus emociones como puente entre la Inspiración y la Acción.',
+      meta1: 'Plazas Limitadas',
+      meta2: 'Modalidad Online',
+      ctaText: 'MÁS INFORMACIÓN',
+      ctaUrl: '#programas',
+      videoUrl: '',
+      spotifyUrl: ''
+    },
+    video: {
+      tipo: 'video',
+      label: 'ÚLTIMO CAPÍTULO',
+      title: 'InspirAcción Nivel 1',
+      description: '',
+      meta1: '',
+      meta2: '',
+      ctaText: 'INSCRIBITE',
+      ctaUrl: 'https://forms.gle/EJEMPLO-DE-FORMULARIO',
+      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      spotifyUrl: ''
+    },
+    podcast: {
+      tipo: 'podcast',
+      label: 'EPISODIO NUEVO',
+      title: 'Pensar al revés',
+      description: 'Conversación sobre por qué la mente intuitiva contradice al sentido común.',
+      meta1: '',
+      meta2: '',
+      ctaText: 'HABLAR CON AGUSTÍN',
+      ctaUrl: 'https://wa.me/5584981811901',
+      videoUrl: '',
+      spotifyUrl: 'https://open.spotify.com/episode/4oYU4F9AIJzqrt7inBHLhk'
+    }
+  };
+
+  document.getElementById('btnEjemplo').addEventListener('click', () => {
+    const keys = Object.keys(examples);
+    const pick = keys[Math.floor(Math.random() * keys.length)];
+    const ex = examples[pick];
+    Object.keys(ex).forEach(k => { if (fields[k]) fields[k].value = ex[k]; });
+    updatePreview();
+    showToast('Ejemplo "' + pick + '" cargado ✓');
+  });
+
+  document.getElementById('btnLimpiar').addEventListener('click', () => {
+    Object.keys(fields).forEach(k => {
+      if (k === 'tipo') { fields[k].value = 'anuncio'; }
+      else { fields[k].value = ''; }
+    });
+    updatePreview();
+    showToast('Campos vaciados ✓');
+  });
+
+  document.getElementById('btnCopiarCSV').addEventListener('click', () => {
+    // Orden de columnas IGUAL al de la planilla original (para que el paste alinee perfecto)
+    const orden = ['tipo', 'label', 'title', 'videoUrl', 'description', 'meta1', 'meta2', 'ctaText', 'ctaUrl', 'spotifyUrl'];
+    const headers = orden.join(',');
+    const values = orden.map(k => {
+      const v = (fields[k]?.value || '').replace(/"/g, '""');
+      return /[,"\n]/.test(v) ? '"' + v + '"' : v;
+    }).join(',');
+    const csv = headers + '\n' + values;
+    navigator.clipboard.writeText(csv).then(() => {
+      showToast('Fila CSV copiada ✓');
+    }).catch(() => {
+      showToast('No se pudo copiar — usá Ctrl+C manual', true);
+    });
+  });
+
+  /* ============================================
+     TOAST
+  ============================================ */
+  const toast = document.getElementById('toast');
+  let toastTimer;
+  function showToast(text, isError) {
+    toast.textContent = text;
+    toast.style.background = isError ? '#7a2a2a' : '';
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "num": "01",
+      "nombre": "Acompañamiento 1 a 1",
+      "modalidad": "ONLINE · 1 A 1",
+      "modalidad_tipo": "online",
+      "descripcion": "Agendá una sesión conmigo si venís detectando un bloqueo recurrente en cualquier área de tu vida o estados emocionales recurrentes como vergüenza, culpa, miedo, ansiedad, depresión, angustia, ira, apatía, falta de claridad y motivación.",
+      "media": "/assets/exp4.jpg",
+      "whatsapp_text": "Hola Agustín, me interesa el Acompañamiento 1 a 1. ¿Me contás más?"
+    },
+    {
+      "num": "02",
+      "nombre": "InspirAcción Nivel 1",
+      "modalidad": "ONLINE · GRUPAL",
+      "modalidad_tipo": "online",
+      "descripcion": "\"El camino contra-intuitivo\" (última edición del año). Programa de entrenamiento grupal donde te guío a usar tus emociones actuales como puente entre la Inspiración y la Acción. Es el primer paso hacia el estado de abundancia.",
+      "media": "/assets/video1.mp4",
+      "whatsapp_text": "Hola Agustín, me interesa InspirAcción Nivel 1. ¿Me contás más?"
+    },
+    {
+      "num": "03",
+      "nombre": "InspirAcción Nivel 2",
+      "modalidad": "ONLINE · AVANZADO",
+      "modalidad_tipo": "online",
+      "descripcion": "Grupo de estudio y laboratorio guiado (última edición del año). La continuación del Nivel 1, diseñada para quienes finalizaron el Nivel 1 y quieran dar el salto a la experiencia profunda de las prácticas fisiológicas, las técnicas metafísicas y los accesos a la intuición. También es instancia requerida para quienes se preparen para certificarse en nuestra formación.",
+      "media": "/assets/exp2.jpg",
+      "whatsapp_text": "Hola Agustín, me interesa InspirAcción Nivel 2. ¿Me contás más?"
+    },
+    {
+      "num": "04",
+      "nombre": "Formación Presencial y Online",
+      "modalidad": "PRESENCIAL + ONLINE",
+      "modalidad_tipo": "hybrid",
+      "descripcion": "Mentoría grupal de proyectos, abundancia y productividad basada en ciencia y espiritualidad. Programa anual donde guío a un grupo a evaluar el año anterior y proyectar el próximo, haciendo de sus proyectos personales una práctica espiritual. Una oportunidad para salir de la espiritualidad neurótica y de la productividad desgastante.",
+      "media": "/assets/video2.mp4",
+      "whatsapp_text": "Hola Agustín, me interesa la Formación Presencial y Online. ¿Me contás más?"
+    }
+  ]
+}

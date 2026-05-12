@@ -17,6 +17,110 @@
         }
       });
     }
+
+    // Cargar estilos reales del sitio en el preview pane (mismas variables CSS, fuentes, etc.)
+    CMS.registerPreviewStyle('/style.css');
+    CMS.registerPreviewStyle('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap');
+
+    // ---------- Preview: PROGRAMAS (4 cards) ----------
+    const ProgramasPreview = createClass({
+      render() {
+        const items = this.props.entry.getIn(['data', 'items']);
+        if (!items) return h('div', { style: { padding: 24 } }, 'Cargando preview...');
+        const arr = items.toJS();
+        return h('div', { style: { padding: 32, background: 'var(--cream, #f5f3ee)', minHeight: '100vh' } },
+          h('div', { style: { fontSize: 10, letterSpacing: '.32em', color: '#9a8845', marginBottom: 16, fontWeight: 500 } }, 'PREVIEW · PROGRAMAS'),
+          h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', maxWidth: '900px' } },
+            arr.map((p, i) => {
+              const isVideo = p.media && /\.(mp4|webm|mov)$/i.test(p.media);
+              const featured = i === 1;
+              return h('article', {
+                key: i,
+                className: 'prog-card' + (featured ? ' prog-card--featured' : ''),
+                style: { background: '#fbf9f4', borderRadius: 14, overflow: 'hidden', position: 'relative', boxShadow: featured ? '0 4px 20px -6px rgba(230,194,122,.3), 0 0 0 1px rgba(230,194,122,.5)' : '0 4px 20px -6px rgba(15,31,26,.08)' }
+              },
+                h('div', { className: 'prog-card-img', style: { position: 'relative', aspectRatio: '1/1.05', overflow: 'hidden', background: '#eee' } },
+                  p.media
+                    ? (isVideo
+                        ? h('video', { src: p.media, autoPlay: true, loop: true, muted: true, playsInline: true, style: { width: '100%', height: '100%', objectFit: 'cover' } })
+                        : h('img', { src: p.media, alt: '', style: { width: '100%', height: '100%', objectFit: 'cover' } }))
+                    : h('div', { style: { width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#999', fontSize: 12 } }, '(sin imagen)')
+                ),
+                h('div', { className: 'prog-card-body', style: { padding: '20px 18px 22px' } },
+                  p.modalidad && h('span', {
+                    className: 'prog-modality prog-modality--' + (p.modalidad_tipo || 'online'),
+                    style: {
+                      display: 'inline-block',
+                      fontSize: 9.5,
+                      letterSpacing: '.22em',
+                      color: p.modalidad_tipo === 'hybrid' ? '#3c6e50' : '#9a8845',
+                      fontWeight: 600,
+                      padding: '6px 11px',
+                      border: '1px solid ' + (p.modalidad_tipo === 'hybrid' ? 'rgba(60,110,80,0.35)' : 'rgba(230,194,122,0.4)'),
+                      borderRadius: 999,
+                      background: p.modalidad_tipo === 'hybrid' ? 'rgba(60,110,80,0.08)' : 'rgba(230,194,122,0.08)',
+                      marginBottom: 12
+                    }
+                  }, p.modalidad),
+                  h('div', { style: { fontSize: 11, letterSpacing: '.22em', color: '#9a8845', fontWeight: 500, marginBottom: 10 } }, p.num),
+                  h('h3', { style: { fontFamily: 'Cormorant Garamond, serif', fontSize: 22, lineHeight: 1.1, color: '#1a2f23', margin: '0 0 12px', fontWeight: 400 } }, p.nombre),
+                  h('div', { style: { width: 32, height: 1, background: '#c9a96e', marginBottom: 12 } }),
+                  h('div', { style: { fontSize: 11, letterSpacing: '.22em', color: '#9a8845', fontWeight: 600 } }, 'MÁS INFORMACIÓN →')
+                ),
+                featured && h('div', {
+                  style: {
+                    position: 'absolute', top: 12, left: 12, fontSize: 8.5, letterSpacing: '.28em',
+                    color: '#f5f3ee', fontWeight: 600, padding: '4px 8px',
+                    background: 'rgba(15,31,26,0.85)', borderRadius: 999
+                  }
+                }, 'MÁS ELEGIDO'),
+                p.descripcion && h('div', { style: { padding: '12px 18px 20px', fontSize: 11, lineHeight: 1.55, color: '#5a4a2d', borderTop: '1px dashed #e0d8c4' } },
+                  h('div', { style: { fontSize: 8.5, letterSpacing: '.28em', color: '#9a8845', marginBottom: 6, fontWeight: 600 } }, 'REVERSO (al hacer flip):'),
+                  p.descripcion
+                ),
+                p.whatsapp_text && h('div', { style: { padding: '0 18px 16px', fontSize: 10, color: '#7a6a3d', fontStyle: 'italic' } },
+                  '📱 WhatsApp: "' + p.whatsapp_text + '"'
+                )
+              );
+            })
+          )
+        );
+      }
+    });
+    CMS.registerPreviewTemplate('programas', ProgramasPreview);
+
+    // ---------- Preview: PORTADAS ----------
+    const PortadasPreview = createClass({
+      render() {
+        const banner = this.props.entry.getIn(['data', 'banner']);
+        return h('div', { style: { padding: 32, background: '#0f1f1a', color: '#f5f3ee', minHeight: '100vh' } },
+          h('div', { style: { fontSize: 10, letterSpacing: '.32em', color: '#e6c27a', marginBottom: 16, fontWeight: 500 } }, 'PREVIEW · BANNER PRINCIPAL'),
+          banner
+            ? h('img', { src: banner, style: { width: '100%', maxWidth: 1200, display: 'block', borderRadius: 4 } })
+            : h('div', { style: { color: 'rgba(245,243,238,.5)', padding: 40, border: '1px dashed rgba(245,243,238,.2)', textAlign: 'center', borderRadius: 4 } }, 'Sin imagen seleccionada')
+        );
+      }
+    });
+    CMS.registerPreviewTemplate('portadas', PortadasPreview);
+
+    // ---------- Preview: STATS ----------
+    const StatsPreview = createClass({
+      render() {
+        const items = this.props.entry.getIn(['data', 'items']);
+        if (!items) return h('div', { style: { padding: 24 } }, 'Cargando preview...');
+        const arr = items.toJS();
+        return h('div', { style: { padding: 40, background: '#efe9d8', minHeight: '100vh' } },
+          h('div', { style: { fontSize: 10, letterSpacing: '.32em', color: '#9a8845', marginBottom: 32, fontWeight: 500 } }, 'PREVIEW · MÉTRICAS'),
+          h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 36, maxWidth: 800 } },
+            arr.map((s, i) => h('div', { key: i },
+              h('div', { style: { fontFamily: 'Cormorant Garamond, serif', fontSize: 48, lineHeight: 1, color: '#1a2f23', marginBottom: 8, fontWeight: 400 } }, s.value || '—'),
+              h('div', { style: { fontSize: 10, letterSpacing: '.28em', color: '#7a6a3d', fontWeight: 500 } }, s.label || '—')
+            ))
+          )
+        );
+      }
+    });
+    CMS.registerPreviewTemplate('stats', StatsPreview);
   </script>
 </body>
 </html>

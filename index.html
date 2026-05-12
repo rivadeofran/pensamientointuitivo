@@ -616,5 +616,16 @@
 <script src="banner_particles.js"></script>
 <script src="main.js"></script>
 
+<!-- Netlify Identity widget — detecta invite/recovery tokens en la URL y redirige a /admin/ -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+      }
+    });
+  }
+</script>
 </body>
 </html>

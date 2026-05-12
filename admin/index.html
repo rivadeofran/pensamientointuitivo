@@ -22,6 +22,13 @@
     CMS.registerPreviewStyle('/style.css');
     CMS.registerPreviewStyle('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap');
 
+    // Helper: convierte paths relativos (assets/x.jpg) a absolutos (/assets/x.jpg) para el iframe del preview
+    const resolveMedia = (p) => {
+      if (!p) return null;
+      if (p.startsWith('http') || p.startsWith('/')) return p;
+      return '/' + p;
+    };
+
     // ---------- Preview: PROGRAMAS (4 cards) ----------
     const ProgramasPreview = createClass({
       render() {
@@ -32,7 +39,8 @@
           h('div', { style: { fontSize: 10, letterSpacing: '.32em', color: '#9a8845', marginBottom: 16, fontWeight: 500 } }, 'PREVIEW · PROGRAMAS'),
           h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', maxWidth: '900px' } },
             arr.map((p, i) => {
-              const isVideo = p.media && /\.(mp4|webm|mov)$/i.test(p.media);
+              const mediaUrl = resolveMedia(p.media);
+              const isVideo = mediaUrl && /\.(mp4|webm|mov)$/i.test(mediaUrl);
               const featured = i === 1;
               return h('article', {
                 key: i,
@@ -40,10 +48,10 @@
                 style: { background: '#fbf9f4', borderRadius: 14, overflow: 'hidden', position: 'relative', boxShadow: featured ? '0 4px 20px -6px rgba(230,194,122,.3), 0 0 0 1px rgba(230,194,122,.5)' : '0 4px 20px -6px rgba(15,31,26,.08)' }
               },
                 h('div', { className: 'prog-card-img', style: { position: 'relative', aspectRatio: '1/1.05', overflow: 'hidden', background: '#eee' } },
-                  p.media
+                  mediaUrl
                     ? (isVideo
-                        ? h('video', { src: p.media, autoPlay: true, loop: true, muted: true, playsInline: true, style: { width: '100%', height: '100%', objectFit: 'cover' } })
-                        : h('img', { src: p.media, alt: '', style: { width: '100%', height: '100%', objectFit: 'cover' } }))
+                        ? h('video', { src: mediaUrl, autoPlay: true, loop: true, muted: true, playsInline: true, style: { width: '100%', height: '100%', objectFit: 'cover' } })
+                        : h('img', { src: mediaUrl, alt: '', style: { width: '100%', height: '100%', objectFit: 'cover' } }))
                     : h('div', { style: { width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#999', fontSize: 12 } }, '(sin imagen)')
                 ),
                 h('div', { className: 'prog-card-body', style: { padding: '20px 18px 22px' } },
@@ -92,7 +100,7 @@
     // ---------- Preview: PORTADAS ----------
     const PortadasPreview = createClass({
       render() {
-        const banner = this.props.entry.getIn(['data', 'banner']);
+        const banner = resolveMedia(this.props.entry.getIn(['data', 'banner']));
         return h('div', { style: { padding: 32, background: '#0f1f1a', color: '#f5f3ee', minHeight: '100vh' } },
           h('div', { style: { fontSize: 10, letterSpacing: '.32em', color: '#e6c27a', marginBottom: 16, fontWeight: 500 } }, 'PREVIEW · BANNER PRINCIPAL'),
           banner

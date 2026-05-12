@@ -616,7 +616,16 @@
 <script src="banner_particles.js"></script>
 <script src="main.js"></script>
 
-<!-- Netlify Identity widget — detecta invite/recovery tokens en la URL y redirige a /admin/ -->
+<!-- Netlify Identity widget — detecta invite/recovery tokens y redirige a /admin/ -->
+<script>
+  // Si la URL tiene un token de invitación o recuperación, mandamos directo al /admin/
+  // (la home tiene custom cursor + Lenis que interfieren con el modal del widget)
+  if (window.location.hash.indexOf("invite_token") !== -1 ||
+      window.location.hash.indexOf("recovery_token") !== -1 ||
+      window.location.hash.indexOf("confirmation_token") !== -1) {
+    window.location.href = "/admin/" + window.location.hash;
+  }
+</script>
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
   if (window.netlifyIdentity) {

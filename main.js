@@ -260,30 +260,20 @@ document.addEventListener('DOMContentLoaded', () => {
   async function fetchLiveAnnouncement() {
     const annPanel = document.getElementById('heroAnnouncement');
     if (!annPanel) return;
-    
+
     const panelContent = document.getElementById('panelContent');
     const modeAnuncio = document.getElementById('modeAnuncio');
     const modeVideo = document.getElementById('modeVideo');
     const modePodcast = document.getElementById('modePodcast');
 
-    try {
-      const response = await fetch(SHEETS_CSV_URL);
-      if (!response.ok) throw new Error('Network response was not ok');
-      const csvText = await response.text();
-      const data = parseCSV(csvText);
-      if (!data) throw new Error('No data found in CSV');
-
+    // Aplica datos al panel (data viene de Sheets o de content/panel_hero.json)
+    const applyPanelData = (data) => {
       const tipo = (data.tipo || 'anuncio').toLowerCase().trim();
-
-      // Fade out
       panelContent.style.opacity = 0;
-      
       setTimeout(() => {
-        // Hide all modes
         if (modeAnuncio) modeAnuncio.style.display = 'none';
         if (modeVideo) modeVideo.style.display = 'none';
         if (modePodcast) modePodcast.style.display = 'none';
-
         if (tipo === 'video') {
           // === MODO VIDEO (YouTube) ===
           if (modeVideo) {
@@ -351,9 +341,29 @@ document.addEventListener('DOMContentLoaded', () => {
         // Fade in
         panelContent.style.opacity = 1;
       }, 600);
+    };
 
+    // 1) Sheets primero (fuente primaria, live)
+    try {
+      const response = await fetch(SHEETS_CSV_URL);
+      if (!response.ok) throw new Error('Sheets network response was not ok');
+      const csvText = await response.text();
+      const data = parseCSV(csvText);
+      if (!data || !data.title) throw new Error('Sheets devolvió data vacía');
+      applyPanelData(data);
+      return;
     } catch (error) {
-      console.error('Error fetching bulletin from Google Sheets:', error);
+      console.warn('Sheets no disponible, intentando fallback Decap:', error);
+    }
+
+    // 2) Fallback: Decap JSON
+    try {
+      const r = await fetch('content/panel_hero.json', { cache: 'no-store' });
+      if (!r.ok) throw new Error('panel_hero.json no encontrado');
+      const data = await r.json();
+      if (data && data.title) applyPanelData(data);
+    } catch (e) {
+      console.warn('Fallback Decap también falló — usando HTML hardcoded:', e);
     }
   }
 

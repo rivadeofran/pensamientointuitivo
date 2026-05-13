@@ -129,6 +129,54 @@
       }
     });
     CMS.registerPreviewTemplate('stats', StatsPreview);
+
+    // ---------- Preview: PANEL HERO ----------
+    const PanelHeroPreview = createClass({
+      render() {
+        const data = this.props.entry.get('data').toJS();
+        const tipo = (data.tipo || 'anuncio').toLowerCase();
+        const panelStyle = {
+          padding: '32px 28px',
+          background: 'rgba(10,20,15,.85)',
+          backdropFilter: 'blur(24px)',
+          border: '1px solid rgba(230,194,122,.25)',
+          borderRadius: 14,
+          color: '#f5f3ee',
+          maxWidth: 380,
+          margin: '20px auto',
+          fontFamily: 'Schibsted Grotesk, sans-serif'
+        };
+        return h('div', { style: { padding: 24, background: '#0a140f', minHeight: '100vh' } },
+          h('div', { style: { fontSize: 10, letterSpacing: '.32em', color: '#e6c27a', marginBottom: 16, fontWeight: 500 } }, 'PREVIEW · PANEL HERO (' + tipo.toUpperCase() + ')'),
+          h('div', { style: panelStyle },
+            h('div', { style: { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 } },
+              h('span', { style: { width: 8, height: 8, background: '#e6c27a', borderRadius: '50%' } }),
+              h('span', { style: { fontSize: 10, letterSpacing: '.28em', color: '#e6c27a' } }, data.label || '—')
+            ),
+            h('h3', { style: { fontFamily: 'Cormorant Garamond, serif', fontSize: 22, lineHeight: 1.15, margin: '0 0 12px', fontWeight: 400 } }, data.title || '—'),
+            (tipo === 'anuncio' || tipo === 'podcast') && data.description &&
+              h('p', { style: { fontSize: 13, lineHeight: 1.55, color: 'rgba(245,243,238,.75)', margin: '0 0 16px' } }, data.description),
+            tipo === 'anuncio' &&
+              h('div', { style: { fontSize: 10, letterSpacing: '.18em', color: 'rgba(245,243,238,.55)', margin: '0 0 18px' } },
+                (data.meta1 || '') + (data.meta1 && data.meta2 ? '  •  ' : '') + (data.meta2 || '')),
+            tipo === 'video' && data.videoUrl &&
+              h('div', { style: { background: '#000', aspectRatio: '16/9', borderRadius: 8, marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#888', fontSize: 11 } }, '▶ Video YouTube'),
+            tipo === 'podcast' && data.spotifyUrl &&
+              h('div', { style: { background: '#1db954', borderRadius: 8, marginBottom: 16, padding: 16, fontSize: 11, color: '#fff' } }, '♫ Reproductor Spotify'),
+            h('div', {
+              style: {
+                display: 'inline-flex', alignItems: 'center', gap: 10,
+                padding: '12px 20px', background: 'rgba(230,194,122,.15)',
+                border: '1px solid rgba(230,194,122,.4)', borderRadius: 999,
+                fontSize: 11, letterSpacing: '.22em', color: '#e6c27a', fontWeight: 600
+              }
+            }, (data.ctaText || 'MÁS INFORMACIÓN') + '  →'),
+            data.ctaUrl && h('div', { style: { fontSize: 9, color: 'rgba(245,243,238,.4)', marginTop: 10 } }, '→ ' + data.ctaUrl)
+          )
+        );
+      }
+    });
+    CMS.registerPreviewTemplate('panel_hero', PanelHeroPreview);
   </script>
 </body>
 </html>

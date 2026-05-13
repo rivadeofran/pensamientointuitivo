@@ -59,3 +59,21 @@ collections:
             fields:
               - { label: "Valor (con + si querés)", name: "value", widget: "string", hint: "Ej: +2.500 o +100%" }
               - { label: "Etiqueta debajo", name: "label", widget: "string", hint: "Ej: ESTUDIANTES" }
+
+  - name: "panel_hero"
+    label: "Panel del Hero (respaldo si Sheets falla)"
+    files:
+      - file: "content/panel_hero.json"
+        label: "Contenido del panel"
+        name: "panel_hero"
+        fields:
+          - { label: "Tipo de contenido", name: "tipo", widget: "select", options: ["anuncio", "video", "podcast"], default: "anuncio", hint: "anuncio = texto + CTA · video = embed de YouTube · podcast = embed de Spotify" }
+          - { label: "Etiqueta superior (eyebrow)", name: "label", widget: "string", hint: "Ej: INSCRIPCIONES ABIERTAS! / VIDEO / PODCAST" }
+          - { label: "Título", name: "title", widget: "string" }
+          - { label: "Descripción (modos anuncio y podcast)", name: "description", widget: "text", required: false }
+          - { label: "Meta 1 (modo anuncio)", name: "meta1", widget: "string", required: false, hint: "Ej: Plazas Limitadas" }
+          - { label: "Meta 2 (modo anuncio)", name: "meta2", widget: "string", required: false, hint: "Ej: Modalidad Online" }
+          - { label: "Texto del botón CTA", name: "ctaText", widget: "string", required: false }
+          - { label: "URL del botón CTA", name: "ctaUrl", widget: "string", required: false, hint: "Link externo (https://...), interno (#programas) o WhatsApp" }
+          - { label: "URL de YouTube (solo modo video)", name: "videoUrl", widget: "string", required: false }
+          - { label: "URL de Spotify (solo modo podcast)", name: "spotifyUrl", widget: "string", required: false }

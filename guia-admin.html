@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Guía del Admin · EPI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #f5f3ee;
+    --cream-warm: #efe9d8;
+    --green-deep: #0f1f1a;
+    --green-jungle: #3c6e50;
+    --gold: #c9a96e;
+    --gold-pastel: #e6c27a;
+    --ink: #1a2f23;
+    --muted: rgba(15,31,26,0.55);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--cream); color: var(--ink); font-family: 'Schibsted Grotesk', sans-serif; -webkit-font-smoothing: antialiased; }
+  body { padding: 0; }
+
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 60px 56px;
+    background: var(--cream);
+  }
+  .page + .page { border-top: 1px dashed rgba(15,31,26,0.15); }
+
+  /* ===== TIPOGRAFÍA ===== */
+  h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 400; line-height: 1.15; color: var(--green-deep); }
+  h1 { font-size: 56px; letter-spacing: -0.02em; margin-bottom: 16px; }
+  h2 { font-size: 32px; letter-spacing: -0.015em; margin: 48px 0 16px; padding-top: 24px; border-top: 1px solid rgba(15,31,26,0.12); }
+  h3 { font-size: 20px; font-weight: 500; margin: 28px 0 10px; color: var(--ink); }
+  p { font-size: 14px; line-height: 1.7; color: var(--ink); margin-bottom: 14px; }
+  .lead { font-size: 16px; line-height: 1.65; color: var(--ink); margin-bottom: 22px; }
+  .eyebrow { font-size: 10px; letter-spacing: 0.32em; color: var(--gold); font-weight: 600; text-transform: uppercase; margin-bottom: 12px; display: block; }
+  .muted { color: var(--muted); font-size: 13px; }
+  strong { font-weight: 600; color: var(--green-deep); }
+  em { font-style: italic; color: var(--gold); }
+  ul, ol { padding-left: 22px; margin: 10px 0 18px; }
+  li { font-size: 14px; line-height: 1.7; margin-bottom: 6px; }
+  code, .code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: rgba(15,31,26,0.06);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--green-deep);
+    word-break: break-all;
+  }
+  a { color: var(--green-jungle); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ===== COVER ===== */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 80px 56px 60px;
+    background: var(--green-deep);
+    color: var(--cream);
+  }
+  .cover .brand-stamp {
+    font-size: 10px;
+    letter-spacing: 0.36em;
+    color: var(--gold-pastel);
+    font-weight: 600;
+  }
+  .cover-main h1 {
+    font-size: 84px;
+    color: var(--cream);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin: 40px 0 30px;
+  }
+  .cover-main h1 em { color: var(--gold-pastel); }
+  .cover-main .lead { color: rgba(245,243,238,0.78); max-width: 580px; font-size: 18px; }
+  .cover-footer { display: flex; justify-content: space-between; align-items: flex-end; font-size: 10px; letter-spacing: 0.3em; color: rgba(245,243,238,0.5); }
+
+  /* ===== BLOQUES ===== */
+  .callout {
+    background: rgba(230,194,122,0.12);
+    border-left: 3px solid var(--gold);
+    padding: 16px 18px;
+    margin: 18px 0;
+    border-radius: 4px;
+  }
+  .callout-title {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .danger {
+    background: rgba(180,60,60,0.08);
+    border-left-color: #b03c3c;
+  }
+  .danger .callout-title { color: #b03c3c; }
+
+  .steps {
+    counter-reset: step;
+    list-style: none;
+    padding-left: 0;
+    margin: 18px 0;
+  }
+  .steps > li {
+    counter-increment: step;
+    padding-left: 48px;
+    position: relative;
+    margin-bottom: 18px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .steps > li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    color: var(--gold);
+    line-height: 1;
+    font-weight: 500;
+  }
+
+  .card {
+    background: #fbf9f4;
+    border: 1px solid rgba(15,31,26,0.08);
+    border-radius: 8px;
+    padding: 20px 22px;
+    margin: 14px 0;
+  }
+  .card .card-tag {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    font-weight: 700;
+    padding: 4px 9px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+  }
+  .card-tag.online { background: rgba(230,194,122,0.15); color: #9a8845; border: 1px solid rgba(230,194,122,0.35); }
+  .card-tag.hybrid { background: rgba(60,110,80,0.12); color: var(--green-jungle); border: 1px solid rgba(60,110,80,0.3); }
+  .card h3 { margin-top: 0; }
+
+  .field-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 13px;
+  }
+  .field-table th, .field-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(15,31,26,0.08);
+    vertical-align: top;
+  }
+  .field-table th {
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    color: var(--gold);
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--gold);
+  }
+  .field-table td:first-child {
+    font-weight: 600;
+    color: var(--green-deep);
+    width: 30%;
+  }
+  .field-table td:last-child {
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .toc {
+    margin: 30px 0 0;
+    padding: 24px 0;
+    border-top: 1px solid rgba(245,243,238,0.2);
+  }
+  .toc-title {
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    color: var(--gold-pastel);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .toc-list { list-style: none; padding: 0; }
+  .toc-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 7px 0;
+    font-size: 13px;
+    color: rgba(245,243,238,0.85);
+    border-bottom: 1px dotted rgba(245,243,238,0.15);
+  }
+  .toc-list .toc-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--gold-pastel);
+    margin-right: 14px;
+  }
+
+  /* ===== IMPRESIÓN ===== */
+  @media print {
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+    body, html { background: white; }
+    .page {
+      max-width: 100%;
+      padding: 0;
+      page-break-after: always;
+    }
+    .page:last-child { page-break-after: auto; }
+    .cover {
+      min-height: auto;
+      page-break-after: always;
+      padding: 40mm 14mm;
+    }
+    h2 { page-break-after: avoid; }
+    h3 { page-break-after: avoid; }
+    .card, .callout, .steps > li { page-break-inside: avoid; }
+    a { color: var(--green-jungle); }
+    .no-print { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="cover">
+  <div>
+    <div class="brand-stamp">Escuela del Pensamiento Intuitivo · Mayo 2026</div>
+  </div>
+  <div class="cover-main">
+    <h1>Guía del<br><em>Admin</em></h1>
+    <p class="lead">Manual práctico para editar el contenido de tu sitio web desde el panel de administración. Sin saber programación.</p>
+  </div>
+  <div class="cover-footer">
+    <div>PARA AGUSTÍN TROWELL</div>
+    <div>VERSIÓN 1.0</div>
+  </div>
+</section>
+
+<!-- ============ INTRO + TOC ============ -->
+<section class="page">
+  <span class="eyebrow">Introducción</span>
+  <h1>¿Qué es este admin?</h1>
+  <p class="lead">Es un panel de control privado donde podés editar el contenido de tu sitio (textos, fotos, métricas, links de WhatsApp, etc.) sin tocar código.</p>
+  <p>Funciona en cualquier navegador (Chrome, Safari, Firefox). Entrás con tu email + contraseña, editás los campos en formularios simples, y al hacer click en <strong>"Publish"</strong> los cambios aparecen en el sitio público en 1 o 2 minutos.</p>
+
+  <h3>¿Qué podés hacer desde acá?</h3>
+  <ul>
+    <li><strong>Editar los 4 programas</strong> — cambiar nombres, descripciones, modalidad, fotos/videos, links de WhatsApp.</li>
+    <li><strong>Cambiar el banner</strong> y otras imágenes de portada.</li>
+    <li><strong>Actualizar las métricas</strong> ("+2.500 estudiantes", etc.).</li>
+    <li><strong>Modificar el panel del Hero</strong> (cuando no estés usando el Google Sheet en vivo).</li>
+  </ul>
+
+  <h3>¿Qué <em>NO</em> podés hacer (todavía)?</h3>
+  <ul>
+    <li>Cambiar el diseño visual del sitio (colores, fuentes, layout).</li>
+    <li>Editar las secciones que no están en el admin (Hero principal, Loop, Banner cita, etc.).</li>
+    <li>Crear secciones nuevas.</li>
+  </ul>
+  <p class="muted">Para esos cambios, hablás con Franco y los hacemos juntos.</p>
+
+  <div class="callout">
+    <div class="callout-title">Cambios en vivo: ~1-2 minutos</div>
+    <p style="margin:0">Cada vez que apretás "Publish", se dispara un proceso automático que actualiza tu sitio. Refrescá la página (Cmd+R o Ctrl+R) después de 2 minutos para ver el cambio.</p>
+  </div>
+</section>
+
+<!-- ============ CÓMO ENTRAR ============ -->
+<section class="page">
+  <span class="eyebrow">Capítulo 1</span>
+  <h1>Cómo entrar al admin</h1>
+
+  <h2 style="border:none; padding-top:0; margin-top:24px">Primera vez (activar tu cuenta)</h2>
+  <ol class="steps">
+    <li>Vas a recibir un mail de <code>no-reply@netlify.com</code> con asunto <em>"You have been invited..."</em></li>
+    <li>Hacé click en <strong>"Accept the invite"</strong>.</li>
+    <li>Se abre el sitio. Te aparece un cuadro chiquito pidiéndote crear una contraseña.</li>
+    <li>Poné una contraseña <strong>segura y que te acuerdes</strong>. Anotala en un lugar seguro (notas, gestor de contraseñas, lo que uses).</li>
+    <li>Listo. Quedás logueado automáticamente.</li>
+  </ol>
+
+  <div class="callout danger">
+    <div class="callout-title">Si el cuadro de contraseña no aparece</div>
+    <p style="margin:0">A veces el navegador se confunde. Copiá el link del mail (click derecho → "Copiar dirección") y reemplazá <code>/#invite</code> por <code>/admin/#invite</code>. Ejemplo:</p>
+    <p style="margin-top:8px"><code>franrivadeo.netlify.app/<strong style="color:#b03c3c">admin/</strong>#invite_token=ABC123...</code></p>
+    <p style="margin-top:8px;margin-bottom:0">Y abrí esa URL nueva.</p>
+  </div>
+
+  <h2 style="margin-top:36px">Las próximas veces</h2>
+  <ol class="steps">
+    <li>Andá a <code>franrivadeo.netlify.app/admin/</code> (guardala en favoritos).</li>
+    <li>Login con tu email + la contraseña que creaste.</li>
+    <li>Vas a entrar al panel de control con las 4 secciones.</li>
+  </ol>
+
+  <h3>Si te olvidás la contraseña</h3>
+  <p>En la pantalla de login, click en <strong>"Forgot password?"</strong> → poné tu email → te llega mail para resetearla.</p>
+</section>
+
+<!-- ============ COLECCIONES ============ -->
+<section class="page">
+  <span class="eyebrow">Capítulo 2</span>
+  <h1>Qué podés editar</h1>
+  <p class="lead">El admin tiene 4 secciones (las llamamos "colecciones"). Cada una controla una parte específica del sitio.</p>
+
+  <!-- PROGRAMAS -->
+  <div class="card">
+    <span class="card-tag online">Colección 1</span>
+    <h3>Programas (los 4)</h3>
+    <p>Las 4 cards que aparecen en la sección "¿Por dónde comenzar?".</p>
+    <table class="field-table">
+      <thead>
+        <tr><th>Campo</th><th>Qué controla</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Número</td><td>El "01", "02", etc.</td></tr>
+        <tr><td>Nombre</td><td>Título principal del programa</td></tr>
+        <tr><td>Modalidad</td><td>Texto del chip de arriba (ej: "ONLINE · GRUPAL")</td></tr>
+        <tr><td>Tipo modalidad</td><td>online (dorado) o hybrid (verde)</td></tr>
+        <tr><td>Descripción</td><td>Texto del reverso (al hacer flip a la card)</td></tr>
+        <tr><td>Imagen/video</td><td>Foto o video de portada</td></tr>
+        <tr><td>Texto WhatsApp</td><td>Mensaje que se autocompleta al clickear "Empezar"</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PORTADAS -->
+  <div class="card">
+    <span class="card-tag hybrid">Colección 2</span>
+    <h3>Portadas y fotos generales</h3>
+    <p>El banner principal (la imagen entre las secciones Escuela y Loop).</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="card">
+    <span class="card-tag online">Colección 3</span>
+    <h3>Métricas / Stats</h3>
+    <p>Los 4 números grandes de la sección "La claridad no se busca. Se revela."</p>
+    <p class="muted">Ej: "+2.500 ESTUDIANTES", "+35 PAÍSES", etc.</p>
+  </div>
+
+  <!-- PANEL HERO -->
+  <div class="card">
+    <span class="card-tag hybrid">Colección 4</span>
+    <h3>Panel del Hero (respaldo si Sheets falla)</h3>
+    <p>El panel boletinador del Hero (donde aparece "INSCRIPCIONES ABIERTAS" o un video o un podcast).</p>
+    <div class="callout">
+      <div class="callout-title">Ojo</div>
+      <p style="margin:0">Este panel <strong>normalmente lee de tu Google Sheet en vivo</strong> (los cambios son instantáneos). Editás desde acá solo si el Sheet no está funcionando, o si querés "congelar" un contenido sin tocar el Sheet.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CÓMO EDITAR ============ -->
+<section class="page">
+  <span class="eyebrow">Capítulo 3</span>
+  <h1>Cómo editar paso a paso</h1>
+
+  <ol class="steps">
+    <li>Click sobre la colección que querés editar (ej. "Programas").</li>
+    <li>Click sobre el ítem que querés modificar (ej. "Los 4 programas").</li>
+    <li>Se abre un editor con <strong>formulario a la izquierda</strong> y <strong>preview en vivo a la derecha</strong>.</li>
+    <li>Modificá los campos. Cualquier cambio se refleja en el preview al instante.</li>
+    <li>Click en <strong>"Publish"</strong> (botón verde arriba a la derecha).</li>
+    <li>Esperá 1-2 minutos y refrescá tu sitio para ver el cambio en vivo.</li>
+  </ol>
+
+  <h2>Subir una imagen o video nuevo</h2>
+  <ol class="steps">
+    <li>En el campo "Imagen o video", click <strong>"Choose an image"</strong> o <strong>"Choose a file"</strong>.</li>
+    <li>Se abre una ventana → click <strong>"Upload"</strong> arriba a la derecha.</li>
+    <li>Arrastrá la imagen/video desde tu Mac o click "browse" para seleccionar.</li>
+    <li>Una vez subida, la seleccionás de la galería → "Choose selected".</li>
+    <li>Volvés al formulario, ya con la nueva imagen aplicada. Hacé "Publish".</li>
+  </ol>
+
+  <div class="callout">
+    <div class="callout-title">Recomendaciones de imágenes</div>
+    <ul style="margin:6px 0 0">
+      <li><strong>Formato</strong>: .jpg para fotos, .mp4 para videos.</li>
+      <li><strong>Peso máximo</strong>: idealmente menos de 500 KB para imágenes, menos de 5 MB para videos.</li>
+      <li><strong>Resolución</strong>: 1200-1600 píxeles de ancho está bien. Más grande no aporta y hace que la página cargue lenta.</li>
+      <li><strong>Antes de subir</strong>: si la imagen pesa mucho, comprimila en <a href="https://tinypng.com">tinypng.com</a> (gratis, sin registro).</li>
+    </ul>
+  </div>
+
+  <h2>Cómo descartar cambios sin publicar</h2>
+  <p>Si modificaste algo pero no querés guardarlo, simplemente salí del editor (click el ← arriba a la izquierda o cerrá la pestaña). Los cambios no publicados se descartan.</p>
+
+  <h2>Cómo volver atrás un cambio publicado</h2>
+  <p>Por ahora no hay un botón "deshacer" directo. Pero como cada cambio queda registrado en GitHub, Franco puede recuperar cualquier versión anterior pidiendoselo. <span class="muted">Decile el día/hora aproximado del cambio que quisieras revertir.</span></p>
+</section>
+
+<!-- ============ BUENAS PRÁCTICAS ============ -->
+<section class="page">
+  <span class="eyebrow">Capítulo 4</span>
+  <h1>Buenas prácticas</h1>
+
+  <h3>Antes de publicar</h3>
+  <ul>
+    <li>Mirá el preview en vivo a la derecha — ahí ves cómo va a quedar.</li>
+    <li>Releé los textos (especialmente fechas, montos, links).</li>
+    <li>Si vas a cambiar varias cosas, mejor hacerlas todas juntas en una sesión y publicar 1 sola vez.</li>
+  </ul>
+
+  <h3>Después de publicar</h3>
+  <ul>
+    <li>Esperá 2 minutos y abrí tu sitio en una pestaña nueva (con <code>Cmd + Shift + R</code> para forzar refresh sin caché).</li>
+    <li>Probá los links que cambiaste (especialmente los de WhatsApp).</li>
+    <li>Si en móvil se ve raro, avisanos.</li>
+  </ul>
+
+  <h3>Frecuencia de edición</h3>
+  <p>Podés editar todas las veces que quieras, no hay límite. Cada cambio es una "versión" guardada — si después querés volver a una versión anterior, se puede.</p>
+
+  <h3>Si vas a subir muchos cambios o cambios grandes</h3>
+  <p class="muted">(ej. reemplazar todas las fotos, reescribir descripciones largas)</p>
+  <p>Mejor avisarle a Franco antes — así puede mirar que todo quede bien y sin romper nada.</p>
+</section>
+
+<!-- ============ TROUBLESHOOTING ============ -->
+<section class="page">
+  <span class="eyebrow">Capítulo 5</span>
+  <h1>Si algo sale mal</h1>
+
+  <h3>El cambio no aparece después de 5 minutos</h3>
+  <ul>
+    <li>Hacé hard reload: <code>Cmd + Shift + R</code> (Mac) o <code>Ctrl + Shift + R</code> (Windows).</li>
+    <li>Probá en pestaña incógnita.</li>
+    <li>Si igual no aparece, avisame y revisamos.</li>
+  </ul>
+
+  <h3>No puedo entrar al admin / login dice error</h3>
+  <ul>
+    <li>Click "Forgot password?" → reseteá la contraseña.</li>
+    <li>Si dice "Rate limit exceeded" → esperá 15 minutos.</li>
+    <li>Si seguís sin poder entrar, avisame.</li>
+  </ul>
+
+  <h3>Subí una foto y se ve cortada / fea</h3>
+  <ul>
+    <li>Las fotos se recortan automáticamente al espacio disponible (proporción cuadrada para cards).</li>
+    <li>Si tu foto tiene algo importante en los bordes, usá una foto con más margen alrededor del sujeto principal.</li>
+    <li>O recortala vos antes (en Vista Previa de Mac, Photoshop, Canva, etc.) a proporción <strong>1:1.05</strong> (casi cuadrada).</li>
+  </ul>
+
+  <h3>Por las dudas</h3>
+  <p>Si algo se rompe gravemente o no entendés qué pasó, <strong>no toques nada más</strong> y avisame. Cada cambio queda guardado, así que siempre podemos volver atrás.</p>
+
+  <div class="callout">
+    <div class="callout-title">Contacto</div>
+    <p style="margin:0">Franco Rivadeo · <a href="mailto:rivadeofran@gmail.com">rivadeofran@gmail.com</a></p>
+  </div>
+
+  <div style="margin-top:60px; text-align:center; color:var(--muted); font-size:11px; letter-spacing:0.2em;">
+    GUÍA DEL ADMIN · ESCUELA DEL PENSAMIENTO INTUITIVO · MAYO 2026
+  </div>
+</section>
+
+</body>
+</html>

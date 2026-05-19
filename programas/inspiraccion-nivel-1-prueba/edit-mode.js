@@ -125,7 +125,7 @@
   // Tags inline permitidos como hijos (NO descalifican al padre)
   const INLINE_TAGS = new Set(['EM','STRONG','I','B','BR','U','SMALL','MARK','SUB','SUP','SPAN','A']);
   // Selectores raíz desde donde buscar
-  const ROOT_SELECTORS = '.nv1-cover, .nv1-section, .nv1-header, .nv1-footer';
+  const ROOT_SELECTORS = '.nv1-cover, .nv1-section, .nv1-header, .nv1-footer, .nv1p-testimonios-qa, .nv1p-transicion';
 
   function isLeafText(el) {
     if (!TEXT_TAGS.has(el.tagName)) return false;

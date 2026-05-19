@@ -223,6 +223,23 @@
     body.nv1-body.nv1p-has-banner .nv1-header,
     body.nv1-body.nv1p-has-banner .header-floating{ top: 32px !important; }
 
+    /* ============ Cita del cover (fondo oscuro) ============ */
+    .nv1p-cover-quote{
+      max-width: 780px;
+      margin: 48px auto 32px;
+      text-align: center;
+      font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 1.8vw, 22px);
+      line-height: 1.55;
+      font-weight: 300;
+      color: rgba(245, 243, 238, 0.82) !important;
+    }
+    .nv1p-cover-quote em{
+      color: #D6B06A !important;
+      font-style: italic;
+    }
+
     /* ============ FAILSAFE: elementos que no se deben ocultar ============
        Si GSAP falla o el ScrollTrigger no dispara, estos siguen visibles. */
     .nv1-faq-item, .nv1-faq-list, .nv1-faq-item summary, .nv1-faq-item p,
@@ -495,7 +512,7 @@
         <span class="nv1-sep">·</span>
         <span>Prácticas meta-cognitivas y de auto-indagación</span>
       </div>
-      <p class="nv1-lead" style="max-width:780px;margin:48px auto 32px;text-align:center;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.5;color:rgba(245,243,238,0.78);">
+      <p class="nv1p-cover-quote">
         "Como ir a un gimnasio pero a entrenar el vínculo entre mente y emociones, y aquí las mancuernas son cada oportunidad de tu día a día: Vínculos, Trabajo, Proyectos, Actividades, Estudio. Todo se vuelve entrenable."
       </p>
       <a href="#nv1-cta" class="nv1-cover-cta">Quiero inscribirme</a>

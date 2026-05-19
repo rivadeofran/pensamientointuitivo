@@ -264,10 +264,21 @@
 
   /* ---------- Desactivar animaciones/cursor para no molestar ---------- */
   function disableAnimations() {
-    // Detener Lenis si existe
-    if (window.lenis && typeof window.lenis.stop === 'function') {
-      try { window.lenis.stop(); } catch {}
+    // Destruir Lenis completamente (stop solo pausa, destroy libera el scroll nativo)
+    if (window.lenis) {
+      try {
+        if (typeof window.lenis.destroy === 'function') window.lenis.destroy();
+        else if (typeof window.lenis.stop === 'function') window.lenis.stop();
+      } catch {}
+      window.lenis = null;
     }
+    // Limpiar estilos que Lenis pudo dejar en html/body
+    document.documentElement.classList.remove('lenis', 'lenis-smooth', 'lenis-stopped');
+    document.documentElement.style.removeProperty('overflow');
+    document.documentElement.style.removeProperty('height');
+    document.body.style.removeProperty('overflow');
+    document.body.style.removeProperty('height');
+    document.body.style.overflowY = 'auto';
     // Detener GSAP ScrollTrigger
     if (window.ScrollTrigger && typeof ScrollTrigger.getAll === 'function') {
       try {

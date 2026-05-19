@@ -2,5 +2,17 @@
 _originals/
 uploads_BACKUP_ORIGINAL/
 *.backup.html
+*.backup-*
 node_modules/
 hero_base64.js
+
+# Variantes experimentales internas (no para producción)
+opcion-*.html
+comparar.html
+guia-admin.html
+guia-sheet.html
+variantes/
+
+# PDFs y assets internos
+EPI*.pdf
+supaginas/

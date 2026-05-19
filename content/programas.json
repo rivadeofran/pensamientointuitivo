@@ -2,39 +2,51 @@
   "items": [
     {
       "num": "01",
-      "nombre": "Acompañamiento 1 a 1",
-      "modalidad": "ONLINE · 1 A 1",
+      "badge": "ÚLTIMA EDICIÓN 2026",
+      "nombre": "InspirAcción Nivel 1",
+      "subtitulo": "El camino contra-intuitivo.",
+      "modalidad": "ONLINE · GRUPAL",
       "modalidad_tipo": "online",
-      "descripcion": "Agendá una sesión conmigo si venís detectando un bloqueo recurrente en cualquier área de tu vida o estados emocionales recurrentes como vergüenza, culpa, miedo, ansiedad, depresión, angustia, ira, apatía, falta de claridad y motivación.",
-      "media": "assets/exp4.jpg",
-      "whatsapp_text": "Hola Agustín, me interesa el Acompañamiento 1 a 1. ¿Me contás más?"
+      "metaNote": "",
+      "descripcion": "Un programa de entrenamiento grupal donde te guío a usar tu mente y emociones a tu favor creando puentes entre la inspiración y la acción en coherencia. Es el primer paso hacia el estado de abundancia.",
+      "media": "assets/video1.mp4",
+      "whatsapp_text": "Hola Agustín, quiero saber más sobre InspirAcción Nivel 1."
     },
     {
       "num": "02",
-      "nombre": "InspirAcción Nivel 1",
+      "badge": "ÚLTIMA EDICIÓN 2026",
+      "nombre": "InspirAcción Nivel 2",
+      "subtitulo": "Grupo de estudios y laboratorio guiado.",
       "modalidad": "ONLINE · GRUPAL",
       "modalidad_tipo": "online",
-      "descripcion": "\"El camino contra-intuitivo\" (última edición del año). Programa de entrenamiento grupal donde te guío a usar tus emociones actuales como puente entre la Inspiración y la Acción. Es el primer paso hacia el estado de abundancia.",
-      "media": "assets/video1.mp4",
-      "whatsapp_text": "Hola Agustín, me interesa InspirAcción Nivel 1. ¿Me contás más?"
+      "metaNote": "· REQUIERE CERTIFICACIÓN NIVEL 1",
+      "descripcion": "Prácticas fisiológicas, técnicas metafísicas, accesos a niveles de consciencia, y reconocimiento de la intuición. En este programa te guío en el estudio profundo de las bases científicas y espirituales que experimentaste en el nivel 1 usando tu mente y cuerpo como laboratorio.",
+      "media": "assets/exp2.jpg",
+      "whatsapp_text": "Hola Agustín, quiero saber más sobre InspirAcción Nivel 2."
     },
     {
       "num": "03",
-      "nombre": "InspirAcción Nivel 2",
-      "modalidad": "ONLINE · AVANZADO",
+      "badge": "",
+      "nombre": "Acompañamiento 1 a 1 - con el Método Contra-Intuitivo",
+      "subtitulo": "Rompé el loop y recuperá tu estado de coherencia.",
+      "modalidad": "ONLINE",
       "modalidad_tipo": "online",
-      "descripcion": "Grupo de estudio y laboratorio guiado (última edición del año). La continuación del Nivel 1, diseñada para quienes finalizaron el Nivel 1 y quieran dar el salto a la experiencia profunda de las prácticas fisiológicas, las técnicas metafísicas y los accesos a la intuición. También es instancia requerida para quienes se preparen para certificarse en nuestra formación.",
-      "media": "assets/exp2.jpg",
-      "whatsapp_text": "Hola Agustín, me interesa InspirAcción Nivel 2. ¿Me contás más?"
+      "metaNote": "",
+      "descripcion": "Las sesiones individuales son un acompañamiento directo donde indagamos en las causas ocultas de tus bloqueos. Ya sea que estés atravesando una crisis vincular, un estancamiento laboral, problemas de dinero, un malestar existencial, o incluso un síntoma, tu estado actual está prolongando un loop inconsciente.",
+      "media": "assets/exp4.jpg",
+      "whatsapp_text": "Hola Agustín, quiero saber más sobre el Acompañamiento 1 a 1."
     },
     {
       "num": "04",
-      "nombre": "Formación Presencial y Online",
+      "badge": "",
+      "nombre": "Formación Presencial.",
+      "subtitulo": "El arte de guiar procesos y estructurar programas desde la consciencia de unidad.",
       "modalidad": "PRESENCIAL + ONLINE",
       "modalidad_tipo": "hybrid",
-      "descripcion": "Mentoría grupal de proyectos, abundancia y productividad basada en ciencia y espiritualidad. Programa anual donde guío a un grupo a evaluar el año anterior y proyectar el próximo, haciendo de sus proyectos personales una práctica espiritual. Una oportunidad para salir de la espiritualidad neurótica y de la productividad desgastante.",
+      "metaNote": "",
+      "descripcion": "Esta inmersión intensiva está diseñada para prepararte como guía de procesos individuales o grupales. Vas a aprender y practicar la estructura interna del Método para crear tus propios procesos y entrenamientos, alineados a tu autenticidad, tus herramientas y las necesidades reales de tu grupo.",
       "media": "assets/video2.mp4",
-      "whatsapp_text": "Hola Agustín, me interesa la Formación Presencial y Online. ¿Me contás más?"
+      "whatsapp_text": "Hola Agustín, quiero saber más sobre la Formación Presencial y Online."
     }
   ]
 }

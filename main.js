@@ -15,16 +15,36 @@ document.addEventListener('DOMContentLoaded', () => {
         const cards = document.querySelectorAll('.prog-card-wrapper');
         (data.items || []).forEach((p, i) => {
           const card = cards[i]; if (!card) return;
-          const numEls = card.querySelectorAll('.prog-num');
-          numEls.forEach(el => el.textContent = p.num);
-          card.querySelectorAll('.prog-name').forEach(el => el.innerHTML = p.nombre.replace(/ /, '<br>'));
+          card.querySelectorAll('.prog-name').forEach(el => {
+            const nombre = p.nombre || '';
+            const m = nombre.match(/^(.*?)\s+(Nivel\s+\d+)\s*$/i);
+            if (m) {
+              const lvl = m[2].trim();
+              const lvlClass = /2/.test(lvl) ? 'prog-name-level--n2' : 'prog-name-level--n1';
+              el.innerHTML = m[1] + ' <span class="prog-name-level ' + lvlClass + '">' + lvl + '</span>';
+            } else {
+              el.textContent = nombre;
+            }
+          });
           const mod = card.querySelector('.prog-modality');
           if (mod && p.modalidad) {
             mod.lastChild.textContent = ' ' + p.modalidad;
             mod.className = 'prog-modality prog-modality--' + (p.modalidad_tipo || 'online');
           }
-          const back = card.querySelector('.prog-back-text');
-          if (back && p.descripcion) back.textContent = p.descripcion;
+          const desc = card.querySelector('.prog-desc-front');
+          if (desc && p.descripcion) desc.textContent = p.descripcion;
+          const sub = card.querySelector('.prog-subtitle');
+          if (sub && p.subtitulo) sub.textContent = p.subtitulo;
+          const badge = card.querySelector('.prog-badge');
+          if (badge && p.badge !== undefined) {
+            if (p.badge) badge.textContent = p.badge;
+            else badge.remove();
+          }
+          const metaNote = card.querySelector('.prog-meta-note');
+          if (metaNote && p.metaNote !== undefined) {
+            if (p.metaNote) metaNote.textContent = p.metaNote;
+            else metaNote.remove();
+          }
           if (p.media) {
             const imgEl = card.querySelector('.prog-card-img img');
             const vidEl = card.querySelector('.prog-card-img video');
@@ -55,7 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           if (p.whatsapp_text) {
             const cta = card.querySelector('.prog-cta');
-            if (cta) {
+            // Solo sobrescribimos el href si actualmente apunta a WhatsApp.
+            // Si el HTML ya definió un destino que no es WhatsApp (ej. una sub-página),
+            // se respeta tal cual.
+            if (cta && cta.getAttribute('href').startsWith('https://wa.me/')) {
               cta.href = 'https://wa.me/5584981811901?text=' + encodeURIComponent(p.whatsapp_text);
             }
           }
@@ -162,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tlHero.to(headerLogo, { opacity: 1, duration: 2, ease: "power2.inOut" }, 0.5);
     }
 
-    // Brand stamp reveal — sutil fade + slide
+    // Brand stamp reveal — sutil fade + slide (legacy, sólo si existe en la página)
     const brandStamp = document.getElementById('heroBrandStamp');
     if (brandStamp) {
       gsap.set(brandStamp, { y: 12, opacity: 0 });
@@ -173,7 +196,20 @@ document.addEventListener('DOMContentLoaded', () => {
         ease: "power3.out"
       }, 0.2);
     }
-    
+
+    // Hero title reveal — stagger de las 3 líneas (Escuela del / Pensamiento / Intuitivo.)
+    const titleParts = document.querySelectorAll('.hero-title > span');
+    if (titleParts.length) {
+      gsap.set(titleParts, { y: 30, opacity: 0 });
+      tlHero.to(titleParts, {
+        opacity: 1,
+        y: 0,
+        duration: 1.1,
+        stagger: 0.14,
+        ease: "power3.out"
+      }, 0);
+    }
+
     tlHero.to('.split-title .char', {
       y: 0, opacity: 1,
       duration: 1.2,
@@ -595,5 +631,162 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(() => { inner.style.willChange = 'transform'; });
     }, 700);
   });
+
+  // Loop circuit: auto-cycle 14s + click en nodo (pausa) + toggle pausa/play
+  (() => {
+    const circuit = document.querySelector('.loop-circuit');
+    if (!circuit) return;
+    const nodes = Array.from(circuit.querySelectorAll('.loop-node'));
+    const center = circuit.querySelector('.loop-center');
+    const nameEl = circuit.querySelector('.loop-active-name');
+    const descEl = circuit.querySelector('.loop-center .loop-desc');
+    const tpl = document.querySelector('#loop-data');
+    const toggle = circuit.querySelector('.loop-toggle');
+    const svg = circuit.querySelector('.loop-circuit-svg');
+    if (!center || !descEl || !tpl) return;
+
+    const data = Array.from(tpl.content.children).map(el => ({
+      name: el.dataset.name,
+      desc: el.dataset.desc,
+    }));
+    const PERIOD = 3500; // 4 nodos × 3.5s = 14s ciclo total
+    let current = 0;
+    let timer = null;
+    let visible = true;
+    let paused = false;
+
+    const setActive = (idx) => {
+      if (idx === current) return;
+      current = idx;
+      nodes.forEach((n, i) => n.classList.toggle('is-active', i === idx));
+      circuit.dataset.active = String(idx + 1);
+      center.classList.add('is-fading');
+      setTimeout(() => {
+        if (nameEl && data[idx].name) nameEl.textContent = data[idx].name;
+        descEl.textContent = data[idx].desc;
+        center.classList.remove('is-fading');
+      }, 260);
+    };
+
+    const stopTimer = () => { if (timer) { clearInterval(timer); timer = null; } };
+    const startTimer = () => {
+      stopTimer();
+      timer = setInterval(() => {
+        if (visible && !paused) setActive((current + 1) % 4);
+      }, PERIOD);
+    };
+
+    const pauseAll = () => {
+      paused = true;
+      if (svg && svg.pauseAnimations) {
+        try { svg.pauseAnimations(); } catch (e) {}
+      }
+      if (toggle) {
+        toggle.setAttribute('aria-pressed', 'true');
+        toggle.setAttribute('aria-label', 'Reanudar ciclo');
+      }
+    };
+    const playAll = () => {
+      paused = false;
+      if (svg && svg.unpauseAnimations) {
+        try { svg.unpauseAnimations(); } catch (e) {}
+      }
+      if (toggle) {
+        toggle.setAttribute('aria-pressed', 'false');
+        toggle.setAttribute('aria-label', 'Pausar ciclo');
+      }
+      startTimer();
+    };
+
+    nodes.forEach((n, i) => n.addEventListener('click', () => {
+      setActive(i);
+      pauseAll();
+    }));
+
+    if (toggle) {
+      toggle.addEventListener('click', () => { paused ? playAll() : pauseAll(); });
+    }
+
+    const section = document.querySelector('.loop-section');
+    if (section && 'IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { rootMargin: '0px' }).observe(section);
+    }
+
+    startTimer();
+  })();
+
+  // Spotlight glow en cards de Programas (dorado, sutil, sigue al cursor)
+  // Optimizaciones: cache de rects, IntersectionObserver, sólo card activa, will-change
+  (() => {
+    const cards = Array.from(document.querySelectorAll('.prog-card'));
+    if (!cards.length) return;
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
+    const section = document.querySelector('.programas');
+    let sectionVisible = false;
+    let rects = [];
+    let activeIdx = -1;
+    let ticking = false;
+    let lastX = 0, lastY = 0;
+
+    const recomputeRects = () => {
+      rects = cards.map(c => c.getBoundingClientRect());
+    };
+    recomputeRects();
+
+    // Recalcular rects en resize y scroll (throttle ~100ms)
+    let resizeT = 0;
+    const scheduleRecompute = () => {
+      clearTimeout(resizeT);
+      resizeT = setTimeout(recomputeRects, 100);
+    };
+    window.addEventListener('resize', scheduleRecompute, { passive: true });
+    window.addEventListener('scroll', scheduleRecompute, { passive: true });
+
+    // Activar listener sólo cuando la sección Programas está en viewport
+    if (section && 'IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        sectionVisible = entry.isIntersecting;
+        if (!sectionVisible && activeIdx !== -1) {
+          // Apagar la card activa al salir del viewport
+          cards[activeIdx].style.setProperty('--glow-opacity', 0);
+          activeIdx = -1;
+        }
+        // Recalcular rects al volver a entrar (por si el layout cambió)
+        if (sectionVisible) recomputeRects();
+      }, { rootMargin: '50px' }).observe(section);
+    } else {
+      sectionVisible = true; // fallback
+    }
+
+    document.addEventListener('pointermove', (e) => {
+      lastX = e.clientX; lastY = e.clientY;
+      if (!sectionVisible || ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        let foundIdx = -1;
+        for (let i = 0; i < rects.length; i++) {
+          const r = rects[i];
+          if (lastX >= r.left && lastX <= r.right && lastY >= r.top && lastY <= r.bottom) {
+            foundIdx = i; break;
+          }
+        }
+        if (foundIdx !== -1) {
+          const r = rects[foundIdx];
+          const card = cards[foundIdx];
+          card.style.setProperty('--glow-x', (lastX - r.left) + 'px');
+          card.style.setProperty('--glow-y', (lastY - r.top) + 'px');
+          card.style.setProperty('--glow-opacity', 1);
+        }
+        // Apagar la card que estaba activa si cambió o salió
+        if (activeIdx !== -1 && activeIdx !== foundIdx) {
+          cards[activeIdx].style.setProperty('--glow-opacity', 0);
+        }
+        activeIdx = foundIdx;
+      });
+    }, { passive: true });
+  })();
+
 
 });

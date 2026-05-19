@@ -27,12 +27,15 @@ collections:
             summary: "{{fields.num}} — {{fields.nombre}}"
             fields:
               - { label: "Número (01, 02, 03, 04)", name: "num", widget: "string" }
+              - { label: "Badge superior (opcional)", name: "badge", widget: "string", required: false, hint: "Ej: ÚLTIMA EDICIÓN 2026. Dejar vacío si no se quiere mostrar." }
               - { label: "Nombre del programa", name: "nombre", widget: "string" }
-              - { label: "Modalidad (texto del tag)", name: "modalidad", widget: "string", hint: "Ej: ONLINE · 1 A 1" }
+              - { label: "Subtítulo (cursiva dorada debajo del título)", name: "subtitulo", widget: "string", required: false }
+              - { label: "Modalidad (texto del tag)", name: "modalidad", widget: "string", hint: "Ej: ONLINE · GRUPAL" }
               - { label: "Tipo de modalidad", name: "modalidad_tipo", widget: "select", options: ["online", "hybrid"], default: "online" }
-              - { label: "Descripción (reverso de la card)", name: "descripcion", widget: "text" }
+              - { label: "Nota meta (opcional, debajo del subtítulo)", name: "metaNote", widget: "string", required: false, hint: "Ej: · REQUIERE CERTIFICACIÓN NIVEL 1" }
+              - { label: "Descripción", name: "descripcion", widget: "text" }
               - { label: "Imagen o video de portada", name: "media", widget: "file", required: false, hint: "Subí una imagen .jpg o video .mp4. Si lo dejás vacío, queda el actual." }
-              - { label: "Texto del WhatsApp al hacer click en EMPEZAR", name: "whatsapp_text", widget: "string", hint: "Ej: Hola Agustín, me interesa el Acompañamiento 1 a 1. ¿Me contás más?" }
+              - { label: "Texto del WhatsApp al hacer click en el CTA", name: "whatsapp_text", widget: "string", hint: "Ej: Hola Agustín, quiero saber más sobre InspirAcción Nivel 1." }
 
   - name: "portadas"
     label: "Portadas y fotos generales"

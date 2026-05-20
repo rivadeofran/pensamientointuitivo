@@ -211,6 +211,10 @@
       });
     });
 
+    // PASADA 1: numerar y marcar TODOS los textos (sin restaurar todavía).
+    // La restauración se hace en una segunda pasada: si se repone aquí un texto
+    // con formato interno (ej. <li><b>…</b> …</li>), se borrarían hijos que aún
+    // faltan numerar y se correría la numeración (perdiendo ediciones al reabrir).
     candidates.forEach((el) => {
       // Saltar si ya está dentro de otro editable
       if (el.closest('[data-edit-key]')) return;
@@ -223,13 +227,6 @@
       el.setAttribute('data-edit-key', key);
       el.setAttribute('contenteditable', 'true');
       el.setAttribute('spellcheck', 'false');
-
-      // Restaurar edición previa del localStorage
-      if (stored[key] && stored[key] !== original) {
-        el.textContent = stored[key];
-        edits.set(key, stored[key]);
-        el.classList.add('nv1-edit-changed');
-      }
 
       el.addEventListener('input', () => {
         const cur = el.textContent;
@@ -255,6 +252,18 @@
           if (isHeading) e.preventDefault();
         }
       });
+    });
+
+    // PASADA 2: restaurar ediciones previas guardadas (ya con todos los keys fijos).
+    originals.forEach((original, key) => {
+      if (stored[key] && stored[key] !== original) {
+        const el = elements.get(key);
+        if (el) {
+          el.textContent = stored[key];
+          edits.set(key, stored[key]);
+          el.classList.add('nv1-edit-changed');
+        }
+      }
     });
 
     buildUI();
@@ -368,10 +377,36 @@
       return;
     }
 
-    // Agrupar por sección
+    // Lista de secciones reales conocidas
+    const SECTION_CLASSES = [
+      'cover','pitch','promesa','para-vos','instructor','programa',
+      'bonos','capacidades','fundamentos','faq','testimonios','encuesta','cta-final'
+    ];
+
+    // Derivar la sección REAL de un cambio mirando el DOM (su <section> contenedora),
+    // no el prefijo del key — que puede venir de una clase de estilo (nv1-h2, nv1-lead…).
+    // Así NINGÚN cambio se descarta al exportar.
+    function realSectionOf(key) {
+      let n = elements.get(key);
+      while (n && n !== document.body) {
+        if (n.classList) {
+          for (const c of n.classList) {
+            if (c.startsWith('nv1-')) {
+              const name = c.replace(/^nv1-/, '');
+              if (SECTION_CLASSES.includes(name)) return name;
+            }
+          }
+        }
+        n = n.parentNode;
+      }
+      const pref = key.replace(/-\d+$/, '');
+      return SECTION_CLASSES.includes(pref) ? pref : 'otros';
+    }
+
+    // Agrupar por sección real
     const bySection = {};
     edits.forEach((edited, key) => {
-      const sec = key.replace(/-\d+$/, '');
+      const sec = realSectionOf(key);
       if (!bySection[sec]) bySection[sec] = [];
       bySection[sec].push({ key, original: originals.get(key), edited });
     });
@@ -384,10 +419,11 @@
     txt += `Total de cambios: ${edits.size}\n`;
     txt += `\n`;
 
-    const orderedSections = [
-      'cover','pitch','promesa','para-vos','instructor','programa',
-      'bonos','capacidades','fundamentos','faq','testimonios','encuesta','cta-final'
-    ];
+    // Orden de salida: primero las secciones conocidas, luego cualquier otra
+    // que haya aparecido (para no perder NADA).
+    const orderedSections = SECTION_CLASSES.concat(
+      Object.keys(bySection).filter((s) => !SECTION_CLASSES.includes(s))
+    );
     orderedSections.forEach((sec) => {
       if (!bySection[sec]) return;
       txt += `═══════════════════════════════════════════════════════\n`;

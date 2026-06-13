@@ -16,3 +16,13 @@ variantes/
 # PDFs y assets internos
 EPI*.pdf
 supaginas/
+
+# Carpetas y archivos de backup internos (no para producción)
+*-backup/
+backup-pre-mockups/
+assets-modulos-nivel1-backup/
+
+# Demos sueltos
+demo-*.html
+*.bak
+*.bak-*

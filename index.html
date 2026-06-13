@@ -158,7 +158,7 @@
         <div class="prog-line"></div>
       </div>
     </article>
-    <a class="prog-cta" href="programas/inspiraccion-nivel-1/">
+    <a class="prog-cta" href="programas/inspiraccion-nivel-1-rediseno/">
       <span class="points_wrapper">
         <i class="point"></i><i class="point"></i><i class="point"></i><i class="point"></i><i class="point"></i><i class="point"></i><i class="point"></i><i class="point"></i><i class="point"></i><i class="point"></i>
       </span>
@@ -189,7 +189,7 @@
         <div class="prog-line"></div>
       </div>
     </article>
-    <a class="prog-cta" href="https://wa.me/5584981811901?text=Hola%20Agust%C3%ADn%2C%20quiero%20saber%20m%C3%A1s%20sobre%20InspirAcci%C3%B3n%20Nivel%202." target="_blank" rel="noopener noreferrer">
+    <a class="prog-cta" href="programas/inspiraccion-nivel-2-rediseno/">
       <span class="points_wrapper">
         <i class="point"></i><i class="point"></i><i class="point"></i><i class="point"></i><i class="point"></i><i class="point"></i><i class="point"></i><i class="point"></i><i class="point"></i><i class="point"></i>
       </span>
@@ -605,6 +605,29 @@
     requestAnimationFrame(loop);
   }
   loop();
+})();
+</script>
+
+<script>
+// ===== Tarjetas de programas clickeables completas =====
+// Cuando hacés click en cualquier parte de una tarjeta, te lleva al destino del CTA
+(function() {
+  document.querySelectorAll('.prog-card-wrapper').forEach(wrapper => {
+    const cta = wrapper.querySelector('.prog-cta');
+    if (!cta || !cta.href) return;
+    const article = wrapper.querySelector('.prog-card');
+    if (!article) return;
+    article.style.cursor = 'pointer';
+    article.addEventListener('click', (e) => {
+      // Si ya clickearon en un link/botón interno, no interferir
+      if (e.target.closest('a, button')) return;
+      if (cta.target === '_blank') {
+        window.open(cta.href, '_blank', 'noopener,noreferrer');
+      } else {
+        window.location.href = cta.href;
+      }
+    });
+  });
 })();
 </script>
 <script src="panel_particles.js"></script>

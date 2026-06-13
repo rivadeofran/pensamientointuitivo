@@ -506,30 +506,26 @@ html[data-header-theme="light"] .header-floating.is-compact .nav-pill {
   display: block;
 }
 
-/* Eyebrow con leading line — contextualiza el título */
+/* "Escuela del" — misma escala que el nombre, parte del mismo título */
 .hero-title-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-family: 'Schibsted Grotesk', sans-serif;
-  font-size: clamp(11px, 0.92vw, 14px);
-  font-weight: 500;
-  letter-spacing: .38em;
-  text-transform: uppercase;
-  color: rgba(230, 194, 122, 0.85);
-  margin-bottom: 24px;
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(46px, 7.2vw, 100px);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.028em;
+  color: var(--cream);
+  margin-bottom: 6px;
+  text-transform: none;
 }
 .hero-title-eyebrow::before {
-  content: '';
-  width: 28px;
-  height: 1px;
-  background: rgba(230, 194, 122, 0.55);
+  display: none; /* sin línea decorativa, ahora es título completo */
 }
 
-/* Título: una sola frase, una sola escala, una sola baseline */
+/* "Pensamiento Intuitivo." — misma escala que "Escuela del" */
 .hero-title-name {
   display: block;
-  font-size: clamp(56px, 9vw, 130px);
+  font-size: clamp(46px, 7.2vw, 100px);
   line-height: 0.95;
   letter-spacing: -0.028em;
   text-wrap: balance;
@@ -1217,10 +1213,10 @@ html[data-header-theme="light"] .header-floating.is-compact .nav-pill {
   .prog-head-content { margin-left: 0; grid-template-columns: 1fr; gap: 36px; padding-top: 80px; }
   .prog-intro { border-left: none; padding-left: 0; border-top: 1px solid rgba(212, 175, 55, 0.45); padding-top: 20px; max-width: 100%; }
 }
-.prog-cards { max-width: 1500px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
+.prog-cards { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(2,1fr); gap: 32px; align-items: stretch; }
 .prog-card { background: var(--soft-black); border-radius: 14px; overflow: hidden; position: relative; transition: all .6s cubic-bezier(.2,.8,.2,1); cursor: pointer; box-shadow: 0 4px 24px -8px rgba(0,0,0,.6), inset 0 0 0 1px rgba(230,194,122,.08); }
 .prog-card:hover { transform: translateY(-12px); box-shadow: 0 30px 60px -18px rgba(0,0,0,.7), inset 0 0 0 1px rgba(230,194,122,.18); }
-.prog-card-img { position: relative; aspect-ratio: 1/1.05; overflow: hidden; }
+.prog-card-img { position: relative; aspect-ratio: 16/10; overflow: hidden; }
 .prog-card-img img, .prog-card-img video { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
 .prog-card:hover .prog-card-img img, .prog-card:hover .prog-card-img video { transform: scale(1.08); }
 .prog-card-icon { position: absolute; top: 16px; right: 16px; width: 42px; height: 42px; background: rgba(15,31,26,.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold-pastel); backdrop-filter: blur(4px); }
@@ -1375,7 +1371,11 @@ html[data-header-theme="light"] .header-floating.is-compact .nav-pill {
   flex-direction: column;
   gap: 20px;
   align-items: stretch;
+  height: 100%;
 }
+/* La tarjeta crece para llenar el wrapper → todos los botones quedan
+   alineados en la línea horizontal inferior, igual que los tops arriba. */
+.prog-card-wrapper > .prog-card { flex: 1 1 auto; }
 .prog-cta {
   --h-button: 48px;
   --round: 0.75rem;
@@ -1990,11 +1990,11 @@ html[data-header-theme="light"] .header-floating.is-compact .nav-pill {
   display: block !important;
 }
 
-/* Guard de 4 columnas SOLO en desktop. En <=1100px las media queries
-   originales (2 cols a 1100px, 1 col a 640px) toman control. */
+/* Guard de 2 columnas en desktop (Nivel 1 + Nivel 2 arriba, otros 2 abajo).
+   En <=640px pasa a 1 columna por media query siguiente. */
 @media (min-width: 1101px) {
   .prog-cards {
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
   .prog-card-wrapper,
   .prog-card {
@@ -2004,9 +2004,11 @@ html[data-header-theme="light"] .header-floating.is-compact .nav-pill {
 .hero-title {
   margin-bottom: 56px;
 }
+/* "Escuela del" y "Pensamiento Intuitivo" al mismo tamaño — un solo título */
+.hero-title-eyebrow,
 .hero-title-name {
-  font-size: clamp(60px, 9.5vw, 142px);
-  line-height: 0.93;
+  font-size: clamp(48px, 7.4vw, 104px);
+  line-height: 0.95;
 }
 .hero-title-eyebrow::before {
   display: none;
@@ -2018,8 +2020,9 @@ html[data-header-theme="light"] .header-floating.is-compact .nav-pill {
   .hero-title {
     margin-bottom: 36px;
   }
+  .hero-title-eyebrow,
   .hero-title-name {
-    font-size: clamp(50px, 12.5vw, 84px);
+    font-size: clamp(42px, 11vw, 72px);
   }
 }
 /* ============= FIN EXPERIMENTO ============= */

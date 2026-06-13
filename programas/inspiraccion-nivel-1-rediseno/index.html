@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InspirAcción · Nivel 1 — Rediseño de prueba</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "surface-cream": "#F5F3EE",
+                    "surface": "#0A140F",
+                    "background": "#0A140F",
+                    "surface-container-lowest": "#06100B",
+                    "surface-container-low": "#0E1A14",
+                    "surface-container": "#13201A",
+                    "surface-container-high": "#1B2820",
+                    "surface-bright": "#2A3830",
+                    "on-surface": "#E9E3D7",
+                    "on-surface-variant": "#C5BBA8",
+                    "text-muted": "#8E8675",
+                    "outline": "#9a8f7d",
+                    "outline-variant": "#4e4637",
+                    "primary": "#D6B06A",
+                    "primary-dim": "#B8893E",
+                    "on-primary": "#2A1E08",
+                    "secondary": "#4FA77D",
+                    "on-secondary": "#06100B",
+                    "tertiary": "#D69E94",
+                    "on-tertiary-container": "#C77A6C",
+                    "accent-gold-glow": "rgba(214, 176, 106, 0.15)"
+                },
+                borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                spacing: {
+                    "container-padding": "24px",
+                    "grid-gutter": "32px",
+                    "stack-gap": "24px",
+                    "section-gap": "120px",
+                    "max-width": "1200px"
+                },
+                fontFamily: {
+                    "body-lg": ["Geist"], "body-md": ["Geist"],
+                    "display-lg": ["Instrument Serif"], "headline-md": ["Instrument Serif"],
+                    "display-lg-mobile": ["Instrument Serif"],
+                    "title-lg": ["Geist"], "label-caps": ["Geist"], "metric-xl": ["Geist"]
+                },
+                fontSize: {
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                    "headline-md": ["40px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                    "display-lg-mobile": ["48px", {"lineHeight": "1.1", "fontWeight": "400"}],
+                    "title-lg": ["24px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "metric-xl": ["56px", {"lineHeight": "1", "fontWeight": "700"}]
+                }
+            }
+        }
+    }
+</script>
+<style>
+    body { background-color:#0A140F; color:#E9E3D7; -webkit-font-smoothing:antialiased; }
+    .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+    .glass-card { background:rgba(19,32,26,0.5); backdrop-filter:blur(12px); border:1px solid rgba(154,143,125,0.12); }
+    canvas[data-chart] { width:100% !important; height:auto !important; display:block; }
+    .gold-border-glow { border:1px solid rgba(214,176,106,0.30); box-shadow:0 0 24px rgba(214,176,106,0.06); }
+    .text-gradient-gold { background:linear-gradient(135deg,#E6C77E 0%,#D6B06A 60%,#B8893E 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .prueba-bar { background:linear-gradient(90deg,#1B2820 0%,#13201A 100%); }
+    /* Acordeón FAQ */
+    details > summary { list-style:none; cursor:pointer; }
+    details > summary::-webkit-details-marker { display:none; }
+    details[open] .faq-icon { transform:rotate(45deg); }
+    details .faq-answer { max-height:0; overflow:hidden; opacity:0; transition:max-height .4s ease, opacity .4s ease, margin .4s ease; }
+    details[open] .faq-answer { max-height:600px; opacity:1; margin-top:16px; }
+    /* Entrada suave por CSS (siempre termina visible, no depende del scroll/JS) */
+    .reveal { animation: revealIn .9s ease both; }
+    @keyframes revealIn { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+    @media (prefers-reduced-motion: reduce){ .reveal{ animation:none; } }
+</style>
+</head>
+<body class="font-body-md overflow-x-hidden">
+
+<!-- Banner de prueba -->
+<div class="prueba-bar text-text-muted px-4 py-2 text-center text-[12px] tracking-wide z-[100] sticky top-0">
+    Versión de prueba · rediseño basado en referencia · copy original de InspirAcción
+</div>
+
+<!-- Navegación -->
+<nav class="fixed top-9 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 transition-all" id="nav">
+    <div class="flex justify-between items-center px-container-padding py-4 max-w-max-width mx-auto">
+        <a href="../../index.html" class="flex items-center" aria-label="InspirAcción · Inicio">
+            <img src="logo-inspiraccion.png" alt="InspirAcción" class="h-12 md:h-14 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+        </a>
+        <div class="hidden md:flex gap-8 items-center">
+            <a href="#programa" class="text-on-surface-variant hover:text-primary transition-colors text-body-md">El programa</a>
+            <a href="#entrenamientos" class="text-on-surface-variant hover:text-primary transition-colors text-body-md">Entrenamientos</a>
+            <a href="#bonos" class="text-on-surface-variant hover:text-primary transition-colors text-body-md">Bonos</a>
+            <a href="#faq" class="text-on-surface-variant hover:text-primary transition-colors text-body-md">FAQ</a>
+            <a href="#cta" class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold hover:brightness-110 transition">Quiero inscribirme</a>
+        </div>
+        <a href="#cta" class="md:hidden text-primary"><span class="material-symbols-outlined">menu</span></a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="relative pt-40 pb-section-gap px-container-padding max-w-max-width mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-grid-gutter items-start">
+        <div class="space-y-stack-gap">
+            <div class="inline-block px-4 py-1 rounded-full border border-primary/30 text-primary font-label-caps text-label-caps bg-primary/5">
+                JULIO 2026 · ÚLTIMA EDICIÓN DEL AÑO · 4ª GENERACIÓN
+            </div>
+            <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg leading-tight">
+                Nivel 1 · Entrenamiento online <span class="italic text-primary">guiado</span>
+            </h1>
+            <p class="font-body-lg text-body-lg text-on-surface max-w-xl font-medium">
+                3 meses de entrenamiento aplicado directamente a todas las áreas de tu vida, usando tus situaciones cotidianas para ordenar tu mente y liberar tus emociones.
+            </p>
+            <div class="space-y-3 font-body-md text-on-surface-variant max-w-xl">
+                <p>El único método cuyo éxito es que aprendas a liberarte de todos los condicionamientos limitantes y del mismo método.</p>
+                <p>Un proceso de educación práctica basado en neurociencia, psicología, fisiología, metafisica, fisica cuántica y espiritualidad. Con el fin de que experimentes la diferencia entre usar la mente y emociones a tu favor o en modo automático.</p>
+            </div>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl italic border-l-2 border-primary pl-5">
+                "Como ir a un gimnasio de mente y emociones donde las mancuernas son cada oportunidad de tu día a día: Vínculos, Trabajo, Proyectos, Salud, Hábitos, Economia. Todo se vuelve entrenable."
+            </p>
+            <div class="flex flex-wrap gap-4 pt-4">
+                <a href="#cta" class="bg-primary text-on-primary px-10 py-5 rounded-full text-lg font-bold shadow-2xl hover:brightness-110 transition-all">
+                    Quiero aplicar
+                </a>
+            </div>
+        </div>
+        <div class="relative group flex flex-col gap-6">
+            <!-- Logo: capa flotante con espacio fijo, no empuja el video -->
+            <div class="relative h-40 md:h-44" id="logoSlot">
+                <img src="logo-escuela-pensamiento-intuitivo.png" alt="Escuela del Pensamiento Intuitivo" id="schoolLogo" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-auto pointer-events-none drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]" style="height: 264px;">
+            </div>
+            <!-- Video: posición anclada -->
+            <div class="relative">
+                <div class="absolute -inset-1 bg-gradient-to-r from-primary to-secondary opacity-20 blur-2xl group-hover:opacity-30 transition duration-1000"></div>
+                <div class="relative bg-surface-container-lowest rounded-xl overflow-hidden gold-border-glow aspect-video">
+                    <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/MnMxV9SfmEw?rel=0&modestbranding=1" title="InspirAcción Nivel 1 · Escuela del Pensamiento Intuitivo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+            <!-- Stats: cierre visual con línea horizontal -->
+            <div class="grid grid-cols-3 gap-4 pt-6 border-t border-outline-variant/20 text-center">
+                <div>
+                    <div class="font-metric-xl text-metric-xl text-primary">3</div>
+                    <div class="font-label-caps text-label-caps text-text-muted mt-2">MESES DE<br>ENTRENAMIENTOS</div>
+                </div>
+                <div>
+                    <div class="font-metric-xl text-metric-xl text-primary">6</div>
+                    <div class="font-label-caps text-label-caps text-text-muted mt-2">MÓDULOS DE<br>ESTUDIO Y PRÁCTICA</div>
+                </div>
+                <div>
+                    <div class="font-metric-xl text-metric-xl text-primary">+100</div>
+                    <div class="font-label-caps text-label-caps text-text-muted mt-2">PRACTICANTES<br>CERTIFICADOS</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NARRATIVA "No fue mi plan crear esta escuela" -->
+<section class="bg-surface-container-lowest py-section-gap">
+    <div class="max-w-max-width mx-auto px-container-padding">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-grid-gutter items-start">
+            <div class="space-y-6 reveal lg:sticky lg:top-32">
+                <h2 class="font-display-lg text-headline-md leading-tight">
+                    No fue mi plan crear esta escuela, <span class="italic text-primary">yo queria ser músico…</span>
+                </h2>
+                <div class="space-y-5 font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                    <p>A esta escuela no llegas por videos mios intentando infundirte miedo por el tiempo de vida que estas perdiendo, por la salud que deberías tener o por la vida que deberías estar viviendo. Todo lo contrario… si llegaste acá <strong class="text-on-surface">ya sos libre, ya estás despierto,</strong> y lo estas haciendo bien.</p>
+                    <p>Mi escuela no es para despertar a las personas, mi escuela es para <strong class="text-on-surface">educar y entrenar a las personas que ya despertaron</strong> o están en el proceso, a vivir de lleno su despertar y tomar un rol activo de contribución al mundo, incluso en la constante influencia de un 97% de la humanidad que siguen dormidos. Esta es la parte desafiante. (Sí, como la escuela de los X-men)</p>
+                    <p><strong class="text-on-surface">Llegaste por resonancia.</strong> Seguramente escuchaste los podcasts o viste alguna clase y percibiste algo más allá de la información. Me suelen decir: <em>"Llegué porque te escuché y senti que experimentaste lo que estás comunicando"</em>, y si, de hecho es eso mismo lo que me trajo hasta acá. (Más abajo te cuento de mi <strong class="text-primary">año en éxtasis</strong>, la experiencia espontánea que cambió el rumbo de mi vida).</p>
+                    <p>Cuando dudamos de nosotros mismos y nuestro poder, recurrimos a apegos y dependencias: más rutinas, más meditación, más técnicas, más suplementos, más enemigos, menos vinculos. Todo es una potencial amenaza. Nos volvemos adictos a terapias, a la información, a cursos o a gurues. Si estás acá es probable que hayas pasado por ahi. <span class="text-primary italic">Este programa corta ese loop.</span></p>
+                </div>
+            </div>
+            <div class="space-y-6 reveal">
+                <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-surface-container border border-outline-variant/20">
+                    <img src="assets-modulos/1.jpg" alt="Material de estudio InspirAcción" loading="lazy" class="w-full h-full object-cover">
+                </div>
+                <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-surface-container border border-outline-variant/20">
+                    <img src="agustin.jpg" alt="Agustín Trowell enseñando" loading="lazy" class="w-full h-full object-cover">
+                </div>
+                <div class="pt-2">
+                    <p class="font-display-lg italic text-2xl text-primary leading-tight">"Llegaste por resonancia."</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-16">
+            <a href="#cta" class="inline-block bg-primary text-on-primary px-10 py-5 rounded-full font-bold hover:brightness-110 transition-all">
+                Quiero aplicar
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- LA PROMESA -->
+<section class="py-section-gap px-container-padding max-w-max-width mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div class="space-y-8 reveal">
+            <p class="font-display-lg text-headline-md leading-tight">
+                Volvé a la abundancia de crear tu vida desde la <span class="italic text-primary">autenticidad</span> y la <span class="italic text-primary">determinación</span> de tu pensamiento intuitivo.
+            </p>
+            <p class="font-body-lg text-body-lg text-on-surface-variant">
+                Liberate de una vez de todos los condicionamientos espirituales de turno (técnicas, pasos, hábitos, prácticas).
+            </p>
+            <div class="flex gap-12 pt-6 border-t border-outline-variant/20">
+                <div>
+                    <div class="font-metric-xl text-4xl text-primary">3 meses</div>
+                    <p class="text-sm text-text-muted mt-2 max-w-[200px]">de entrenamiento aplicado a todas las áreas de tu vida</p>
+                </div>
+                <div>
+                    <div class="font-metric-xl text-4xl text-primary">+100</div>
+                    <p class="text-sm text-text-muted mt-2 max-w-[200px]">practicantes ya transformados por el método</p>
+                </div>
+            </div>
+        </div>
+        <div class="space-y-6 font-body-lg text-body-lg text-on-surface-variant reveal">
+            <p>Un proceso diseñado para que detectes tus <em class="text-on-surface not-italic font-medium">reacciones automáticas</em> y las reemplaces por <em class="text-on-surface not-italic font-medium">acciones intuitivas</em>. Es un proceso sencillo, práctico y profundo de despertar de consciencia.</p>
+            <p>Lo vas a conseguir desarrollando <em class="text-on-surface not-italic font-medium">habilidades creativas y resolutivas</em> con prácticas fundamentadas en neurociencia, psicología, fisiologia, fisica cuantica y espiritualidad que te guiaré a aplicar en cada área de tu vida en el día a día.</p>
+            <p>Me gusta decir que este programa tiene el propósito de pasar de <em class="text-primary not-italic">los problemas que te cansaste de tener</em> a los <em class="text-primary not-italic">problemas que siempre quisiste tener</em>.</p>
+        </div>
+    </div>
+</section>
+
+<!-- 6 PRINCIPIOS CONTRA-INTUITIVOS -->
+<section class="py-section-gap px-container-padding max-w-max-width mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-grid-gutter items-center">
+        <div class="space-y-6 reveal">
+            <span class="font-label-caps text-label-caps text-primary tracking-widest">EL MÉTODO</span>
+            <h2 class="font-display-lg text-headline-md leading-tight">
+                Pero acá te dejo los primeros <span class="italic text-primary">6 principios Contra-Intuitivos</span>
+            </h2>
+            <ol class="space-y-3 font-body-lg text-body-lg text-on-surface italic">
+                <li class="flex gap-4"><span class="font-metric-xl text-xl text-primary not-italic shrink-0 w-8">1.</span><span>"Comenzá por el final."</span></li>
+                <li class="flex gap-4"><span class="font-metric-xl text-xl text-primary not-italic shrink-0 w-8">2.</span><span>"Si querés aprender, primero enseñá."</span></li>
+                <li class="flex gap-4"><span class="font-metric-xl text-xl text-primary not-italic shrink-0 w-8">3.</span><span>"Si querés saber, primero hablá."</span></li>
+                <li class="flex gap-4"><span class="font-metric-xl text-xl text-primary not-italic shrink-0 w-8">4.</span><span>"Si querés tener, primero soltá."</span></li>
+                <li class="flex gap-4"><span class="font-metric-xl text-xl text-primary not-italic shrink-0 w-8">5.</span><span>"Tus problemas son tus proyectos."</span></li>
+                <li class="flex gap-4"><span class="font-metric-xl text-xl text-primary not-italic shrink-0 w-8">6.</span><span>"Tus enemigos son tus maestros."</span></li>
+            </ol>
+        </div>
+        <div class="space-y-5 font-body-lg text-body-lg text-on-surface-variant reveal leading-relaxed">
+            <p>Se trata de invertir la lógica. <strong class="text-on-surface">No hay nada que creer, es práctica constante + observación deliberada.</strong></p>
+            <p>En InspirAcción vas a <strong class="text-on-surface">desprogramar tu necesidad de control</strong> y vas a surfear esa libertad emocional que es el origen de la libertad fisica, a la que llamamos <span class="text-primary">abundancia</span>.</p>
+            <p>Hasta entonces la <strong class="text-on-surface">intuición</strong> era una idea, ahora se vuelve experiencia.</p>
+            <p>Al final de este recorrido vas a recibir un certificado y dos opciones:</p>
+            <ol class="space-y-3 list-decimal list-inside marker:text-primary marker:font-bold pl-2">
+                <li><strong class="text-on-surface">Seguir tu vida.</strong> El método funciona por inercia de la integración practica.</li>
+                <li><strong class="text-on-surface">Inscribirte al Nivel 2</strong> que es un grupo de estudio y laboratorio, no para integrar algo más, sino por el placer genuino de la exploración de los principios que desencadenaron tu experiencia en el Nivel 1, y continuar entrenando con tu grupo. A la vez es un requisito para luego formarte con esta metodología.</li>
+            </ol>
+            <div class="pt-6">
+                <a href="#cta" class="inline-block bg-primary text-on-primary px-8 py-4 rounded-full font-bold hover:brightness-110 transition-all">
+                    Quiero aplicar
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- QUÉ VAS A APRENDER / QUÉ PODES EXPERIMENTAR -->
+<section class="bg-surface-container-lowest py-section-gap">
+    <div class="max-w-max-width mx-auto px-container-padding">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-grid-gutter">
+            <div class="space-y-6 reveal">
+                <h2 class="font-display-lg text-headline-md leading-tight">Qué vas a <span class="italic text-primary">aprender</span></h2>
+                <ul class="space-y-5 text-on-surface-variant">
+                    <li><strong class="text-on-surface">Órdenes de Realidad:</strong> A desglosar conflictos separando los hechos concretos de las historias que te contás, eliminando la carga emocional de las situaciones para ganar claridad inmediata.</li>
+                    <li><strong class="text-on-surface">Proyección Lineal y Cuántica:</strong> A dejar de accionar sin rumbo. Aprenderás a ceder tiempo de "hacer por hacer" para proyectar y diseñar tus semanas y objetivos con precisión.</li>
+                    <li><strong class="text-on-surface">El Mapa del Flow:</strong> A identificar de manera exacta qué estímulos y contextos te invitan a fluir, para poder replicarlos a voluntad.</li>
+                    <li><strong class="text-on-surface">Flexibilidad de la personalidad:</strong> A comprender que tu identidad actual es solo "una porción de la pizza". Aprenderás a desidentificarte para elegir quién te conviene ser frente a cada desafío, jugando más y sufriendo menos.</li>
+                    <li><strong class="text-on-surface">Entrenamiento de la percepción (Bases de UCDM):</strong> A cambiar tu lugar como observador, quitándole el juicio de "bueno o malo" a las cosas para empezar a elegir desde lo que realmente te conviene.</li>
+                    <li><strong class="text-on-surface">Integración de saberes sin ruido mental:</strong> A unificar conceptos de neurociencia, psicología, fisiologia, metafisica, fisica cuantica y espiritualidad en un sistema práctico y estructurado.</li>
+                    <li><strong class="text-on-surface">Metacognición y el rol del observador:</strong> A pensar sobre tus propios pensamientos. Vas a entender cómo funciona tu sistema nervioso y tu mente para poder reprogramar patrones de conducta en lugar de ser víctima de ellos.</li>
+                </ul>
+            </div>
+            <div class="space-y-6 reveal">
+                <h2 class="font-display-lg text-headline-md leading-tight">Qué podes <span class="italic text-primary">experimentar</span> durante el programa</h2>
+                <ul class="space-y-5 text-on-surface-variant">
+                    <li><strong class="text-on-surface">Instalar herramientas que te permitan volver a tu centro:</strong> Vas a incorporar técnicas de escritura, meditación, movimiento y expresiones meta-cognitivas como anclas de tu día a día.</li>
+                    <li><strong class="text-on-surface">Habitar la incertidumbre y el silencio:</strong> Vas a entrenar la capacidad de sostener la incomodidad y el vacío sin reaccionar en automático, dándole espacio a la inspiración y la intuición para elegir respuestas más funcionales.</li>
+                    <li><strong class="text-on-surface">Salir rápido del sufrimiento:</strong> Vas a experimentar una mayor velocidad para detectar tus resistencias y salir de estados emocionales que te estancan, aportando liviandad a tu cotidianidad.</li>
+                    <li><strong class="text-on-surface">Sentir sin etiquetar:</strong> Vas a lograr observar y a decodificar el mensaje de tus emociones en su estado puro, libertándote de la necesidad neurótica de ponerles nombres, e intentar analizarlas.</li>
+                    <li><strong class="text-on-surface">Tomar decisiones con voluntad intuitiva:</strong> Vas a comprometerte con objetivos reales, observando quién toma las decisiones en tu mente, ganando la evidencia y la autoconfianza necesarias para encarar proyectos más grandes.</li>
+                    <li><strong class="text-on-surface">Pasar de la idea a la acción inmediata:</strong> Vas a erradicar la postergación, la duda crónica y el perfeccionismo. Vas a materializar proyectos estancados (viajes, emprendimientos, mudanzas) y a tomar decisiones radicales, incluso si tu entorno las considera "contraintuitivas".</li>
+                    <li><strong class="text-on-surface">Establecer límites desde la paz, no desde la reacción:</strong> Vas a sostener la incomodidad de conversaciones difíciles, confrontar manipulaciones y poner límites claros (a familiares, parejas o jefes) sin perder tu eje, eliminando la culpa y el enojo.</li>
+                    <li><strong class="text-on-surface">Elevar radicalmente la calidad de tus vínculos:</strong> Al dejar de operar desde el miedo o tus apegos del pasado, vas a empezar a resonar y relacionarte con personas desde otra frecuencia, limpiando tu entorno de dinámicas tóxicas.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center mt-16">
+            <a href="#cta" class="inline-block bg-primary text-on-primary px-10 py-5 rounded-full font-bold hover:brightness-110 transition-all">
+                Quiero aplicar
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- INSTRUCTOR -->
+<section id="instructor" class="py-section-gap px-container-padding max-w-max-width mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+        <div class="relative order-2 lg:order-1 lg:sticky lg:top-32 reveal">
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-primary/20 rounded-full blur-3xl"></div>
+            <img src="agustin.jpg" alt="Agustín Trowell Kissam" class="w-full aspect-[2/3] object-cover rounded-2xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700" loading="lazy">
+            <div class="absolute bottom-6 right-6 bg-surface p-4 rounded-xl gold-border-glow hidden md:block">
+                <p class="font-label-caps text-label-caps text-primary mb-1">CREADOR DEL MÉTODO</p>
+                <p class="font-title-lg text-lg">Contra-Intuitivo</p>
+            </div>
+        </div>
+        <div class="order-1 lg:order-2 space-y-stack-gap">
+            <span class="font-label-caps text-label-caps text-primary tracking-widest">QUIÉN ES TU INSTRUCTOR</span>
+            <h2 class="font-display-lg text-display-lg-mobile md:text-headline-md">Agustín <span class="italic">Trowell Kissam</span></h2>
+            <p class="font-label-caps text-[11px] tracking-[0.18em] uppercase text-primary-dim leading-relaxed">Creador del <strong class="text-primary">Método Contra-Intuitivo</strong>, fundador de la <strong class="text-primary">Escuela del Pensamiento Intuitivo</strong> y co-fundador de la escuela de movimiento <strong class="text-primary">Move Mentoring</strong>. Profesor en las formaciones de la escuela <strong class="text-primary">SomaYoga</strong>.</p>
+            <div class="font-body-md text-on-surface-variant space-y-5 leading-relaxed italic">
+                <p>A mis 22 años mi realidad colapsó entre ataques de pánico, la quiebra del negocio familiar, deudas, y ningun patrimonio a favor en la familia. En ese caos fue que experimenté, de forma espontánea, un estado expandido de conciencia que se sostuvo casi un año. No fue un bienestar pasajero, sino una vivencia trascendental de unidad absoluta que disolvió toda separación a la que describí como "éxtasis". Me sentia realizado, completo y enamorado de absolutamente todo. Sentir esa plenitud en pleno caos me dejó nuevas preguntas: ¿Esto significa que siempre tuve la posibilidad de sentirme asi y no la veia? ¿Qué cambia internamente para que el afuera deje de condicionarnos?</p>
+                <p>Pasé los siguientes cinco años obsesionado con hallar una respuesta científica. Me sumergí en la neurociencia y la fisiología de la salud, pero caí en la neurosis de acumular comportamientos, hábitos, dietas y terapias logrando unicamente aumentar la obsesión, la frustración y la ansiedad.</p>
+                <p><strong class="text-on-surface not-italic">¿Como salí del este loop?</strong> Comenzando por el final. Un ejemplo fue el día en que decidí renunciar a mi creencia de que estaba enfermo. Ese día me liberé del peso de cientos de hábitos, condiciones especiales y miedos que me tenían atado. Paradójicamente me entere que nunca estuve enfermo y entonces los síntomas desaparecieron. Las ilusiones del ego pueden ser muy convincentes, <strong class="text-on-surface not-italic">es contra-intuitivo.</strong></p>
+                <p>Otro ejemplo es cuando decidí resolver mi situación económica. Fue una odisea emocional el admitir que esto era importante para mi y que no necesitaba justificarlo. Llegué a tener ataques de pánico cuando por fin empezaron a ingresarme grandes cantidades de dinero y entonces pude ver con claridad todos los programas inconscientes a los que ni siquiera sabia que me enfrentaba.</p>
+                <p>En ambos casos, la transformación fue muy rápida y no tuve que hacer nada mas que dejar morir al personaje. Estar dispuesto a perder aquello que más <strong class="text-on-surface not-italic">creia</strong> que anhelaba. Entonces, por pirmera vez entendí lo que significa el amor incondicional y el inmenso poder que conlleva.</p>
+                <p>De pronto todo comenzó a llegar a mi a una velocidad inimaginada; dinero, viajes, vínculos, mi cuerpo mejoró, la piel de mi cara cambió, mi autoestima aumentó, mi reconocimiento y mis proyectos crecieron a medida que se volvían mas auténticos. Y entonces me encontré con dinero, tiempo y energía para empezar a ayudar a otras personas.</p>
+                <p>Para dar rigor a este proceso, estudié Neurociencias con <strong class="text-on-surface not-italic">Nazareth Castellanos</strong>, Bioneuroemoción con <strong class="text-on-surface not-italic">Enric Corbera</strong>, y así nació el programa <strong class="text-on-surface not-italic">InspirAcción</strong>. Tambien trabajé bajo la guia de mentores de negocios con visión espiritual como <strong class="text-on-surface not-italic">Lain Garcia Calvo, Sofia Contreras y Mariano Rodriguez</strong>, quienes me inspiraron a crear <strong class="text-on-surface not-italic">Proyección</strong>, una mentoria donde guío a las personas que aprendan a usar sus proyectos personales como un mapa para la evolución interna y la abundancia.</p>
+            </div>
+            <p class="font-display-lg text-2xl italic text-on-surface border-l-2 border-primary pl-6 leading-snug">Mi propósito es guiar a las personas a desprogramar sus mecanismos limitantes para expresar su autenticidad y crear su vida sin miedos, culpas ni juicios. El camino es contra-intuitivo: cuando liberás la presión sobre tus metas, ellas solas te vienen a buscar.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CADA MÓDULO CONTIENE -->
+<section id="programa" class="bg-surface-container-lowest py-section-gap">
+    <div class="max-w-max-width mx-auto px-container-padding">
+        <div class="text-center mb-20 reveal">
+            <span class="font-label-caps text-label-caps text-primary tracking-widest">ESTRUCTURA DEL PROGRAMA</span>
+            <h2 class="font-display-lg text-headline-md mt-4">Cada <span class="text-primary italic">módulo contiene</span></h2>
+            <p class="font-body-md text-text-muted mt-4">El programa consta de 6 módulos quincenales. Cada 15 días se desbloquea un nuevo módulo de prácticas y de estudio.</p>
+        </div>
+
+        <div class="space-y-10">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-outline-variant/10 pb-10 group">
+                <div class="md:col-span-1 font-metric-xl text-4xl text-primary opacity-30 group-hover:opacity-100 transition-opacity">01</div>
+                <div class="md:col-span-3"><h3 class="font-title-lg text-title-lg">Clases grabadas de resumen</h3></div>
+                <div class="md:col-span-8">
+                    <ul class="space-y-2 text-on-surface-variant">
+                        <li><b class="text-on-surface">Del tema actual:</b> Aportando más detalles y ejemplos.</li>
+                        <li><b class="text-on-surface">De los entrenamientos:</b> Explicando cómo funcionan, por qué y para qué. Y guías prácticas para realizarlos.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-outline-variant/10 pb-10 group">
+                <div class="md:col-span-1 font-metric-xl text-4xl text-primary opacity-30 group-hover:opacity-100 transition-opacity">02</div>
+                <div class="md:col-span-3"><h3 class="font-title-lg text-title-lg">Manual de estudio y entrenamientos</h3></div>
+                <div class="md:col-span-8"><p class="text-on-surface-variant">Que organiza los conceptos de forma práctica, sencilla y aplicable en la vida cotidiana.</p></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-outline-variant/10 pb-10 group">
+                <div class="md:col-span-1 font-metric-xl text-4xl text-primary opacity-30 group-hover:opacity-100 transition-opacity">03</div>
+                <div class="md:col-span-3"><h3 class="font-title-lg text-title-lg">Sesión en vivo de Aplicación &amp; Consultoría</h3></div>
+                <div class="md:col-span-8">
+                    <ul class="space-y-2 text-on-surface-variant">
+                        <li>Abordamos consultas de casos reales de quienes quieran participar.</li>
+                        <li>Revisamos procesos y resolvemos dudas del programa y de los entrenamientos.</li>
+                        <li>Se entrega la grabacion dentro de las 48hs para ver en diferido.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-outline-variant/10 pb-10 group">
+                <div class="md:col-span-1 font-metric-xl text-4xl text-primary opacity-30 group-hover:opacity-100 transition-opacity">04</div>
+                <div class="md:col-span-3"><h3 class="font-title-lg text-title-lg">WhatsApp como extensión de las sesiones en vivo de Zoom</h3></div>
+                <div class="md:col-span-8">
+                    <ul class="space-y-2 text-on-surface-variant">
+                        <li>Es nuestro punto de encuentro diario.</li>
+                        <li>Aquí trancurren los desafíos semanales.</li>
+                        <li>Exposición de ejemplos.</li>
+                        <li>Envío audios respondiendo dudas y profunizando con explicaciones.</li>
+                        <li>No es condición usarlo, pero es recomendable por el valor que aporta.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-on-surface-variant max-w-3xl mt-12">Además: en el grupo de WhatsApp contás con soporte y asistencia de egresados de la escuela que pasaron por el Nivel 1 y 2 y se certificaron en la formación presencial. Durante los 15 días de duración del módulo tenés la libertad de organizarte con tus tiempos a tu manera utilizando los recursos que más te identifiquen.</p>
+
+        <div class="mt-12 flex items-center gap-6 glass-card p-8 rounded-2xl gold-border-glow">
+            <span class="material-symbols-outlined text-primary text-5xl shrink-0">workspace_premium</span>
+            <div>
+                <p class="font-label-caps text-label-caps text-primary-dim mb-2">CERTIFICACIÓN</p>
+                <p class="text-on-surface-variant">Se otorga al completar el proceso. Es requisito para realizar el <strong class="text-on-surface">Nivel 2</strong> y/o la <strong class="text-on-surface">Formación</strong>.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 4 ENTRENAMIENTOS -->
+<section id="entrenamientos" class="py-section-gap px-container-padding max-w-max-width mx-auto">
+    <div class="text-center mb-16 reveal">
+        <span class="font-label-caps text-label-caps text-primary tracking-widest">CONTENIDO PRÁCTICO</span>
+        <h2 class="font-display-lg text-headline-md mt-4">Los <span class="italic text-primary">4 entrenamientos</span> que vas a desarrollar</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mt-6 max-w-3xl mx-auto">En InspirAcción trabajamos con el Método Contra-Intuitivo. Uno de sus principios básicos es: "Transformar todo problema en un proyecto de crecimiento personal".</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Entrenamiento 1 -->
+        <div class="glass-card rounded-2xl p-8 space-y-5">
+            <div class="flex items-baseline gap-4">
+                <span class="font-metric-xl text-3xl text-primary">01</span>
+                <h3 class="font-title-lg text-title-lg">Escritura creativa meta-cognitiva</h3>
+            </div>
+            <p class="font-display-lg italic text-xl text-primary">"Un rito cotidiano para liberar la expresión auténtica"</p>
+            <div><p class="font-label-caps text-label-caps text-text-muted mb-1">EL PROBLEMA</p><p class="text-sm text-on-surface-variant">Con el tiempo acumulamos ideas, deseos y emociones sostenidos por el apego, el miedo y la culpa. Muchos pensamientos entran pero pocos se digieren; a menudo actuamos sin que exista un deseo auténtico ni plenitud.</p></div>
+            <div><p class="font-label-caps text-label-caps text-text-muted mb-1">EL PROYECTO</p><p class="text-sm text-on-surface-variant">Convertir esa tormenta de pensamientos y memorias caóticas en materia prima para tu intuición. Mediante una práctica de escritura matutina de 5 niveles, depurás la mente a la deriva para ordenar tus ideas.</p></div>
+            <div><p class="font-label-caps text-label-caps text-secondary mb-1">EL RESULTADO</p><p class="text-sm text-on-surface-variant">El proceso calma las aguas y permite que salgan a la luz tus deseos, emociones y sueños auténticos que estaban abandonados.</p></div>
+        </div>
+        <!-- Entrenamiento 2 -->
+        <div class="glass-card rounded-2xl p-8 space-y-5">
+            <div class="flex items-baseline gap-4">
+                <span class="font-metric-xl text-3xl text-primary">02</span>
+                <h3 class="font-title-lg text-title-lg">Meditación y respiración basada en ciencia y espiritualidad</h3>
+            </div>
+            <p class="font-display-lg italic text-xl text-primary">"Un service a la antena de la intuición"</p>
+            <div><p class="font-label-caps text-label-caps text-text-muted mb-1">EL PROBLEMA</p><p class="text-sm text-on-surface-variant">La ciencia explica cómo mejorar la salud y el bienestar, pero no suele explicar para qué necesitamos esa salud. Sin un propósito claro, incluso los practicantes más constantes se desmotivan.</p></div>
+            <div><p class="font-label-caps text-label-caps text-text-muted mb-1">EL PROYECTO</p><p class="text-sm text-on-surface-variant">Técnicas de respiración y meditación para regular tu coherencia cardíaca (comunicación armoniosa entre corazón, cerebro y sistema nervioso). Aprenderás a medir y comprobar por tu cuenta cuándo entrás en coherencia.</p></div>
+            <div><p class="font-label-caps text-label-caps text-secondary mb-1">EL RESULTADO</p><p class="text-sm text-on-surface-variant">No buscamos solo relajación sino sintonizar con tu creatividad y originalidad. La paz y la salud son consecuencias de esta sintonía. La verdadera meditación comienza al abrir los ojos.</p></div>
+        </div>
+        <!-- Entrenamiento 3 -->
+        <div class="glass-card rounded-2xl p-8 space-y-5">
+            <div class="flex items-baseline gap-4">
+                <span class="font-metric-xl text-3xl text-primary">03</span>
+                <h3 class="font-title-lg text-title-lg">Bitácoras contra-intuitivas de auto-indagación</h3>
+            </div>
+            <p class="font-display-lg italic text-xl text-primary">"Actualizando el sistema de creencias"</p>
+            <div><p class="font-label-caps text-label-caps text-text-muted mb-1">EL PROBLEMA</p><p class="text-sm text-on-surface-variant">Saber no es sinónimo de ser consciente. Solemos usar frases como "ya sé lo que me pasa" para postergar decisiones difíciles. Este "darse cuenta" constante, pero vacío de acción, es un recurso del ego.</p></div>
+            <div><p class="font-label-caps text-label-caps text-text-muted mb-1">EL PROYECTO</p><p class="text-sm text-on-surface-variant">Responderás preguntas estructuradas para desafiar tus creencias base. Detectarás incoherencias y limitaciones que creías verdades. Es una lucha de igual a igual contra uno mismo para dejar caer viejas identidades.</p></div>
+            <div><p class="font-label-caps text-label-caps text-secondary mb-1">EL RESULTADO</p><p class="text-sm text-on-surface-variant">Una actualización del sistema. Liberarás creencias que ya no cuadran con tu nueva versión y detectarás las historias que te contabas para evitar avanzar. Los nuevos pensamientos se "descargan" solos al liberar espacio.</p></div>
+        </div>
+        <!-- Entrenamiento 4 -->
+        <div class="glass-card rounded-2xl p-8 space-y-5">
+            <div class="flex items-baseline gap-4">
+                <span class="font-metric-xl text-3xl text-primary">04</span>
+                <h3 class="font-title-lg text-title-lg">Sesiones de Aplicación &amp; Consultoría</h3>
+            </div>
+            <p class="font-display-lg italic text-xl text-primary">"La psicología del futuro tiene que ser más cercana, humana y expansiva"</p>
+            <div><p class="font-label-caps text-label-caps text-text-muted mb-1">EL PROBLEMA</p><p class="text-sm text-on-surface-variant">La psicología no debería ser tan solemne y distante. El problema común es la idea de que estamos separados en un mundo escaso, donde solo podemos ser víctimas o victimarios para validar nuestro sufrimiento.</p></div>
+            <div><p class="font-label-caps text-label-caps text-text-muted mb-1">EL PROYECTO</p><p class="text-sm text-on-surface-variant">Este espacio es comunidad y unión. En las sesiones grupales todos somos un espejo. Al compartir casos personales, las creencias limitantes se disuelven para todos por igual en un entorno libre de juicios.</p></div>
+            <div><p class="font-label-caps text-label-caps text-secondary mb-1">EL RESULTADO</p><p class="text-sm text-on-surface-variant">Una desprogramación grupal que aporta inspiración y renovación emocional. Vas a ver cómo la evolución de otros te cambia en tiempo real y tendrás la oportunidad de ser el ejemplo e inspirar a otros.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- MATERIAL DE ESTUDIO -->
+<section class="bg-surface-container-lowest py-section-gap">
+    <div class="max-w-max-width mx-auto px-container-padding">
+        <div class="text-center mb-20 reveal">
+            <span class="font-label-caps text-label-caps text-primary tracking-widest">MATERIAL DE ESTUDIO</span>
+            <h2 class="font-display-lg text-headline-md mt-4">El programa consta de <span class="italic text-primary">6 módulos</span> quincenales</h2>
+            <p class="font-body-lg text-body-lg text-on-surface-variant mt-6 max-w-3xl mx-auto">Cada uno de los siguientes temas establece las bases sobre las que fueron creados los entrenamientos: Neurociencia, Psicología, Fisiología, Metafísica, Filosofía y Espiritualidad.</p>
+        </div>
+
+        <div class="space-y-10">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-outline-variant/10 pb-10 group">
+                <div class="md:col-span-3"><img src="assets-modulos/1.jpg" alt="Manual módulo 1 · El problema de la psique" loading="lazy" class="w-full rounded-lg border border-outline-variant/20 shadow-lg transition-transform duration-500 group-hover:-translate-y-1"></div>
+                <div class="md:col-span-3">
+                    <p class="font-label-caps text-label-caps text-primary-dim mb-2">MÓDULO 01</p>
+                    <h3 class="font-title-lg text-title-lg">El problema de la psique</h3>
+                </div>
+                <ul class="md:col-span-6 space-y-3 text-sm text-on-surface-variant">
+                    <li><b class="text-on-surface">El caos del mundo de las ideas:</b> La naturaleza de la mente es caótica. Esto genera confusión y contradicciones internas, dándonos la sensación de que tenemos deseos que compiten entre sí.</li>
+                    <li><b class="text-on-surface">La paradoja orden-desorden:</b> Nuestro desorden interno suele nacer del esfuerzo (el "deber ser") por sostener un orden externo, y viceversa.</li>
+                    <li><b class="text-on-surface">Órdenes de realidad:</b> No vemos las cosas como son, sino como somos. Aquí aprendemos a bajar a tierra y desafiar las historias limitantes que condicionan nuestra percepción.</li>
+                </ul>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-outline-variant/10 pb-10 group">
+                <div class="md:col-span-3"><img src="assets-modulos/2.jpg" alt="Manual módulo 2 · El estado de incertidumbre" loading="lazy" class="w-full rounded-lg border border-outline-variant/20 shadow-lg transition-transform duration-500 group-hover:-translate-y-1"></div>
+                <div class="md:col-span-3">
+                    <p class="font-label-caps text-label-caps text-primary-dim mb-2">MÓDULO 02</p>
+                    <h3 class="font-title-lg text-title-lg">El estado de incertidumbre</h3>
+                </div>
+                <ul class="md:col-span-6 space-y-3 text-sm text-on-surface-variant">
+                    <li><b class="text-on-surface">El camino contra-intuitivo:</b> Al inicio, tu cuerpo se resistirá a habitar la incertidumbre o la idea de un vacío. Sin embargo, es en ese punto exacto donde comienza tu verdadera libertad.</li>
+                    <li><b class="text-on-surface">El guardián del umbral:</b> El ego protege este límite; atravesarlo requiere el valor de desafiar lo que hasta entonces creíamos que era nuestra "intuición"</li>
+                    <li><b class="text-on-surface">Dejar ir:</b> Partimos de la premisa: "Solo podemos tener aquello que estamos dispuestos a perder".</li>
+                </ul>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-outline-variant/10 pb-10 group">
+                <div class="md:col-span-3"><img src="assets-modulos/3.jpg" alt="Manual módulo 3 · El poder de la voluntad" loading="lazy" class="w-full rounded-lg border border-outline-variant/20 shadow-lg transition-transform duration-500 group-hover:-translate-y-1"></div>
+                <div class="md:col-span-3">
+                    <p class="font-label-caps text-label-caps text-primary-dim mb-2">MÓDULO 03</p>
+                    <h3 class="font-title-lg text-title-lg">El poder de la voluntad</h3>
+                </div>
+                <ul class="md:col-span-6 space-y-3 text-sm text-on-surface-variant">
+                    <li><b class="text-on-surface">Los 3 cerebros y sus motores:</b> Analizamos la diferencia fundamental entre Instinto, Impulso, Intención y Voluntad.</li>
+                    <li><b class="text-on-surface">Meta-cognición:</b> Desarrollamos la habilidad de observar cómo observamos.</li>
+                    <li><b class="text-on-surface">Neurociencia de la voluntad:</b> Entendemos que no se trata de hábito o fuerza bruta, sino de la presencia como motor del movimiento.</li>
+                    <li><b class="text-on-surface">El momento clave:</b> Entre el estímulo y la respuesta se encuentra nuestra libertad de elegir quiénes queremos ser. Aprendemos a distinguir cuándo elegimos con libertad y cuándo por condicionamiento.</li>
+                </ul>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-outline-variant/10 pb-10 group">
+                <div class="md:col-span-3"><img src="assets-modulos/4.jpg" alt="Manual módulo 4 · Ordenar con la palabra" loading="lazy" class="w-full rounded-lg border border-outline-variant/20 shadow-lg transition-transform duration-500 group-hover:-translate-y-1"></div>
+                <div class="md:col-span-3">
+                    <p class="font-label-caps text-label-caps text-primary-dim mb-2">MÓDULO 04</p>
+                    <h3 class="font-title-lg text-title-lg">Ordenar con la palabra</h3>
+                </div>
+                <ul class="md:col-span-6 space-y-3 text-sm text-on-surface-variant">
+                    <li><b class="text-on-surface">Abracadabra (crear con la palabra):</b> El discurso actúa como delator de sistemas de creencias antiguos. Aprendemos a detectar bloqueos escuchando lo que decimos.</li>
+                    <li><b class="text-on-surface">La cara oculta de la manifestación:</b> Mientras el ego cree que crea con la palabra, las verdaderas creaciones nacen del vacío de la escucha.</li>
+                    <li><b class="text-on-surface">Lenguaje condicionado:</b> A menudo buscamos las llaves de la evolución teniendo las llaves en la mano; no las vemos porque están demasiado a la vista.</li>
+                </ul>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-outline-variant/10 pb-10 group">
+                <div class="md:col-span-3"><img src="assets-modulos/5.jpg" alt="Manual módulo 5 · El obstáculo es el camino" loading="lazy" class="w-full rounded-lg border border-outline-variant/20 shadow-lg transition-transform duration-500 group-hover:-translate-y-1"></div>
+                <div class="md:col-span-3">
+                    <p class="font-label-caps text-label-caps text-primary-dim mb-2">MÓDULO 05</p>
+                    <h3 class="font-title-lg text-title-lg">El obstaculo es el camino</h3>
+                </div>
+                <ul class="md:col-span-6 space-y-3 text-sm text-on-surface-variant">
+                    <li><b class="text-on-surface">Estoicismo:</b> La vida, las personas y las circunstancias como práctica espiritual cotidiana.</li>
+                    <li><b class="text-on-surface">Enemigos:</b> Entendemos que tus aparentes enemigos son, en realidad, tus maestros.</li>
+                    <li><b class="text-on-surface">La ciencia de darse cuenta:</b> El caos no significan que algo esté mal; a menudo indican que ahora vez lo que antes ignorabas.</li>
+                    <li><b class="text-on-surface">Tomar riesgos:</b> Un marcador de alto valor personal. Cuando la vida deja de ser una aventura, es momento de preguntarse qué riesgos venimos postergando.</li>
+                    <li><b class="text-on-surface">Productividad y espiritualidad:</b> Cómo programar objetivos materiales que contribuyan a tus objetivos internos.</li>
+                </ul>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start group">
+                <div class="md:col-span-3"><img src="assets-modulos/6.jpg" alt="Manual módulo 6 · El estado de flow" loading="lazy" class="w-full rounded-lg border border-outline-variant/20 shadow-lg transition-transform duration-500 group-hover:-translate-y-1"></div>
+                <div class="md:col-span-3">
+                    <p class="font-label-caps text-label-caps text-primary-dim mb-2">MÓDULO 06</p>
+                    <h3 class="font-title-lg text-title-lg">Estado de flow</h3>
+                </div>
+                <ul class="md:col-span-6 space-y-3 text-sm text-on-surface-variant">
+                    <li><b class="text-on-surface">El milagro de experimentarse a uno mismo:</b> Es lo que ocurre al conseguir tan solo un verdadero instante de certeza.</li>
+                    <li><b class="text-on-surface">Intuición:</b> Características, reconocimiento y accesos a los estados de intuición. La intuición neurótica y la intuición como función natural.</li>
+                    <li><b class="text-on-surface">S.A.R.A: Sistema de activación reticular ascendente:</b> La neurociencia de ver lo que se lleva adentro.</li>
+                    <li><b class="text-on-surface">El mapa del flow:</b> Cómo identificar lo que a vos te hace entrar en flow es integrarlo a tu vida cotidiana.</li>
+                    <li><b class="text-on-surface">Inspiracion:</b> La voluntad mas alla de los condicionamientos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BONOS -->
+<section id="bonos" class="py-section-gap px-container-padding max-w-max-width mx-auto">
+    <div class="text-center mb-16 reveal">
+        <span class="font-label-caps text-label-caps text-primary tracking-widest">ADEMÁS...</span>
+        <h2 class="font-display-lg text-headline-md mt-4">Bonos <span class="italic">extras</span></h2>
+        <p class="text-text-muted mt-4">Por inscribirte a la 4ª generación del Nivel 1 de InspirAcción.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="glass-card rounded-2xl overflow-hidden group flex flex-col">
+            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/1.png" alt="40% off en Sesiones 1-1" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="p-6 flex-grow space-y-3">
+                <span class="text-primary font-label-caps text-[10px] bg-primary/10 px-3 py-1 rounded-full uppercase">Bono 1</span>
+                <h3 class="font-title-lg text-lg">40% off en Sesiones 1-1:</h3>
+                <p class="text-sm text-on-surface-variant">Agenda tu sesion con Agus con un <strong class="text-primary">40%</strong> de descuento durante toda la cursada del programa</p>
+            </div>
+        </div>
+        <div class="glass-card rounded-2xl overflow-hidden group flex flex-col">
+            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/2.png" alt="Sesión en vivo con Martin Lopez Grosman" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="p-6 flex-grow space-y-3">
+                <span class="text-primary font-label-caps text-[10px] bg-primary/10 px-3 py-1 rounded-full uppercase">Bono 2</span>
+                <h3 class="font-title-lg text-lg">Sesion en vivo con Martin Lopez Grosman <em class="text-primary">(@Mada.Move)</em></h3>
+                <p class="text-sm text-on-surface-variant">Regulacion fisiologica del estres mediante tecnicas de respiración y las practicas regenerativas</p>
+            </div>
+        </div>
+        <div class="glass-card rounded-2xl overflow-hidden group flex flex-col">
+            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/3.png" alt="Sesión en vivo con Simón Rodrigué" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="p-6 flex-grow space-y-3">
+                <span class="text-primary font-label-caps text-[10px] bg-primary/10 px-3 py-1 rounded-full uppercase">Bono 3</span>
+                <h3 class="font-title-lg text-lg">Sesion en vivo con Simón Rodrigué <em class="text-primary">(@Yogaconsimon)</em></h3>
+                <p class="text-sm text-on-surface-variant">Practicas de meta-cognición y regulación de la coherencia cardiaca desde el Yoga</p>
+            </div>
+        </div>
+        <div class="glass-card rounded-2xl overflow-hidden group flex flex-col">
+            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/4.png" alt="Acceso de por vida a las clases grabadas y al manual" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="p-6 flex-grow space-y-3">
+                <span class="text-primary font-label-caps text-[10px] bg-primary/10 px-3 py-1 rounded-full uppercase">Bono 4</span>
+                <h3 class="font-title-lg text-lg">Acceso de por vida a todas las clases grabadas y al manual.</h3>
+                <p class="text-sm text-on-surface-variant">Se entregan las metricas del progreso grupal realizadas en las 3 instancias claves de la cursada.</p>
+            </div>
+        </div>
+        <div class="glass-card rounded-2xl overflow-hidden group flex flex-col">
+            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/5.png" alt="Asistencia y clases extras de guías formados con el método" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="p-6 flex-grow space-y-3">
+                <span class="text-primary font-label-caps text-[10px] bg-primary/10 px-3 py-1 rounded-full uppercase">Bono 5</span>
+                <h3 class="font-title-lg text-lg">Asistencia y clases extras de guias formados con el metodo.</h3>
+                <p class="text-sm text-on-surface-variant">Sesiones extras con guias que realizaron el Nivel 1 y 2 de InspirAcción y luego se certificaron como guias en la formacion presencial del la escuela.</p>
+            </div>
+        </div>
+        <div class="glass-card rounded-2xl overflow-hidden group flex flex-col">
+            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/6.png" alt="Acceso a clases exclusivas" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="p-6 flex-grow space-y-3">
+                <span class="text-primary font-label-caps text-[10px] bg-primary/10 px-3 py-1 rounded-full uppercase">Bono 6</span>
+                <h3 class="font-title-lg text-lg">Acceso a clases exclusivas:</h3>
+                <p class="text-sm text-on-surface-variant">Clases especiales de otras formaciones y grupos anteriores</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section id="testimonios" class="bg-surface-container-low py-section-gap">
+    <div class="max-w-max-width mx-auto px-container-padding">
+        <div class="text-center mb-12 reveal">
+            <span class="font-label-caps text-label-caps text-secondary">MÁS DE 100 PERSONAS YA PASARON POR EL PROGRAMA</span>
+            <h2 class="font-display-lg text-headline-md mt-4">Lo que cambia cuando <span class="italic">entrenas tu libertad</span></h2>
+            <h3 class="font-display-lg text-2xl text-primary italic mt-8">Esto reportaron los certificados del Nivel 1:</h3>
+            <p class="text-text-muted text-sm mt-2">De la última generación</p>
+        </div>
+
+        <div class="max-w-3xl mx-auto mb-16 space-y-4 text-center text-on-surface-variant italic">
+            <p>Les preguntamos: "Para realizar este entrenamiento muchos de ustedes invirtieron la energía que apenas tenían, el tiempo que les faltaba y el dinero de sus ahorros o que pidieron prestado. Si es tu caso, siendo completamente honesto/a con vos: <strong class="text-primary not-italic">¿considerás que lo valió?</strong> ¿Qué le dirías a alguien que está en la misma situación en la que estabas antes de tomar la decisión?"</p>
+            <p>Y también: "Si tuvieras que explicar qué hace a InspirAcción diferente a otras propuestas, ¿Qué dirías?"</p>
+        </div>
+
+        <div class="columns-1 md:columns-2 lg:columns-3 gap-8 [&>*]:mb-8">
+            <!-- Cada testimonio -->
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Siento que lo valió completamente, todavía en el proceso del modulo 6 jejej. pero lo vale y lo valió y continua, porque es algo de toda la vida, y no de unos meses nada más. Es un aprendizaje, para volver a revisarlo y practicarlo, y entrenarlo y volverlo a ver y volver a entrenar. Le diría a esa persona que vaya para adelante, que confié en su fuego interno y que si la intuición lo pide, que la escuche y vaya. (Lo escribo y me río porque lo que le digo a esa persona me lo estoy diciendo a mi, muchas veces no lo aplico, pero cuando lo aplico, es por ahí)"</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">A</div><p class="font-bold text-sm">Alejandro Figueras</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Si lo super valió, lo dudé, pero en cuanto comenzo supe que estaba en el camino correcto y estoy muy feliz con todo el conocimiento aprendido y sobre todo la energia del grupo y todo lo leido! Sobre todo lo valió por que fue muy desafiante y siento que lo pasé por el cuerpo y ahora tengo otra creencia sobre quien soy y lo que puedo hacer y como ver situaciones y conflictos."</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">M</div><p class="font-bold text-sm">Mariano Tombeur</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-3">"Sí, lo valió. Y creo recién comienza..."</p>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-3">Le diría que hay decisiones en la vida que dependen de esa voluntad y de esa escucha interna que no vale a quedarnos en cada apoyo en la almohada, en cada momento en el indoloro, en cada minuto al azar.</p>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">Y que si esa voluntad y escucha están en duda o sufrimiento, necesitan sólo una decisión, sólo una, sólo un momento de inconsciencia para entrenar y transformar este Ser que nos acompaña con quien tenemos la inevitable conveniencia de cerrar la relación más honesta del mundo: experimentá InspirAcción."</p>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Lo valió muchisimo. Le diría que no tenga miedo, que no se va a arrepentir, que lo vea como una inversión en sí mismo, que no hay forma que nada cambie luego de esto. Y que confíe en que se dieron las condiciones perfectas para que llegue a este contenido, que se entregue al juego de lo que es, y se prepare para despertar porque esto es picantiiiisimooo"</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">W</div><p class="font-bold text-sm">Wanda Griffero</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"El contenido es el diferencial y la forma en la que Agus lo explica."</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">A</div><p class="font-bold text-sm">Aldana López</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"El temario y los conceptos están muy por fuera de lo común, la propuesta te sumerge en un hábitar distinto con uno mismo"</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">D</div><p class="font-bold text-sm">David Nehuén Dos Santos Bauer</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"La coherencia de todo el proceso. El contenido teórico es excelente, los ejercicios con propósitos definidos, las clases presenciales donde abordamos ejemplos prácticos, y aplicables en las vidas de cada uno. Como todo se va intentando y va contando de mucho sentido."</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">N</div><p class="font-bold text-sm">Natalia estela cecere</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Que es un entrenamiento de la mente - parece terapia (y en cierto punto lo es!) pero es una práctica para re programar , re conocer, re aprender, consciente mente Se aprende de cómo funciona el cerebro, la mente , el SNC, etc para luego desarticular o re articularlo para nuestro beneficio. No es fácil, y por momentos incómodo pero por ahí es."</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">P</div><p class="font-bold text-sm">Patricia Ligia</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Hacerse responsable de uno mismo tambien tiene que ver con explorar los lugares mas ocultos que a veces ni sabemos que los tenemos pero el grupo y la comunidad acompaña de forma amorosa y que cada uno va a su tiempo, no hay prisa."</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">C</div><p class="font-bold text-sm">Camila Mansilla Maturana</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Depende desde donde nace esta decisión y tu capacidad de inpirarte, poner foco, voluntad, hacer el trabajo y porque no abandonarlo para sentir. Creo que el único requisito es saber que algo más grande que una situación te motiva, que tienes curiosidad, algo te impulsa y deseas saber lo que está dentro de ti."</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">M</div><p class="font-bold text-sm">Maitena Asunción Pérez Echave</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Primero y más importante que es una inversión para tu salud mental , partiendo de esa base , invertir en uno mismo es lo más auténtico y placentero que harás. Le diría que se anime a preguntarse cosas, le diría que se atreva a un despertar diferente, a entrenar la cabeza para que pueda mejorar día a día y no preocuparse porque cosas que solo ocupan lugar con el ego de amigo y no resuelven nada de tu aquí y ahora."</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">M</div><p class="font-bold text-sm">Mariano sacheri</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Considero que lo valió y más. Me agradezco por haber dicho sí en ese momento en el que mi cuenta bancaria no daba fé de que podamos pagarlo! Me agradezco haber saltado porque lo que siento que me llevo es realmente invaluable. Le diría que en este mundo, dónde casi todo invita a mirar afuera, este programa donde encontras herramientas súper amorosas y prácticas para conocerte más, mejor, hacerte cargo de tu vida y sobre todo sufrir menos es para todo aquel que quiera cambios reales en su existencia! Que no hay forma de arrepentirse."</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">Y</div><p class="font-bold text-sm">Yamila Melano</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"En cuanto al material y la propuesta en si, lo veo diferente en la variedad de info y material teórico, incluyendo los materiales complementarios y citas. Es bastante enriquecedor, poder tener otras referencias para continuar buceando en este mar de info hermoso. También lo veo diferente a otras propuestas, desde ya por la visión de Agus y la guía de él. Creo que, el no estar como un referente onda 'Maestro o Gurú', o por lo menos percibiéndolo así, hace que sea más genuina la propuesta."</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">A</div><p class="font-bold text-sm">Alejandro Figueras</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Cambio mi forma de ver la realidad, por ende de accionar y de vivir."</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">B</div><p class="font-bold text-sm">Bernarda parra</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Inspiracción a diferencia de otros programas, te da herramientas REALES Y PRÁCTICAS para aplicar HOY en tu vida. No te pide nada que no tengas, no subestima, al contrario, te obliga amorosamente a ponerte en el lugar de creador que te corresponde como ser humano."</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">Y</div><p class="font-bold text-sm">Yamila Melano</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Como dijo Agus , te entrena , esto fue un entrenamiento intensivo de cómo entender cómo funciona la cabeza , la mente , las máscaras del ego. El formato que tiene este programa lo hace diferente a otras propuestas. Depende mucho del enfoque del orador y la consecuencia que le busque el receptor"</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">M</div><p class="font-bold text-sm">Mariano sacheri</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Que no lo piense, es un antes y después la manera de ver y sentir la vida"</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">D</div><p class="font-bold text-sm">Daniela Weffer</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Vengo gastando mucha plata en formaciones pero esta es la más significativa. La que me dio las herramientas y me ayudo a ver que no soy el único loco que cree en todo esto. Ya que desde chico vengo pasando por varias filosofías a través del entrenamiento y los deportes de combate. Ahora todo se simplifica y me da poder de crado. En si entendi todo. Ahora es cuestión de seguir aplicando y disfrutando que era la parte que no estaba haciendo. Graciass!!!"</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">L</div><p class="font-bold text-sm">Leandro exequiel calleros</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Siii valió 100% la pena aunque aún no termino pero sé que eso tiene que ver conmigo pero ah valido la pena cada peso y segundo. Le diría que vale mucho la pena es una experiencia que LITERALMENTE te cambia la vida. De hoy para siempre"</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">M</div><p class="font-bold text-sm">Melissa Natalia palacios</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Si. Para mi fue un entrenamiento 100% recomendable. Me quedo con un montón de herramientas que incluso hoy llevo a mis prácticas, a mis alumn@s. Feliz de haber llegado a vos Agus y feliz de poder estar en Pipa en dos semanas. Solo agradecimiento por todo lo que enseñas, por tu forma de transmitir, por tu mirada."</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">Z</div><p class="font-bold text-sm">Zaira Selene Delsordo Núñez</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Estructura los diversos y múltiples accesos de información (filosofías, prácticas, estudios, etc) de una manera inteligente, ordenada y eficiente para aplicarlos en conjunto, tanto en el estudio y práctica mental/cognitiva/ inteligible como en la práctica somática y cuántica."</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">E</div><p class="font-bold text-sm">Enrique Ezequiel Molina</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Que te permite observar y aprender a gestionar la mente el cuerpo la percepción y la modulación del tiempo, una herramienta de conocimiento muy profundo, desafiante y posible"</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">C</div><p class="font-bold text-sm">Camila fernanda mansilla maturana</p></div>
+            </div>
+            <div class="glass-card p-7 rounded-2xl break-inside-avoid">
+                <div class="flex text-primary mb-4">★★★★★</div>
+                <p class="text-on-surface italic text-[15px] leading-relaxed mb-5">"Combina todo lo que en otros lugares solo es info aislada y eso genera confusión y más ruido mental, el tener todo en un solo lugar ayuda darle mucho más sentido a todo y darnos cuenta que eso que pareciera ser 'diferente' no es nada más que lo mismo dicho de otra forma"</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center font-bold text-primary text-sm">M</div><p class="font-bold text-sm">Melissa Natalia palacios</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ENCUESTA -->
+<section class="py-section-gap px-container-padding max-w-max-width mx-auto">
+    <div class="text-center mb-16 reveal">
+        <span class="font-label-caps text-label-caps text-primary tracking-widest">LOS DATOS HABLAN</span>
+        <h2 class="font-display-lg text-headline-md mt-4">Resultados de la <span class="italic text-primary">encuesta</span> a la última generación</h2>
+        <p class="text-text-muted mt-4">Última generación certificada del Nivel 1</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-surface-cream text-[#0A140F] rounded-2xl p-7">
+            <h4 class="font-bold text-[#0A140F] mb-1">¿Cuánto bajaron tus niveles de estrés / sufrimiento / resistencia desde que iniciaste el proceso?</h4>
+            <p class="font-label-caps text-[11px] text-primary-dim mb-4 tracking-widest">28 RESPUESTAS</p>
+            <div class="relative"><canvas data-chart="estres" width="480" height="300"></canvas></div>
+        </div>
+        <div class="bg-surface-cream text-[#0A140F] rounded-2xl p-7">
+            <h4 class="font-bold text-[#0A140F] mb-1">Nivel de Entusiasmo: ¿Cuánto disfrutaste el material de lectura y estudio? <span class="block text-sm text-[#0A140F]/50 mt-1">Escala 1 al 5</span></h4>
+            <p class="font-label-caps text-[11px] text-primary-dim mb-4 tracking-widest">28 RESPUESTAS</p>
+            <div class="relative"><canvas data-chart="entusiasmo" width="480" height="300"></canvas></div>
+        </div>
+        <div class="bg-surface-cream text-[#0A140F] rounded-2xl p-7">
+            <h4 class="font-bold text-[#0A140F] mb-1">¿Qué tan probable es que recomiendes InspirAcción a otra persona?</h4>
+            <p class="font-label-caps text-[11px] text-primary-dim mb-4 tracking-widest">28 RESPUESTAS</p>
+            <div class="relative"><canvas data-chart="recomendacion" width="480" height="300"></canvas></div>
+        </div>
+        <div class="bg-surface-cream text-[#0A140F] rounded-2xl p-7">
+            <h4 class="font-bold text-[#0A140F] mb-1">¿Cómo sentís el volumen de información y prácticas hasta ahora?</h4>
+            <p class="font-label-caps text-[11px] text-primary-dim mb-4 tracking-widest">28 RESPUESTAS</p>
+            <div class="relative"><canvas data-chart="volumen" width="480" height="300"></canvas></div>
+        </div>
+        <div class="bg-surface-cream text-[#0A140F] rounded-2xl p-7">
+            <h4 class="font-bold text-[#0A140F] mb-1">¿Percibís que cambió el dominio de tus estados internos durante o luego de haber aplicado los entrenamientos?</h4>
+            <p class="font-label-caps text-[11px] text-primary-dim mb-4 tracking-widest">28 RESPUESTAS · ESCALA 1 AL 5</p>
+            <div class="relative"><canvas data-chart="estados" width="480" height="300"></canvas></div>
+        </div>
+        <div class="bg-surface-cream text-[#0A140F] rounded-2xl p-7">
+            <h4 class="font-bold text-[#0A140F] mb-1">En comparación con otras formaciones o programas que conocés, ¿cómo calificarías InspirAcción?</h4>
+            <p class="font-label-caps text-[11px] text-primary-dim mb-4 tracking-widest">28 RESPUESTAS</p>
+            <div class="relative"><canvas data-chart="comparacion" width="480" height="300"></canvas></div>
+        </div>
+    </div>
+</section>
+
+<!-- ¿ES PARA MÍ? -->
+<section class="py-section-gap px-container-padding max-w-max-width mx-auto">
+    <div class="text-center mb-16 reveal">
+        <span class="font-label-caps text-label-caps text-secondary tracking-widest">DECIDÍ CON HONESTIDAD</span>
+        <h2 class="font-display-lg text-headline-md mt-4">¿Es <span class="italic text-primary">para mí?</span></h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-grid-gutter">
+        <div class="glass-card p-10 rounded-2xl space-y-6">
+            <h3 class="font-title-lg text-title-lg text-secondary italic flex items-center gap-2">
+                <span class="material-symbols-outlined">check_circle</span> Es para vos si…
+            </h3>
+            <ul class="space-y-4">
+                <li class="flex gap-3 text-on-surface"><span class="material-symbols-outlined text-secondary shrink-0">check</span>Tu paz mental y amor propio tienden a depender de hábitos, técnicas, prácticas, personas, terapeutas, cursos.</li>
+                <li class="flex gap-3 text-on-surface"><span class="material-symbols-outlined text-secondary shrink-0">check</span>Tenés conocimiento y experiencia, pero a veces funciona y a veces no.</li>
+                <li class="flex gap-3 text-on-surface"><span class="material-symbols-outlined text-secondary shrink-0">check</span>Tu creatividad, tu orden mental y tu iniciativa son inconstantes y tienden al colapso.</li>
+                <li class="flex gap-3 text-on-surface"><span class="material-symbols-outlined text-secondary shrink-0">check</span>Aún existe una parte de vos que no puede concebir una vida en paz y abundante a la vez.</li>
+                <li class="flex gap-3 text-on-surface"><span class="material-symbols-outlined text-secondary shrink-0">check</span>Estás dispuesto/a a renunciar al peso y la fuerza de tener la razón para acceder al poder y la claridad de tu intuición.</li>
+                <li class="flex gap-3 text-on-surface"><span class="material-symbols-outlined text-secondary shrink-0">check</span>Querés utilizar este entrenamiento como formacion para ordenar tu proceso, conceptos y acompañar a otros o complemento a tu trabajo de guia.</li>
+            </ul>
+        </div>
+        <div class="bg-surface-container-high/30 p-10 rounded-2xl space-y-6 border border-tertiary/10">
+            <h3 class="font-title-lg text-title-lg text-tertiary italic flex items-center gap-2">
+                <span class="material-symbols-outlined">cancel</span> No es para vos si…
+            </h3>
+            <ul class="space-y-4">
+                <li class="flex gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-on-tertiary-container shrink-0">close</span>Creés que el problema es externo y no estás dispuesto a verte como creador de tus bloqueos.</li>
+                <li class="flex gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-on-tertiary-container shrink-0">close</span>Buscas un curso. Esto no es un curso, no hay información copiada y pegada de otros autores.</li>
+                <li class="flex gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-on-tertiary-container shrink-0">close</span>Buscas técnicas, prácticas, hábitos o información definitiva que te resuleva tus problemas por el solo hecho de hacer o repetir algo.</li>
+                <li class="flex gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-on-tertiary-container shrink-0">close</span>Estás buscando resolver tu economía, vínculos, trabajo, tiempo, sin estar dispuesto a renunciar a la idea que tenes sobre el dinero, las peronas, tu valor y el tiempo.</li>
+                <li class="flex gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-on-tertiary-container shrink-0">close</span>Querés que la solución sea desde el plano del tener/hacer y no te bancas la incertidumbre previa a cambiar tu vida desde el ser.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="flex flex-wrap justify-center gap-4 mt-12">
+        <a href="#testimonios" class="inline-block bg-surface-container border border-primary/40 text-primary px-8 py-4 rounded-full font-bold hover:bg-primary/10 transition-all">
+            Ver testimonios
+        </a>
+        <a href="#cta" class="inline-block bg-primary text-on-primary px-8 py-4 rounded-full font-bold hover:brightness-110 transition-all">
+            Quiero aplicar
+        </a>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="py-section-gap px-container-padding max-w-4xl mx-auto">
+    <div class="text-center mb-16 reveal">
+        <span class="font-label-caps text-label-caps text-primary tracking-widest">PREGUNTAS FRECUENTES</span>
+        <h2 class="font-display-lg text-headline-md mt-4">Lo que más <span class="italic text-primary">nos preguntan</span></h2>
+    </div>
+
+    <div class="space-y-4">
+        <details class="border-b border-outline-variant/20 py-5 group">
+            <summary class="flex justify-between items-center"><span class="font-body-lg text-on-surface group-hover:text-primary transition-colors pr-6">¿Tengo que interactuar en el grupo de WhatsApp?</span><span class="faq-icon material-symbols-outlined text-outline transition-transform shrink-0">add</span></summary>
+            <div class="faq-answer text-on-surface-variant"><p>No es un requisito pero por la experiencia es recomendable, ya que abordamos cuestiones prácticas de la vida cotidiana y se mantiene un nivel profesional y cálido a la vez.</p></div>
+        </details>
+        <details class="border-b border-outline-variant/20 py-5 group">
+            <summary class="flex justify-between items-center"><span class="font-body-lg text-on-surface group-hover:text-primary transition-colors pr-6">¿Qué pasa si no puedo asistir a las sesiones en vivo?</span><span class="faq-icon material-symbols-outlined text-outline transition-transform shrink-0">add</span></summary>
+            <div class="faq-answer text-on-surface-variant"><p>Las sesiones en vivo quedan grabadas y se entregan dentro de las 48hs posteriores. Cualquier consulta o intervención la podés dejar en el grupo de WhatsApp, que funciona como extensión de las sesiones en vivo.</p></div>
+        </details>
+        <details class="border-b border-outline-variant/20 py-5 group">
+            <summary class="flex justify-between items-center"><span class="font-body-lg text-on-surface group-hover:text-primary transition-colors pr-6">¿Qué carga horaria me va a llevar?</span><span class="faq-icon material-symbols-outlined text-outline transition-transform shrink-0">add</span></summary>
+            <div class="faq-answer text-on-surface-variant space-y-3"><p>El programa viene demostrando una igualdad de efectividad en todos los casos. Al trabajar con casos de la vida cotidiana es difícil determinar cuánto tiempo lleva el programa, ya que vas a aprender a usar todas las áreas de tu vida como entrenamiento.</p><p>Si hablamos en términos de lectura, escritura, prácticas complementarias y sesiones, calculamos un mínimo de entre <strong class="text-on-surface">2 y 6 horas semanales</strong>. (Pensalo como un gimnasio, porque funciona exactamente igual.)</p></div>
+        </details>
+        <details class="border-b border-outline-variant/20 py-5 group">
+            <summary class="flex justify-between items-center"><span class="font-body-lg text-on-surface group-hover:text-primary transition-colors pr-6">¿Cuáles son los requisitos para obtener la certificación?</span><span class="faq-icon material-symbols-outlined text-outline transition-transform shrink-0">add</span></summary>
+            <div class="faq-answer text-on-surface-variant space-y-3"><p>Para obtener la certificación deberás completar el programa y dos formularios de evaluación que van a medir tus niveles de evolución en áreas de tu vida, dejando evidencia de los cambios relativos (emocional y mental) y objetivos (sucesos, salud, finanzas, acciones, hábitos, vínculos, etc.).</p><p>Al ser un programa de entrenamiento el único requisito es entrenar y ver los resultados suceder. La evidencia definitiva es tu vida.</p></div>
+        </details>
+        <details class="border-b border-outline-variant/20 py-5 group">
+            <summary class="flex justify-between items-center"><span class="font-body-lg text-on-surface group-hover:text-primary transition-colors pr-6">¿Cómo sé si es para mí?</span><span class="faq-icon material-symbols-outlined text-outline transition-transform shrink-0">add</span></summary>
+            <div class="faq-answer text-on-surface-variant space-y-3"><p><strong class="text-on-surface">Por resonancia.</strong> Por lo general la mayoría de las personas que ingresan al programa ya escucharon todos los podcast o vieron las clases de YouTube, por lo tanto ingresan por intuición. Si estás buscando un curso más, no es este tu lugar. Esto no es para saber más de un tema, es para <em class="text-primary">ser el cambio</em>.</p><p>Pensalo como una combinación entre un programa de educación en libertad emocional (el que no tuvimos en la escuela) y una sesión de 3 meses de entrenamiento en neuro-psico-espiritualidad grupal guiada por un entrenador. El nivel de impacto es total.</p></div>
+        </details>
+        <details class="border-b border-outline-variant/20 py-5 group">
+            <summary class="flex justify-between items-center"><span class="font-body-lg text-on-surface group-hover:text-primary transition-colors pr-6">¿Qué puedo esperar de realizar este proceso?</span><span class="faq-icon material-symbols-outlined text-outline transition-transform shrink-0">add</span></summary>
+            <div class="faq-answer text-on-surface-variant"><p>Para responder esto prefiero dejarlos con los testimonios de las personas que ya pasaron por el programa.</p></div>
+        </details>
+    </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="cta" class="py-section-gap px-container-padding">
+    <div class="max-w-3xl mx-auto">
+        <div class="relative bg-surface-container rounded-3xl overflow-hidden gold-border-glow shadow-2xl">
+            <div class="bg-primary text-on-primary py-3 px-6 text-center font-label-caps text-label-caps uppercase tracking-widest">
+                Próxima edición: Julio 2026 · 4ª generación
+            </div>
+            <div class="p-10 md:p-16 text-center space-y-8">
+                <h2 class="font-display-lg text-display-lg-mobile md:text-headline-md">¿Listo para dar <span class="text-primary italic">el primer paso?</span></h2>
+                <p class="text-on-surface-variant max-w-xl mx-auto">Plazas limitadas. Un entrenamiento de 3 meses en libertad emocional, aplicado a todas las áreas de tu vida.</p>
+                <a href="https://wa.me/5584981811901?text=Hola%20Agust%C3%ADn%2C%20quiero%20m%C3%A1s%20info%20sobre%20InspirAcci%C3%B3n%20Nivel%201" target="_blank" rel="noopener" class="inline-block w-full bg-primary text-on-primary py-6 rounded-full font-bold text-xl hover:shadow-[0_0_40px_rgba(214,176,106,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all">
+                    Quiero hablar con Agustín
+                </a>
+                <p class="text-xs text-text-muted"><a href="../../index.html#programas" class="hover:text-primary transition-colors">← Volver a programas</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="w-full py-section-gap bg-surface-container-lowest border-t border-outline-variant/10">
+    <div class="flex flex-col md:flex-row justify-between items-center px-container-padding gap-stack-gap max-w-max-width mx-auto">
+        <div class="flex flex-col items-center md:items-start gap-4">
+            <span class="font-display-lg text-title-lg text-primary">InspirAcción</span>
+            <p class="font-body-md text-text-muted text-center md:text-left max-w-sm">© 2026 Escuela del Pensamiento Intuitivo. Entrenamiento en libertad emocional.</p>
+        </div>
+        <div class="flex gap-8">
+            <a href="../../index.html#experiencia" class="text-text-muted hover:text-primary transition-colors">Experiencia</a>
+            <a href="../../index.html#tecnologia" class="text-text-muted hover:text-primary transition-colors">Método</a>
+            <a href="../../index.html#recursos" class="text-text-muted hover:text-primary transition-colors">Contacto</a>
+        </div>
+    </div>
+</footer>
+
+<!-- WhatsApp FAB -->
+<a href="https://wa.me/5584981811901?text=Hola%20Agust%C3%ADn%2C%20quiero%20m%C3%A1s%20info%20sobre%20InspirAcci%C3%B3n%20Nivel%201" target="_blank" rel="noopener" class="fixed bottom-8 right-8 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all z-[99] flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.588-5.946 0-6.556 5.332-11.891 11.891-11.891 3.181 0 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.481 8.403 0 6.556-5.332 11.891-11.891 11.891-2.003 0-3.976-.505-5.723-1.465l-6.27 1.683zm5.891-3.373c1.554.921 3.084 1.403 4.692 1.403 5.397 0 9.791-4.394 9.791-9.791 0-2.618-1.02-5.081-2.872-6.934-1.852-1.852-4.311-2.872-6.919-2.872-5.398 0-9.791 4.394-9.791 9.791 0 1.708.451 3.251 1.341 4.646l-.88 3.216 3.638-.959zm10.149-6.425c-.276-.138-1.631-.804-1.884-.897-.253-.093-.438-.138-.623.138-.185.276-.715.897-.875 1.082-.16.185-.32.207-.597.069-.276-.138-1.168-.431-2.224-1.374-.822-.733-1.375-1.64-1.537-1.916-.162-.276-.017-.426.121-.563.124-.123.276-.323.415-.485.138-.162.185-.276.276-.462.092-.185.046-.347-.023-.485-.069-.138-.623-1.501-.854-2.057-.225-.548-.453-.473-.623-.482-.16-.009-.344-.011-.528-.011-.184 0-.485.069-.738.347-.253.276-.967.947-.967 2.308s.991 2.679 1.129 2.863c.138.185 1.95 2.977 4.722 4.172.659.284 1.174.453 1.576.581.661.21 1.263.18 1.739.109.531-.079 1.631-.666 1.861-1.312.23-.646.23-1.199.161-1.312-.069-.113-.253-.185-.529-.323z"/></svg>
+</a>
+
+<script>
+    document.documentElement.classList.add('js');
+
+    // Nav shrink on scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) { nav.classList.add('py-2','shadow-xl'); }
+        else { nav.classList.remove('py-2','shadow-xl'); }
+    });
+
+    // Reveal on scroll
+    const revObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revObserver.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revObserver.observe(el));
+
+    // ===== Gráficos de encuesta (Chart.js) =====
+    (function initCharts(){
+        if (!window.Chart) { setTimeout(initCharts, 200); return; }
+        Chart.defaults.font.family = "'Geist', -apple-system, sans-serif";
+        Chart.defaults.font.size = 12;
+        Chart.defaults.color = '#0A140F';
+
+        const commonPie = {
+            plugins: { legend: { position: 'right', labels: { boxWidth: 14, padding: 12, font: { size: 11 } } },
+                tooltip: { backgroundColor: '#0A140F', titleColor: '#D6B06A', bodyColor: '#F5F3EE', padding: 10, cornerRadius: 6 } },
+            animation: { animateRotate: true, animateScale: true, duration: 1400, easing: 'easeOutQuart' },
+            maintainAspectRatio: false, responsive: false
+        };
+        const commonBar = {
+            plugins: { legend: { display: false },
+                tooltip: { backgroundColor: '#0A140F', titleColor: '#D6B06A', bodyColor: '#F5F3EE', padding: 10, cornerRadius: 6,
+                    callbacks: { label: (ctx) => { const pct = ((ctx.parsed.y / 28) * 100).toFixed(1); return ` ${ctx.parsed.y} respuestas · ${pct}%`; } } } },
+            scales: { x: { grid: { display: false }, ticks: { color: '#0A140F' } },
+                y: { beginAtZero: true, grid: { color: 'rgba(10,20,15,0.08)' }, ticks: { color: 'rgba(10,20,15,0.55)', stepSize: 5 } } },
+            animation: { duration: 1200, easing: 'easeOutQuart' }, maintainAspectRatio: false, responsive: false
+        };
+        const charts = {
+            estres: { type:'pie', data:{ labels:['Estoy peor','Estoy igual','Leve mejoría','Bajó notablemente'], datasets:[{ data:[0,0,35.7,64.3], backgroundColor:['#4A8FBE','#C44A3F','#E4A23C','#3F8C68'], borderWidth:0 }] }, options: commonPie },
+            entusiasmo: { type:'bar', data:{ labels:['1','2','3','4','5'], datasets:[{ data:[0,0,2,9,17], backgroundColor:'#D6B06A', borderRadius:4, maxBarThickness:60 }] }, options: commonBar },
+            recomendacion: { type:'pie', data:{ labels:['No lo recomendaría','Sólo a algunas personas','Lo recontra recomiendo'], datasets:[{ data:[0,32.1,67.9], backgroundColor:['#4A8FBE','#C44A3F','#3F8C68'], borderWidth:0 }] }, options: commonPie },
+            volumen: { type:'pie', data:{ labels:['Muy ligero / Me quedo con ganas de más','Equilibrado / Siento que puedo llevar el ritmo bien','Desafiante pero gestionable','Excesivo / Me siento abrumado/a'], datasets:[{ data:[0,3.6,89.3,7.1], backgroundColor:['#4A8FBE','#C44A3F','#E4A23C','#3F8C68'], borderWidth:0 }] }, options: commonPie },
+            estados: { type:'bar', data:{ labels:['1','2','3','4','5'], datasets:[{ data:[0,0,5,13,10], backgroundColor:'#D6B06A', borderRadius:4, maxBarThickness:60 }] }, options: commonBar },
+            comparacion: { type:'pie', data:{ labels:['Menos valioso','Igual que otros','Más valioso','Único'], datasets:[{ data:[0,3.5,28.6,67.9], backgroundColor:['#4A8FBE','#C44A3F','#E4A23C','#3F8C68'], borderWidth:0 }] }, options: commonPie }
+        };
+        document.querySelectorAll('canvas[data-chart]').forEach(c => {
+            const key = c.dataset.chart;
+            if (charts[key]) new Chart(c, charts[key]);
+        });
+    })();
+</script>
+</body>
+</html>

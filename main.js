@@ -17,11 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
           const card = cards[i]; if (!card) return;
           card.querySelectorAll('.prog-name').forEach(el => {
             const nombre = p.nombre || '';
+            const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
             const m = nombre.match(/^(.*?)\s+(Nivel\s+\d+)\s*$/i);
+            const sep = nombre.match(/^(.+?)\s+[-–]\s+(.+)$/); // "Nombre - subtítulo"
             if (m) {
               const lvl = m[2].trim();
               const lvlClass = /2/.test(lvl) ? 'prog-name-level--n2' : 'prog-name-level--n1';
-              el.innerHTML = m[1] + ' <span class="prog-name-level ' + lvlClass + '">' + lvl + '</span>';
+              el.innerHTML = esc(m[1]) + ' <span class="prog-name-level ' + lvlClass + '">' + esc(lvl) + '</span>';
+            } else if (sep) {
+              el.innerHTML = esc(sep[1].trim()) + '<span class="prog-name-sub">' + esc(sep[2].trim()) + '</span>';
             } else {
               el.textContent = nombre;
             }
@@ -106,13 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   // 1. Initialize Lenis (Smooth Scroll) - Paused initially for preloader
+  // Modo "lerp" (deslizamiento flotante, estilo Voldog): scroll continuo con inercia suave.
   const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    lerp: 0.06,
     direction: 'vertical',
     gestureDirection: 'vertical',
     smooth: true,
-    mouseMultiplier: 1,
+    wheelMultiplier: 1.05,
+    mouseMultiplier: 1.05,
     smoothTouch: false,
     touchMultiplier: 2,
     infinite: false,
@@ -125,56 +130,73 @@ document.addEventListener('DOMContentLoaded', () => {
   gsap.ticker.add((time) => { lenis.raf(time * 1000); });
   gsap.ticker.lagSmoothing(0);
 
+  // Curva de marca (cubic-bezier 0.32, 0.72, 0, 1) como ease reutilizable de GSAP.
+  // Una sola curva pausada para todo el sitio: frena suave, sin rebote.
+  const brandEase = (function () {
+    const bx = (t) => 3 * Math.pow(1 - t, 2) * t * 0.32 + t * t * t;
+    const by = (t) => 3 * Math.pow(1 - t, 2) * t * 0.72 + 3 * (1 - t) * t * t + t * t * t;
+    return (x) => {
+      let lo = 0, hi = 1, u = 0.5;
+      for (let i = 0; i < 20; i++) { u = (lo + hi) / 2; (bx(u) < x) ? (lo = u) : (hi = u); }
+      return by(u);
+    };
+  })();
+
   // 2. Prepare Split Text for Hero Reveal
-  const splitTitles = new SplitType('.split-title', { types: 'words, chars' });
-  const splitLines = new SplitType('.split-line', { types: 'lines, words' });
-  
-  // Wrap lines in an overflow hidden container so they can slide up from invisible bounds
-  document.querySelectorAll('.split-line .line').forEach(line => {
-    const wrapper = document.createElement('div');
-    wrapper.style.overflow = 'hidden';
-    line.parentNode.insertBefore(wrapper, line);
-    wrapper.appendChild(line);
-  });
-  
-  gsap.set('.split-title .char', { y: 110, opacity: 0 });
-  gsap.set('.split-line .word', { y: 110, opacity: 0 });
+  // Solo 'words' (sin 'lines'): las palabras fluyen y envuelven naturalmente según la tipografía
+  // real, evitando el bug de líneas mal medidas antes de que carguen las webfonts (palabras huérfanas).
+  const splitLines = new SplitType('.split-line', { types: 'words' });
+
+  gsap.set('.split-line .word', { y: 40, opacity: 0 });
   gsap.set('.hero-divider', { width: 0 });
 
-  // 3. Preloader Sequence Timeline
-  const tlLoader = gsap.timeline({
-    onComplete: () => {
-      document.getElementById('preloader').style.display = 'none';
-      lenis.start(); // Enable scroll
-      triggerHeroReveal();
-    }
-  });
-
+  // 3. Preloader Sequence — versión corta (~1.5s), saltable, y solo en la primera visita de la sesión
+  const preloaderEl = document.getElementById('preloader');
   const matrixTextEl = document.getElementById('matrixText');
-  const fullText = "Reconfigurando percepción";
   const preloaderLogo = document.getElementById('preloaderLogo');
 
-  if (preloaderLogo) {
-    tlLoader.to(preloaderLogo, { opacity: 0.8, duration: 2, ease: "power2.out" }, 0);
+  let tlLoader;
+  let preloaderDone = false;
+
+  function toggleSkipListeners(add) {
+    const fn = add ? window.addEventListener : window.removeEventListener;
+    fn('wheel', onSkip, { passive: true });
+    fn('touchmove', onSkip, { passive: true });
+    fn('keydown', onSkip);
+    fn('click', onSkip);
+  }
+  function finishPreloader() {
+    if (preloaderDone) return;
+    preloaderDone = true;
+    toggleSkipListeners(false);
+    if (preloaderEl) preloaderEl.style.display = 'none';
+    lenis.start(); // Habilitar scroll
+    triggerHeroReveal();
+  }
+  function onSkip() {
+    if (preloaderDone) return;
+    if (tlLoader) tlLoader.kill();
+    gsap.to('#preloader', { autoAlpha: 0, duration: 0.35, ease: 'power3.inOut', onComplete: finishPreloader });
   }
 
-  // Matrix-style typing effect
-  tlLoader.to({}, {
-    duration: 2.2,
-    ease: "none",
-    onUpdate: function() {
-      const progress = this.progress();
-      const currentLength = Math.floor(progress * fullText.length);
-      if (matrixTextEl) {
-        matrixTextEl.textContent = fullText.substring(0, currentLength);
-      }
+  if (sessionStorage.getItem('epiPreloaderSeen')) {
+    // Ya se vio en esta sesión: entrar directo, sin preloader
+    finishPreloader();
+  } else {
+    sessionStorage.setItem('epiPreloaderSeen', '1');
+    if (matrixTextEl) matrixTextEl.textContent = 'Reconfigurando percepción';
+
+    tlLoader = gsap.timeline({ onComplete: finishPreloader });
+    if (preloaderLogo) {
+      tlLoader.to(preloaderLogo, { opacity: 0.85, duration: 0.6, ease: 'power2.out' }, 0);
     }
-  }, 0.5) // Start typing after 0.5s
-  .to(matrixTextEl, { opacity: 0, duration: 0.8, ease: "power3.in" }, "+=1.2") // Hold and then fade out
-    // Trigger the custom event to tell particles.js to explode the preloader
-    .call(() => { window.dispatchEvent(new Event('explodePreloader')); })
-    // Fade out the preloader background faster
-    .to('#preloader', { autoAlpha: 0, duration: 1.2, ease: "power3.inOut" }, "+=0.1");
+    // Texto entra y se sostiene ~1s para poder leerlo (solo en la primera visita de la sesión)
+    tlLoader.fromTo(matrixTextEl, { opacity: 0 }, { opacity: 1, duration: 0.55, ease: 'power2.out' }, 0.3);
+    tlLoader.call(() => { window.dispatchEvent(new Event('explodePreloader')); }, null, 1.85);
+    tlLoader.to('#preloader', { autoAlpha: 0, duration: 0.55, ease: 'power3.inOut' }, 1.85);
+
+    toggleSkipListeners(true); // Saltar con scroll, toque, click o tecla
+  }
 
   // 4. Hero Reveal Sequence (Awwwards Style Stagger)
   function triggerHeroReveal() {
@@ -193,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
         opacity: 1,
         y: 0,
         duration: 1.2,
-        ease: "power3.out"
+        ease: brandEase
       }, 0.2);
     }
 
@@ -206,30 +228,24 @@ document.addEventListener('DOMContentLoaded', () => {
         y: 0,
         duration: 1.1,
         stagger: 0.14,
-        ease: "power3.out"
+        ease: brandEase
       }, 0);
     }
 
-    tlHero.to('.split-title .char', {
-      y: 0, opacity: 1,
-      duration: 1.2,
-      stagger: 0.02,
-      ease: "power4.out"
-    }, 0)
-    .to('.hero-divider', {
+    tlHero.to('.hero-divider', {
       width: 60,
       duration: 1.2,
-      ease: "power3.inOut"
+      ease: brandEase
     }, 0.4)
     .to('.split-line .word', {
       y: 0, opacity: 1,
       duration: 1,
       stagger: 0.015,
-      ease: "power3.out"
+      ease: brandEase
     }, 0.6)
     .fromTo('.scroll-cue', 
       { autoAlpha: 0, y: 20 },
-      { autoAlpha: 1, y: 0, duration: 1.5, ease: "power2.out" }, 
+      { autoAlpha: 1, y: 0, duration: 1.5, ease: brandEase },
       1.5
     );
   }
@@ -438,27 +454,27 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.to(el, { x: x * 0.3, y: y * 0.3, duration: 0.4, ease: "power2.out" });
     });
     el.addEventListener('mouseleave', () => {
-      gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.3)" });
+      gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: brandEase });
     });
   });
 
   // 7. General GSAP Reveals (Scroll Storytelling)
   gsap.utils.toArray('.gs_reveal:not(.gs_left):not(.gs_right):not(.gs_up)').forEach((el) => {
-    gsap.fromTo(el, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%" } });
+    gsap.fromTo(el, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 1.2, ease: brandEase, scrollTrigger: { trigger: el, start: "top 85%" } });
   });
   gsap.utils.toArray('.gs_left').forEach((el) => {
-    gsap.fromTo(el, { autoAlpha: 0, x: -60 }, { autoAlpha: 1, x: 0, duration: 1.4, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%" } });
+    gsap.fromTo(el, { autoAlpha: 0, x: -60 }, { autoAlpha: 1, x: 0, duration: 1.4, ease: brandEase, scrollTrigger: { trigger: el, start: "top 85%" } });
   });
   gsap.utils.toArray('.gs_right').forEach((el) => {
-    gsap.fromTo(el, { autoAlpha: 0, x: 60 }, { autoAlpha: 1, x: 0, duration: 1.4, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%" } });
+    gsap.fromTo(el, { autoAlpha: 0, x: 60 }, { autoAlpha: 1, x: 0, duration: 1.4, ease: brandEase, scrollTrigger: { trigger: el, start: "top 85%" } });
   });
   gsap.utils.toArray('.gs_up').forEach((el) => {
-    gsap.fromTo(el, { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%" } });
+    gsap.fromTo(el, { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 1.2, ease: brandEase, scrollTrigger: { trigger: el, start: "top 85%" } });
   });
 
   document.querySelectorAll('.pillars, .footer-grid').forEach(container => {
     const items = container.querySelectorAll('.gs_stagger');
-    gsap.fromTo(items, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.15, ease: "power2.out", scrollTrigger: { trigger: container, start: "top 85%", onEnter: () => {
+    gsap.fromTo(items, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.15, ease: brandEase, scrollTrigger: { trigger: container, start: "top 85%", onEnter: () => {
       container.querySelectorAll('.pillar').forEach(p => p.classList.add('is-drawn'));
     } } });
   });
@@ -467,7 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(loopSection) {
     const loopNodes = loopSection.querySelectorAll('.loop-dot');
     let tlLoop = gsap.timeline({ scrollTrigger: { trigger: loopSection, start: "top 70%" } });
-    tlLoop.fromTo(loopNodes, { scale: 0.5, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.8, stagger: 0.3, ease: "back.out(1.5)" }, 0);
+    tlLoop.fromTo(loopNodes, { scale: 0.5, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.8, stagger: 0.3, ease: brandEase }, 0);
 
   }
 
@@ -498,6 +514,29 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', onScroll, { passive: true });
     update();
   })();
+
+  // Zoom-in del hero al scrollear (estilo Voldog): el video se acerca suave mientras
+  // la sección Programas sube por encima. Atado al scroll (scrub) para máxima suavidad.
+  const heroVideo = document.querySelector('.hero-video');
+  if (heroVideo) {
+    gsap.fromTo(heroVideo, { scale: 1 }, {
+      scale: 1.16,
+      ease: "none",
+      scrollTrigger: { trigger: '.hero', start: "top top", end: "+=90%", scrub: true }
+    });
+  }
+
+  // Intro de Programas: entra deslizándose hacia la derecha, al costado de la pregunta.
+  // Atado al scroll (scrub) para que el desplazamiento sea fluido y lo controle el usuario.
+  const progIntro = document.querySelector('.prog-intro');
+  if (progIntro && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    gsap.fromTo(progIntro, { x: -70, opacity: 0 }, {
+      x: 0,
+      opacity: 1,
+      ease: 'none', // en un scrub la curva la da el scroll
+      scrollTrigger: { trigger: '.programas-head', start: 'top 78%', end: 'top 42%', scrub: true }
+    });
+  }
 
   // Parallax
   gsap.utils.toArray('.gs_parallax').forEach(img => {
@@ -531,7 +570,7 @@ document.addEventListener('DOMContentLoaded', () => {
         y: 0,
         opacity: 1,
         rotation: 0,
-        ease: "power2.out",
+        ease: brandEase,
         scrollTrigger: {
           trigger: section,
           start: "top bottom",
@@ -562,9 +601,8 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.from(num.querySelectorAll('.stat-digit'), {
       y: -70,
       opacity: 0,
-      rotation: -10,
       duration: 0.95,
-      ease: "back.out(1.5)",
+      ease: brandEase,
       stagger: 0.085,
       scrollTrigger: { trigger: num, start: "top 85%" }
     });
@@ -587,50 +625,109 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 8. Floating Action Buttons Logic
   const fabs = document.querySelectorAll('.fab-btn');
+  const persistCta = document.getElementById('persistCta');
+  const progsSection = document.getElementById('programas');
+  const inlineProgCta = document.querySelector('.btn-gold'); // "VER PROGRAMAS" de la sección Escuela
+  // WhatsApp + Comunidad siempre visibles (también en el hero): los mostramos de entrada.
+  fabs.forEach(fab => fab.classList.add('show'));
   lenis.on('scroll', () => {
     const y = window.scrollY;
     const vh = window.innerHeight;
-    if(fabs.length > 0) {
-      if(y > vh * 0.6) {
-        fabs.forEach(fab => fab.classList.add('show'));
-      } else {
-        fabs.forEach(fab => fab.classList.remove('show'));
+    // CTA persistente: aparece cuando ya pasaste Programas, pero se oculta si el CTA inline
+    // de Escuela está a la vista (para no duplicar "VER PROGRAMAS").
+    if (persistCta && progsSection) {
+      const passed = progsSection.getBoundingClientRect().bottom < vh * 0.4;
+      let inlineVisible = false;
+      if (inlineProgCta) {
+        const r = inlineProgCta.getBoundingClientRect();
+        inlineVisible = r.top < vh && r.bottom > 0;
       }
+      persistCta.classList.toggle('show', passed && !inlineVisible);
     }
   });
 
-  // 9. Flip card (tarjetas de programas con efecto carta dándose vuelta)
-  // Click en cualquier parte de la card dispara el flip
-  document.addEventListener('click', (e) => {
-    const card = e.target.closest('.prog-card--flippable');
-    if (!card || card.classList.contains('is-transitioning')) return;
-    e.preventDefault();
+  // 8b. Globito promocional de Comunidad: aparece al scrollear y hace un ciclo
+  //     visible/oculto continuo con la carita de Agustín. Se puede cerrar con la ✕.
+  (() => {
+    const promo = document.getElementById('fabPromo');
+    const fab = document.querySelector('.fab-comunidad');
+    if (!promo || !fab) return;
+    const closeBtn = document.getElementById('fabPromoClose');
+    const link = promo.querySelector('.fab-promo-link');
 
-    const front = card.querySelector('.prog-card-face--front');
-    const back = card.querySelector('.prog-card-face--back');
-    const inner = card.querySelector('.prog-card-inner');
+    // En móvil el globo aparece en versión compacta y con ritmo más espaciado (no hay hover).
+    const isMobile = window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(max-width: 640px)').matches;
+    const FIRST_MS   = isMobile ? 6000 : 3200;
+    const VISIBLE_MS = isMobile ? 8000 : 10000;
+    const HIDDEN_MS  = isMobile ? 16000 : 4000;
 
-    front.style.pointerEvents = 'none';
-    back.style.pointerEvents = 'none';
+    let started = false, t = null;
+    let dismissed = sessionStorage.getItem('epiPromoDismissed') === '1';
 
-    card.classList.add('is-transitioning');
-    card.classList.toggle('is-flipped');
+    function hide() { promo.classList.remove('show'); promo.setAttribute('aria-hidden', 'true'); }
+    function cycleShow() {
+      if (dismissed) return;
+      // si la pestaña está en segundo plano, esperamos sin gastar la aparición
+      if (document.hidden) { t = setTimeout(cycleShow, HIDDEN_MS); return; }
+      promo.classList.add('show'); promo.setAttribute('aria-hidden', 'false');
+      t = setTimeout(cycleHide, VISIBLE_MS);
+    }
+    function cycleHide() { hide(); t = setTimeout(cycleShow, HIDDEN_MS); }
+    function stop() { dismissed = true; hide(); clearTimeout(t); }
 
-    setTimeout(() => {
-      card.classList.remove('is-transitioning');
-      if (card.classList.contains('is-flipped')) {
-        back.style.pointerEvents = 'auto';
-        front.style.pointerEvents = 'none';
-      } else {
-        front.style.pointerEvents = 'auto';
-        back.style.pointerEvents = 'none';
+    // Arranca el ciclo tras un breve retraso inicial (deja pasar el preloader).
+    // Los botones ya están siempre visibles, así que el globito no depende del scroll.
+    setTimeout(() => { if (!started && !dismissed) { started = true; cycleShow(); } }, FIRST_MS);
+
+    // Hover sobre el botón de comunidad → muestra el globo (en vez de la leyenda del cursor).
+    // Mientras el mouse está encima (del botón o del propio globo) queda fijo; al salir, retoma el ciclo.
+    function holdOpen() { if (dismissed) return; clearTimeout(t); promo.classList.add('show'); promo.setAttribute('aria-hidden', 'false'); }
+    function releaseOpen() { if (dismissed) return; clearTimeout(t); t = setTimeout(cycleHide, 500); }
+    fab.addEventListener('mouseenter', holdOpen);
+    fab.addEventListener('mouseleave', releaseOpen);
+    promo.addEventListener('mouseenter', () => { clearTimeout(t); });
+    promo.addEventListener('mouseleave', releaseOpen);
+
+    if (closeBtn) closeBtn.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      sessionStorage.setItem('epiPromoDismissed', '1'); stop();
+    });
+    if (link) link.addEventListener('click', () => {
+      sessionStorage.setItem('epiPromoDismissed', '1'); stop();
+    });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) hide(); });
+  })();
+
+  // 8c. Menú móvil: hamburguesa → panel glass a pantalla completa
+  (() => {
+    const burger = document.getElementById('navBurger');
+    const menu = document.getElementById('mobileMenu');
+    if (!burger || !menu) return;
+    const closeBtn = document.getElementById('mmClose');
+    function open() {
+      menu.classList.add('open'); document.body.classList.add('mm-open');
+      menu.setAttribute('aria-hidden', 'false'); burger.setAttribute('aria-expanded', 'true');
+      if (typeof lenis !== 'undefined' && lenis) lenis.stop();
+    }
+    function close() {
+      menu.classList.remove('open'); document.body.classList.remove('mm-open');
+      menu.setAttribute('aria-hidden', 'true'); burger.setAttribute('aria-expanded', 'false');
+      if (typeof lenis !== 'undefined' && lenis) lenis.start();
+    }
+    burger.addEventListener('click', () => menu.classList.contains('open') ? close() : open());
+    if (closeBtn) closeBtn.addEventListener('click', close);
+    // tocar cualquier link cierra el panel; los anchors internos se re-disparan
+    // DESPUÉS de reactivar Lenis (el handler global corre con Lenis aún parado)
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      close();
+      const href = a.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        const target = document.querySelector(href);
+        if (target && typeof lenis !== 'undefined' && lenis) setTimeout(() => lenis.scrollTo(target, { offset: -60 }), 60);
       }
-      front.getBoundingClientRect();
-      back.getBoundingClientRect();
-      inner.style.willChange = 'auto';
-      requestAnimationFrame(() => { inner.style.willChange = 'transform'; });
-    }, 700);
-  });
+    }));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  })();
 
   // Loop circuit: auto-cycle 14s + click en nodo (pausa) + toggle pausa/play
   (() => {

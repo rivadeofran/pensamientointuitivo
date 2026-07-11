@@ -1,6 +1,8 @@
 (function() {
   const canvas = document.getElementById('bannerParticles');
   if (!canvas) return;
+  // En mobile no arranca (la figura del ojo requiere mouse; no aporta en touch)
+  if (window.matchMedia('(pointer: coarse)').matches) { canvas.style.display = 'none'; return; }
   const ctx = canvas.getContext('2d');
   const section = canvas.parentElement;
 
@@ -24,12 +26,12 @@
   let mouse = { active: false };
   let isInView = false;
   let animationId = null;
-  let dpr = Math.max(window.devicePixelRatio || 1, 1);
+  let dpr = Math.min(Math.max(window.devicePixelRatio || 1, 1), 1.5);
   let shapeProgress = 0; // 0 = scattered, 1 = silhouette
 
   function resize() {
     const rect = section.getBoundingClientRect();
-    dpr = Math.max(window.devicePixelRatio || 1, 1);
+    dpr = Math.min(Math.max(window.devicePixelRatio || 1, 1), 1.5);
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
     canvas.style.width = rect.width + 'px';

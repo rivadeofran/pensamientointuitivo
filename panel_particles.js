@@ -6,6 +6,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('panelParticles');
   if (!canvas) return;
+  // En mobile no se dibujan partículas (ahorro de rendimiento)
+  if (window.matchMedia('(pointer: coarse)').matches) { canvas.style.display = 'none'; return; }
   const ctx = canvas.getContext('2d');
   const panel = canvas.parentElement;
 
@@ -81,14 +83,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // Wait a bit for layout to settle
   setTimeout(initParticles, 200);
 
+  let rafId = null;
   function animate() {
     ctx.clearRect(0, 0, w, h);
     particles.forEach(p => {
       p.update();
       p.draw();
     });
-    requestAnimationFrame(animate);
+    rafId = requestAnimationFrame(animate);
   }
 
-  animate();
+  // Pausa el dibujo cuando el panel no está en pantalla
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      const visible = entries[0].isIntersecting;
+      if (visible && rafId === null) animate();
+      else if (!visible && rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+    }, { threshold: 0 }).observe(panel);
+  } else {
+    animate();
+  }
 });

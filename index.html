@@ -3,18 +3,32 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>EPI — Escuela del Pensamiento Intuitivo (V2)</title>
+  <title>Escuela del Pensamiento Intuitivo — Agustín Trowell</title>
+  <meta name="description" content="Entrená tu pensamiento intuitivo y tu libertad emocional con neurociencia, psicología y espiritualidad. Programas online y presenciales con Agustín Trowell." />
+  <meta name="author" content="Agustín Trowell" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f1f1a" />
+  <!-- Open Graph / redes sociales (og:url y og:image absoluta se completan al fijar el dominio) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Escuela del Pensamiento Intuitivo" />
+  <meta property="og:locale" content="es_AR" />
+  <meta property="og:title" content="Escuela del Pensamiento Intuitivo — Agustín Trowell" />
+  <meta property="og:description" content="Entrená tu pensamiento intuitivo y tu libertad emocional con neurociencia, psicología y espiritualidad. Programas online y presenciales con Agustín Trowell." />
+  <meta property="og:image" content="assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Escuela del Pensamiento Intuitivo — Agustín Trowell" />
+  <meta name="twitter:description" content="Entrená tu pensamiento intuitivo y tu libertad emocional con neurociencia, psicología y espiritualidad. Programas online y presenciales con Agustín Trowell." />
+  <meta name="twitter:image" content="assets/og-image.jpg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=20260711" />
+  <link rel="apple-touch-icon" href="/favicon-180.png?v=20260711" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=20260711c" />
 </head>
 <body>
 
-<!-- ============= NEURAL CURSOR (DISABLED — revert: uncomment the canvas + script tag below and remove invert-cursor) ============= -->
-<!-- <canvas id="neuralCursor"></canvas> -->
-
-<!-- ============= INVERT CURSOR (mix-blend-mode: difference) ============= -->
+<!-- ============= CURSOR (punto invertido + leyenda contextual) ============= -->
 <div id="invertCursor" aria-hidden="true"></div>
 
 <!-- ============= GLOBAL GRAIN OVERLAY ============= -->
@@ -38,20 +52,71 @@
     <a href="#hero" class="active">INICIO</a>
     <a href="#experiencia">EXPERIENCIA</a>
     <a href="#tecnologia">MÉTODO</a>
-    <a href="#programas">PROGRAMAS</a>
+    <div class="nav-progs">
+      <a href="#programas" class="nav-progs-trigger">PROGRAMAS</a>
+      <div class="nav-progs-menu">
+        <div class="nav-progs-panel">
+          <a class="nav-progs-item" href="programas/inspiraccion-nivel-1-rediseno/">
+            <span class="npi-dot"></span>
+            <span class="npi-text"><span class="npi-title">InspirAcción Nivel 1</span><span class="npi-sub">Entrenamiento online guiado</span></span>
+          </a>
+          <a class="nav-progs-item" href="programas/inspiraccion-nivel-2-rediseno/">
+            <span class="npi-dot"></span>
+            <span class="npi-text"><span class="npi-title">InspirAcción Nivel 2</span><span class="npi-sub">Laboratorio y grupo de estudio</span></span>
+          </a>
+          <a class="nav-progs-item" href="https://wa.me/5584981811901?text=Hola%20Agust%C3%ADn%2C%20quiero%20saber%20m%C3%A1s%20sobre%20el%20Acompa%C3%B1amiento%201%20a%201." target="_blank" rel="noopener noreferrer">
+            <span class="npi-dot"></span>
+            <span class="npi-text"><span class="npi-title">Acompañamiento 1 a 1</span><span class="npi-sub">Proceso personalizado</span></span>
+          </a>
+          <a class="nav-progs-item" href="https://wa.me/5584981811901?text=Hola%20Agust%C3%ADn%2C%20quiero%20saber%20m%C3%A1s%20sobre%20la%20Formaci%C3%B3n%20Presencial%20y%20Online." target="_blank" rel="noopener noreferrer">
+            <span class="npi-dot"></span>
+            <span class="npi-text"><span class="npi-title">Formación Presencial</span><span class="npi-sub">Presencial y online</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
     <a href="#recursos">CONTACTO</a>
   </nav>
+  <a class="header-comunidad" href="https://www.escueladelpensamientointuitivo.com/school/course/comunidad" target="_blank" rel="noopener" data-cursor="Unite a la comunidad">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 5 18.5V20"/><circle cx="11" cy="8" r="3.2"/><path d="M18.5 20v-1.2a3 3 0 0 0-2.3-2.9M15.5 5.2a3 3 0 0 1 0 5.6"/></svg>
+    <span>COMUNIDAD</span>
+  </a>
+  <!-- Hamburguesa: solo visible cuando el menú de secciones se oculta (≤1100px) -->
+  <button class="nav-burger" id="navBurger" type="button" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+
+<!-- ============= MENÚ MÓVIL (panel glass) ============= -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <button class="mm-close" id="mmClose" type="button" aria-label="Cerrar menú">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>
+  </button>
+  <nav class="mm-nav" aria-label="Secciones">
+    <a href="#hero">INICIO</a>
+    <a href="#experiencia">EXPERIENCIA</a>
+    <a href="#tecnologia">MÉTODO</a>
+    <a href="#recursos">CONTACTO</a>
+  </nav>
+  <div class="mm-progs">
+    <div class="mm-label">PROGRAMAS</div>
+    <a href="programas/inspiraccion-nivel-1-rediseno/">InspirAcción Nivel 1</a>
+    <a href="programas/inspiraccion-nivel-2-rediseno/">InspirAcción Nivel 2</a>
+    <a href="https://wa.me/5584981811901?text=Hola%20Agust%C3%ADn%2C%20quiero%20saber%20m%C3%A1s%20sobre%20el%20Acompa%C3%B1amiento%201%20a%201." target="_blank" rel="noopener noreferrer">Acompañamiento 1 a 1</a>
+    <a href="https://wa.me/5584981811901?text=Hola%20Agust%C3%ADn%2C%20quiero%20saber%20m%C3%A1s%20sobre%20la%20Formaci%C3%B3n%20Presencial%20y%20Online." target="_blank" rel="noopener noreferrer">Formación Presencial</a>
+  </div>
+  <a class="mm-comunidad" href="https://www.escueladelpensamientointuitivo.com/school/course/comunidad" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 5 18.5V20"/><circle cx="11" cy="8" r="3.2"/><path d="M18.5 20v-1.2a3 3 0 0 0-2.3-2.9M15.5 5.2a3 3 0 0 1 0 5.6"/></svg>
+    UNITE A LA COMUNIDAD
+  </a>
+</div>
 
 <!-- ============= HERO ============= -->
 <section class="hero" id="hero" data-screen-label="01 Hero" data-section-theme="dark">
   <!-- Hero Background Video -->
-  <video class="hero-video" src="uploads/video%20heroe.mp4" autoplay loop muted playsinline></video>
+  <video class="hero-video" src="uploads/video%20heroe%20final%202026.mp4" poster="uploads/hero-poster.webp" preload="metadata" autoplay loop muted playsinline></video>
   
   <div class="hero-overlay"></div>
-  
-  <!-- Subtle floating particles overlay -->
-  <canvas class="hero-particles" id="heroParticles"></canvas>
 
   <div class="hero-inner gs_reveal_hero hero-content-grid">
     <div class="hero-text">
@@ -117,6 +182,14 @@
         </div>
       </div>
     </div>
+
+    <!-- Índice de programas: fila completa debajo del hero -->
+    <nav class="hero-progs" aria-label="Programas">
+      <a href="programas/inspiraccion-nivel-1-rediseno/" class="hero-prog"><span class="hero-prog-name">InspirAcción Nivel 1</span><span class="arrow" aria-hidden="true"></span></a>
+      <a href="programas/inspiraccion-nivel-2-rediseno/" class="hero-prog"><span class="hero-prog-name">InspirAcción Nivel 2</span><span class="arrow" aria-hidden="true"></span></a>
+      <a href="https://wa.me/5584981811901?text=Hola%20Agust%C3%ADn%2C%20quiero%20saber%20m%C3%A1s%20sobre%20el%20Acompa%C3%B1amiento%201%20a%201." target="_blank" rel="noopener noreferrer" class="hero-prog"><span class="hero-prog-name">Acompañamiento 1 a 1</span><span class="arrow" aria-hidden="true"></span></a>
+      <a href="https://wa.me/5584981811901?text=Hola%20Agust%C3%ADn%2C%20quiero%20saber%20m%C3%A1s%20sobre%20la%20Formaci%C3%B3n%20Presencial%20y%20Online." target="_blank" rel="noopener noreferrer" class="hero-prog"><span class="hero-prog-name">Formación Presencial</span><span class="arrow" aria-hidden="true"></span></a>
+    </nav>
   </div>
 
   <a href="#programas" class="scroll-cue">
@@ -128,7 +201,6 @@
 <!-- ============= PROGRAMAS ============= -->
 <section class="programas" id="programas" data-screen-label="04 Programas" data-section-theme="light">
   <div class="programas-head gs_reveal gs_up">
-    <div class="prog-rail" aria-hidden="true"><span>PROGRAMAS</span><span class="prog-rail-line"></span><span>04</span></div>
     <div class="prog-head-content">
       <h2 class="prog-h2">¿Por dónde<br><em>comenzar?</em></h2>
       <p class="prog-intro">Programas diseñados para cada etapa de tu proceso. Desde el autoconocimiento hasta la creación consciente de tu vida y proyectos.</p>
@@ -172,7 +244,7 @@
     <article class="prog-card">
       <span class="prog-badge">ÚLTIMA EDICIÓN 2026</span>
       <div class="prog-card-img">
-        <img src="assets/exp2.jpg" alt="">
+        <img src="assets/exp2.webp" alt="">
         <div class="prog-card-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="5" width="18" height="12" rx="1"/><path d="M12 14V8M9 11l3-3 3 3M8 21h8M12 17v4"/></svg>
         </div>
@@ -202,7 +274,7 @@
     <div class="prog-card-wrapper gs_card" data-speed="1.05">
     <article class="prog-card">
       <div class="prog-card-img">
-        <img src="assets/exp4.jpg" alt="">
+        <img src="assets/exp4.webp" alt="">
         <div class="prog-card-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="4" y="5" width="16" height="12" rx="1"/><circle cx="12" cy="10" r="2"/><path d="M9 14h6M9 21h6M12 17v4"/></svg>
         </div>
@@ -283,13 +355,33 @@
   </div>
 </section>
 
+<!-- CTA persistente: aparece al pasar la sección Programas, invita a volver a la oferta -->
+<a href="#programas" class="persist-cta" id="persistCta">Ver programas</a>
+
 <!-- ============= FLOATING ICONS (WhatsApp, Spotify, Instagram, YouTube) ============= -->
 <div class="fab-container" id="fabContainer">
   <a class="fab-btn fab-wa magnetic-btn" href="https://wa.me/message/DNT6CAYVHIZLE1" target="_blank" rel="noopener" aria-label="WhatsApp">
-    <div class="fab-tooltip">WhatsApp</div>
+    <!-- cartelito propio quitado: la leyenda del cursor ("Escribinos") lo reemplaza sin solaparse -->
     <svg viewBox="0 0 24 24" fill="#fff"><path d="M20.5 3.5A11.4 11.4 0 0 0 12.1 0C5.7 0 .6 5.1.6 11.5c0 2 .5 4 1.6 5.7L.5 24l7-1.8a11.4 11.4 0 0 0 4.6 1A11.4 11.4 0 0 0 23.6 11.5c0-3-1.2-5.9-3.1-8ZM12.1 21.2a9.5 9.5 0 0 1-4.8-1.3l-.4-.2-4.1 1 1-4-.2-.4a9.5 9.5 0 1 1 8.5 4.9Zm5.4-7.1c-.3-.2-1.7-.9-2-1s-.4 0-.6.2c-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.8-1.5-4-3.4-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.5-.5-.5-.6-.5h-.6c-.2 0-.5 0-.8.4-.3.3-1.1 1.1-1.1 2.7 0 1.6 1.1 3.1 1.3 3.3.2.2 2.3 3.5 5.6 4.9 2 .9 2.8 1 3.8.8.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.1-1.4 0-.1-.2-.2-.5-.4Z"/></svg>
     <span class="fab-pulse"></span>
   </a>
+  <!-- Acceso a la comunidad/plataforma de Agustín (systeme.io). Va ARRIBA del WhatsApp por el column-reverse -->
+  <div class="fab-slot fab-comunidad-slot">
+    <a class="fab-btn fab-comunidad magnetic-btn" href="https://www.escueladelpensamientointuitivo.com/school/course/comunidad" target="_blank" rel="noopener" aria-label="Comunidad">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 5 18.5V20"/><circle cx="11" cy="8" r="3.2"/><path d="M18.5 20v-1.2a3 3 0 0 0-2.3-2.9M15.5 5.2a3 3 0 0 1 0 5.6"/></svg>
+      <span class="fab-pulse"></span>
+    </a>
+    <!-- Globito promocional: asoma cada cierto tiempo con la carita de Agustín -->
+    <div class="fab-promo" id="fabPromo" aria-hidden="true">
+      <a class="fab-promo-link" href="https://www.escueladelpensamientointuitivo.com/school/course/comunidad" target="_blank" rel="noopener">
+        <img class="fab-promo-face" src="assets/agustin-avatar.jpg" alt="Agustín Trowell" width="40" height="40" loading="lazy">
+        <span class="fab-promo-text"><span class="fab-promo-eyebrow">Agustín te invita</span><span class="fab-promo-title">Unite a la comunidad</span></span>
+      </a>
+      <button class="fab-promo-close" id="fabPromoClose" type="button" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+  </div>
 </div>
 
 <!-- ============= ESCUELA ============= -->
@@ -300,35 +392,6 @@
       <h2 class="esc-h2">Invertí la lógica de tus pensamientos</h2>
       <p class="esc-p">¿Qué es la escuela del pensamiento intuitivo? Es una comunidad de educación práctica donde guiamos a las personas a utilizar su intuición mental, mediante la práctica de la libertad emocional. <br><br> ¿Cómo lo hacemos? Con entrenamientos basados en: Neurociencias, Psicología, Metafísica, Fisiología y Espiritualidad. <br><br> Utilizamos prácticas simples que activan el pensamiento intuitivo que se reconoce por la sensación de certeza y la ausencia de dudas y cumple con las siguientes características:</p>
 
-      <div class="pillars">
-        <div class="pillar gs_stagger">
-          <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="6" pathLength="1"/><path d="M2 16 C 6 8, 26 8, 30 16 C 26 24, 6 24, 2 16 Z" pathLength="1"/></svg>
-          <div class="pillar-title">ES CREATIVO</div>
-          <p class="pillar-text">Tomá conciencia de cómo funcionás.</p>
-        </div>
-        <div class="pillar gs_stagger">
-          <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M11 6 C 6 6, 4 11, 6 15 C 3 18, 5 23, 9 23 C 10 26, 16 27, 16 24 V 8 C 16 5, 12 4, 11 6 Z" pathLength="1"/><path d="M21 6 C 26 6, 28 11, 26 15 C 29 18, 27 23, 23 23 C 22 26, 16 27, 16 24" pathLength="1"/></svg>
-          <div class="pillar-title">ES ORIGINAL</div>
-          <p class="pillar-text">Comprendé tu mente y tu percepción.</p>
-        </div>
-        <div class="pillar gs_stagger">
-          <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 a 11 11 0 0 1 19 -3 M27 20 a 11 11 0 0 1 -19 3" pathLength="1"/><path d="M22 6 v 6 h -6 M10 26 v -6 h 6" pathLength="1"/></svg>
-          <div class="pillar-title">ES AUTÉNTICO</div>
-          <p class="pillar-text">Rompé el loop automático.</p>
-        </div>
-        <div class="pillar gs_stagger">
-          <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3 V 29 M3 16 H 29 M7 7 L 25 25 M25 7 L 7 25" pathLength="1"/></svg>
-          <div class="pillar-title">ES ORDENADO</div>
-          <p class="pillar-text">Diseñá una vida con sentido.</p>
-        </div>
-        <div class="pillar gs_stagger">
-          <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="10" pathLength="1"/><path d="M16 6 v 20 M6 16 h 20" pathLength="1"/></svg>
-          <div class="pillar-title">ES LIBRE DE<br>CONDICIONAMIENTOS</div>
-          <p class="pillar-text">Liberate de patrones heredados.</p>
-        </div>
-      </div>
-
-      <a href="#programas" class="btn-gold gs_stagger magnetic-btn">VER PROGRAMAS <span class="arrow"></span></a>
     </div>
 
     <div class="esc-media gs_reveal gs_right">
@@ -337,11 +400,43 @@
       </video>
     </div>
   </div>
+
+  <div class="pillars">
+    <div class="pillar gs_stagger">
+      <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="6" pathLength="1"/><path d="M2 16 C 6 8, 26 8, 30 16 C 26 24, 6 24, 2 16 Z" pathLength="1"/></svg>
+      <div class="pillar-title">ES CREATIVO</div>
+      <p class="pillar-text">Tomá conciencia de cómo funcionás.</p>
+    </div>
+    <div class="pillar gs_stagger">
+      <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M11 6 C 6 6, 4 11, 6 15 C 3 18, 5 23, 9 23 C 10 26, 16 27, 16 24 V 8 C 16 5, 12 4, 11 6 Z" pathLength="1"/><path d="M21 6 C 26 6, 28 11, 26 15 C 29 18, 27 23, 23 23 C 22 26, 16 27, 16 24" pathLength="1"/></svg>
+      <div class="pillar-title">ES ORIGINAL</div>
+      <p class="pillar-text">Comprendé tu mente y tu percepción.</p>
+    </div>
+    <div class="pillar gs_stagger">
+      <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 a 11 11 0 0 1 19 -3 M27 20 a 11 11 0 0 1 -19 3" pathLength="1"/><path d="M22 6 v 6 h -6 M10 26 v -6 h 6" pathLength="1"/></svg>
+      <div class="pillar-title">ES AUTÉNTICO</div>
+      <p class="pillar-text">Rompé el loop automático.</p>
+    </div>
+    <div class="pillar gs_stagger">
+      <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3 V 29 M3 16 H 29 M7 7 L 25 25 M25 7 L 7 25" pathLength="1"/></svg>
+      <div class="pillar-title">ES ORDENADO</div>
+      <p class="pillar-text">Diseñá una vida con sentido.</p>
+    </div>
+    <div class="pillar gs_stagger">
+      <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="10" pathLength="1"/><path d="M16 6 v 20 M6 16 h 20" pathLength="1"/></svg>
+      <div class="pillar-title">ES LIBRE DE<br>CONDICIONAMIENTOS</div>
+      <p class="pillar-text">Liberate de patrones heredados.</p>
+    </div>
+  </div>
+
+  <div class="esc-cta">
+    <a href="#programas" class="btn-gold gs_stagger magnetic-btn">VER PROGRAMAS <span class="arrow"></span></a>
+  </div>
 </section>
 
 <!-- banner full bleed quote -->
 <section class="banner-strip gs_reveal" data-screen-label="02b Banner" data-section-theme="dark">
-  <img src="assets/banner.jpg" alt="" id="bannerImg" class="parallax-bg">
+  <img src="assets/banner.webp" alt="" id="bannerImg" class="parallax-bg">
   <canvas id="bannerParticles" class="banner-particles"></canvas>
   <div class="banner-quote gs_reveal gs_up">
     <div class="quote-plate">
@@ -567,11 +662,14 @@
 
   <div class="cta-footer-bottom">
     <span>© 2026 EPI — ESCUELA DEL PENSAMIENTO INTUITIVO</span>
+    <!-- Links ocultos hasta tener páginas reales (Privacidad/Términos/Créditos). Revert: descomentar.
     <div class="cta-footer-links">
       <a href="#">PRIVACIDAD</a>
       <a href="#">TÉRMINOS</a>
       <a href="#">CRÉDITOS</a>
     </div>
+    -->
+    <span></span>
   </div>
 </section>
 
@@ -582,26 +680,71 @@
 <!-- SplitType for the text reveal -->
 <script src="https://unpkg.com/split-type"></script>
 <!-- Our custom scripts -->
-<!-- <script src="cursor.js"></script> --> <!-- DISABLED — revert by uncommenting this and the neuralCursor canvas above -->
 <script>
 (function() {
   const cursor = document.getElementById('invertCursor');
   if (!cursor || window.matchMedia('(pointer: coarse)').matches) return;
+
+  // Etiqueta interna: leyenda contextual (estilo Voldog)
+  const label = document.createElement('span');
+  label.className = 'cursor-label';
+  cursor.appendChild(label);
+
+  // Mapa de leyendas: el primer selector que matchee gana. data-cursor="..." tiene prioridad.
+  const labelMap = [
+    ['.prog-card-wrapper', 'Ver'],
+    ['.fab-wa', 'Escribinos'],
+    ['.announcement-panel iframe, .announcement-panel video, .panel-media', 'Reproducir'],
+    ['.btn-gold, .panel-cta', 'Ir'],
+  ];
+  const interactive = 'a, button, .prog-card, .magnetic-btn, [data-cursor]';
+
+  function resolveLabel(el) {
+    if (!el || !el.closest) return null;
+    const withAttr = el.closest('[data-cursor]');
+    if (withAttr) return withAttr.getAttribute('data-cursor');
+    for (const pair of labelMap) { if (el.closest(pair[0])) return pair[1]; }
+    return null;
+  }
+  function applyState(el) {
+    const lbl = resolveLabel(el);
+    if (lbl) {
+      label.textContent = lbl;
+      cursor.classList.add('has-label');
+      cursor.classList.remove('is-hover');
+    } else if (el && el.closest && el.closest(interactive)) {
+      cursor.classList.add('is-hover');
+      cursor.classList.remove('has-label');
+    } else {
+      cursor.classList.remove('has-label', 'is-hover');
+    }
+  }
+
   let mx = window.innerWidth / 2, my = window.innerHeight / 2;
   let cx = mx, cy = my;
-  let hovering = false;
   window.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; }, { passive: true });
-  const interactive = 'a, button, .prog-card, .exp-cell, .magnetic-btn, [data-cursor]';
-  document.addEventListener('mouseover', (e) => {
-    if (e.target.closest(interactive)) { hovering = true; cursor.classList.add('is-hover'); }
-  });
+  document.addEventListener('mouseover', (e) => applyState(e.target), { passive: true });
   document.addEventListener('mouseout', (e) => {
-    if (e.target.closest(interactive)) { hovering = false; cursor.classList.remove('is-hover'); }
-  });
+    if (!e.relatedTarget) { cursor.classList.remove('has-label', 'is-hover'); }
+    else { applyState(e.relatedTarget); }
+  }, { passive: true });
+
+  const GAP = 22; // separación entre el cursor y la pastilla de leyenda
   function loop() {
-    cx += (mx - cx) * 0.22;
-    cy += (my - cy) * 0.22;
-    cursor.style.transform = `translate3d(${cx}px, ${cy}px, 0) translate(-50%, -50%)`;
+    cx += (mx - cx) * 0.16;
+    cy += (my - cy) * 0.16;
+    let offset = 'translate(-50%, -50%)'; // punto/círculo: centrado en el cursor
+    if (cursor.classList.contains('has-label')) {
+      // Pastilla al costado (no tapa la manito). Elige lado según el espacio disponible.
+      const pillW = cursor.offsetWidth;
+      const fitsRight = mx + GAP + pillW < window.innerWidth - 8;
+      const fitsLeft = mx - GAP - pillW > 8;
+      const goRight = fitsRight || !fitsLeft; // preferí derecha; izquierda solo si no entra a la derecha
+      offset = goRight
+        ? 'translate(' + GAP + 'px, -50%)'
+        : 'translate(calc(-100% - ' + GAP + 'px), -50%)';
+    }
+    cursor.style.transform = 'translate3d(' + cx + 'px, ' + cy + 'px, 0) ' + offset;
     requestAnimationFrame(loop);
   }
   loop();
@@ -630,12 +773,10 @@
   });
 })();
 </script>
-<script src="panel_particles.js"></script>
+<script src="panel_particles.js?v=20260708b"></script>
 <script src="particles.js"></script>
-<!-- <script src="neural_separator.js"></script> --> <!-- DISABLED — sección eliminada; revert: descomentar para volver -->
-
-<script src="banner_particles.js"></script>
-<script src="main.js"></script>
+<script src="banner_particles.js?v=20260708b"></script>
+<script src="main.js?v=20260711d"></script>
 
 <!-- Netlify Identity widget — detecta invite/recovery tokens y redirige a /admin/ -->
 <script>

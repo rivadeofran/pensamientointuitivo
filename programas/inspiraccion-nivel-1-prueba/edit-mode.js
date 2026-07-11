@@ -131,6 +131,8 @@
     if (!TEXT_TAGS.has(el.tagName)) return false;
     // Saltar si está dentro de un img/svg/canvas/video
     if (el.closest('img, svg, canvas, video, picture, source, script, style, noscript')) return false;
+    // Saltar contenido decorativo / clones (ej. clon del loop de testimonios)
+    if (el.closest('[aria-hidden="true"]')) return false;
     // Debe tener texto visible
     const txt = (el.textContent || '').trim();
     if (!txt) return false;

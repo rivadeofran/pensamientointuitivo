@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>InspirAcción Nivel 1 · El entrenamiento del guerrero · EPI · PRUEBA</title>
+  <title>InspirAcción Nivel 1 · Entrenamiento online guiado · EPI · PRUEBA</title>
   <meta name="description" content="Programa de entrenamiento del Método Contra-Intuitivo. 3 meses guiados por Agustín Trowell. Próxima edición: Julio 2026." />
 
-  <meta property="og:title" content="InspirAcción Nivel 1 · El entrenamiento del guerrero" />
+  <meta property="og:title" content="InspirAcción Nivel 1 · Entrenamiento online guiado" />
   <meta property="og:description" content="3 meses de entrenamiento aplicado para transformar tu vida. +100 personas ya transformadas." />
   <meta property="og:image" content="assets/cover.jpg" />
   <meta property="og:type" content="website" />
@@ -184,6 +184,74 @@
       color: rgba(10,20,15,0.78);
       margin: 0 0 12px 0;
     }
+    .nv1p-qa-author{
+      font-family: 'Schibsted Grotesk', sans-serif;
+      font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: #B8893E; font-weight: 600;
+      margin: 16px 0 0 0;
+    }
+    .nv1p-qa-author::before{ content: "— "; }
+    /* Pregunta-divisor entre tandas de testimonios */
+    .nv1p-qa-divider{
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(22px, 3vw, 30px);
+      line-height: 1.3;
+      text-align: center;
+      color: #0A140F;
+      max-width: 760px;
+      margin: 24px auto 56px;
+    }
+
+    /* ===== Testimonios: pared de 3 columnas con loop infinito ===== */
+    .nv1p-testi-intro{ max-width: 760px; margin: 0 auto 64px; text-align: center; }
+    .nv1p-testi-intro p{
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: clamp(19px, 2.4vw, 25px); line-height: 1.35;
+      color: rgba(10,20,15,0.78); margin: 0 0 14px;
+    }
+    .nv1p-testi-intro p:last-child{ margin-bottom: 0; }
+
+    .nv1p-testi-wall{
+      max-width: 1180px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+      max-height: 760px; overflow: hidden; position: relative;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+              mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    }
+    .nv1p-testi-col{
+      display: flex; flex-direction: column;
+      animation: testiScroll var(--dur, 50s) linear infinite;
+      will-change: transform;
+    }
+    .nv1p-testi-col:hover{ animation-play-state: paused; }
+    .nv1p-testi-set{ display: flex; flex-direction: column; gap: 24px; padding-bottom: 24px; }
+    @keyframes testiScroll{ from{ transform: translateY(0); } to{ transform: translateY(-50%); } }
+
+    .nv1p-testi-card{
+      background: #FFFEFB;
+      border: 1px solid #ece6da;
+      border-left: 3px solid #D6B06A;
+      border-radius: 6px;
+      padding: 24px 22px;
+    }
+    .nv1p-testi-card .nv1p-qa-answer{ font-size: 14px; line-height: 1.62; margin: 0 0 8px; }
+    .nv1p-testi-card .nv1p-qa-answer:last-of-type{ margin-bottom: 0; }
+    .nv1p-testi-card .nv1p-qa-author{ margin-top: 14px; }
+
+    /* Modo edición: desarmar el loop para editar cómodo */
+    body.nv1-edit-mode .nv1p-testi-wall{ max-height: none; overflow: visible; -webkit-mask-image: none; mask-image: none; }
+    body.nv1-edit-mode .nv1p-testi-col{ animation: none; }
+    body.nv1-edit-mode .nv1p-testi-set{ padding-bottom: 0; }
+    body.nv1-edit-mode .nv1p-testi-clone{ display: none; }
+
+    /* Mobile: una columna estática, legible */
+    @media (max-width: 900px){
+      .nv1p-testi-wall{ grid-template-columns: 1fr; max-height: none; overflow: visible; -webkit-mask-image: none; mask-image: none; gap: 16px; }
+      .nv1p-testi-col{ animation: none; }
+      .nv1p-testi-set{ padding-bottom: 0; gap: 16px; }
+      .nv1p-testi-clone{ display: none; }
+    }
 
     /* ===== ENCUESTA (imágenes del PDF) ===== */
     .nv1p-encuesta-img{
@@ -209,6 +277,74 @@
       font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase;
       border: 1px solid rgba(214,176,106,0.25);
     }
+
+    /* ===== Sección "El programa" unificada (dark) ===== */
+    /* La sección dark es full-bleed (margin:0 -100vw): el contenido directo
+       debe re-centrarse o se va fuera de pantalla. */
+    .nv1-pitch[data-section-theme="dark"] .nv1-eyebrow-small,
+    .nv1-pitch[data-section-theme="dark"] .nv1-h2,
+    .nv1-pitch[data-section-theme="dark"] .nv1-lead{
+      max-width: 880px; margin-left: auto; margin-right: auto; text-align: center;
+    }
+    .nv1-pitch[data-section-theme="dark"] .nv1-lead,
+    .nv1-pitch[data-section-theme="dark"] .nv1-body-text{ color: rgba(245,243,238,0.82); }
+    .nv1-pitch[data-section-theme="dark"] .nv1-lead em,
+    .nv1-pitch[data-section-theme="dark"] .nv1-body-text em{ color: #D6B06A; font-style: italic; }
+    .nv1-pitch .nv1p-vsl{ margin: 56px auto; }
+    .nv1-pitch .nv1-promesa-inner{ margin: 8px auto 56px; }
+    .nv1-pitch .nv1-pitch-desc{ max-width: 760px; margin-left: auto; margin-right: auto; }
+
+    /* ===== Portada: nube holi (imagen real) ===== */
+    .nv1-cover{ overflow:hidden; }
+    .nv1-cover .holi{
+      position:absolute; inset:0; top:-6%;
+      display:flex; align-items:center; justify-content:center;
+      pointer-events:none; z-index:1;
+    }
+    .nv1-cover .holi-stage{
+      position:relative; width:min(120vw, 1280px);
+      animation: nvHoliBloom 3.6s cubic-bezier(.22,.61,.36,1) both, nvHoliDrift 28s ease-in-out 3.5s infinite;
+      filter:url(#nvSmoke); will-change:transform, opacity;
+    }
+    .nv1-cover .holi-spread{
+      transform-origin:50% 50%; will-change:transform, opacity;
+      animation: nvHoliBreathe 16s ease-in-out infinite;
+    }
+    .nv1-cover .holi-img{
+      display:block; width:100%; height:auto;
+      mix-blend-mode:screen; opacity:.80;
+      -webkit-mask-image:radial-gradient(ellipse 56% 54% at 50% 50%, #000 18%, rgba(0,0,0,.45) 44%, transparent 68%);
+              mask-image:radial-gradient(ellipse 56% 54% at 50% 50%, #000 18%, rgba(0,0,0,.45) 44%, transparent 68%);
+    }
+    .nv1-cover-vignette{
+      position:absolute; inset:0; z-index:2; pointer-events:none;
+      background:radial-gradient(74% 64% at 50% 44%, rgba(5,8,12,0) 40%, rgba(5,8,12,.6) 100%);
+    }
+    .nv1-cover-grain{
+      position:absolute; inset:0; z-index:2; pointer-events:none;
+      opacity:.11; mix-blend-mode:overlay;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='130' height='130'%3E%3Cfilter id='ng'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23ng)'/%3E%3C/svg%3E");
+      background-size:170px 170px;
+    }
+    .nv1-cover .nv1-cover-inner{ position:relative; z-index:3; transform:translateY(4cm); }
+    .nv1-cover-logo{ margin:8px auto 6px; }
+    /* Logo con barrido de luz (gradiente animado usando el logo como máscara) */
+    .nv1-cover-logo-shine{
+      width:min(90vw, 660px); aspect-ratio: 1591 / 2250; margin:0 auto;
+      -webkit-mask: url("assets/titulo-inspiraccion.png") center / contain no-repeat;
+              mask: url("assets/titulo-inspiraccion.png") center / contain no-repeat;
+      background: linear-gradient(100deg,
+        #F5F3EE 0%, #F5F3EE 38%, #FFF7E6 46%, #D6B06A 50%, #FFF7E6 54%, #F5F3EE 62%, #F5F3EE 100%);
+      background-size: 220% auto;
+      animation: nvLogoShine 5.5s ease-in-out infinite;
+      filter: drop-shadow(0 18px 40px rgba(0,0,0,.6)) drop-shadow(0 2px 10px rgba(0,0,0,.45));
+    }
+    @keyframes nvLogoShine{ 0%{ background-position: 0% 0 } 50%{ background-position: 100% 0 } 100%{ background-position: 0% 0 } }
+    @media (prefers-reduced-motion: reduce){ .nv1-cover-logo-shine{ animation: none; background-position: 50% 0; } }
+    @keyframes nvHoliBloom{ 0%{opacity:0; transform:scale(.7)} 60%{opacity:1} 100%{opacity:1; transform:scale(1)} }
+    @keyframes nvHoliDrift{ 0%,100%{transform:translate(0,0) rotate(0deg) scale(1)} 50%{transform:translate(0,-1.4%) rotate(1.6deg) scale(1.03)} }
+    @keyframes nvHoliBreathe{ 0%,100%{transform:scale(1); opacity:1} 50%{transform:scale(1.1); opacity:.86} }
+    @media (prefers-reduced-motion: reduce){ .nv1-cover .holi-stage, .nv1-cover .holi-spread{ animation:none !important } }
 
     /* ===== BANNER de prueba ===== */
     .nv1p-prueba-banner{
@@ -247,7 +383,8 @@
     .nv1-list, .nv1-list li, .nv1-stat-block,
     .nv1p-modulo, .nv1p-bono, .nv1p-entrenamiento, .nv1p-fundamento,
     .nv1p-qa-block, .nv1p-chart-card, .nv1p-cert,
-    .nv1p-modulo-footer, .nv1-body-text {
+    .nv1p-modulo-footer, .nv1-body-text,
+      .nv1-bonos .nv1-h2, .nv1p-bonos-sub {
       opacity: 1 !important;
     }
 
@@ -412,6 +549,47 @@
     }
     .nv1p-bono-content p strong{ color: #D6B06A; }
 
+    /* ---- Encabezado de bonos con nube holi ---- */
+    .nv1p-bonos-head{
+      position: relative;
+      max-width: 880px;
+      margin: 0 auto;
+      text-align: center;
+      z-index: 1;
+    }
+    .nv1p-bonos-head .nv1-eyebrow-small{ position: relative; z-index: 2; }
+    .nv1p-bonos-head .nv1-h2{ position: relative; z-index: 2; }
+    .nv1p-bonos-sub{
+      position: relative; z-index: 2;
+      font-family: 'Schibsted Grotesk', sans-serif;
+      font-size: 16px; line-height: 1.5;
+      color: rgba(245,243,238,0.72);
+      margin: 16px auto 0;
+      max-width: 560px;
+    }
+    .nv1p-bonos-holi{
+      position: absolute;
+      top: -118px; right: -40px;
+      width: min(34vw, 300px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.78;
+    }
+    .nv1p-bonos-holi img{
+      display: block; width: 100%; height: auto;
+      mix-blend-mode: screen;
+      -webkit-mask-image: radial-gradient(ellipse 58% 58% at 52% 46%, #000 16%, rgba(0,0,0,0.42) 48%, transparent 72%);
+              mask-image: radial-gradient(ellipse 58% 58% at 52% 46%, #000 16%, rgba(0,0,0,0.42) 48%, transparent 72%);
+      animation: nvBonosHoli 14s ease-in-out infinite;
+    }
+    @keyframes nvBonosHoli{
+      0%,100%{ transform: translate(0,0) scale(1); }
+      50%{ transform: translate(-1.5%,-2%) scale(1.05); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .nv1p-bonos-holi img{ animation: none; }
+    }
+
     /* ============ ENCUESTA (Chart.js) ============ */
     .nv1p-encuesta-grid{
       display: grid;
@@ -497,16 +675,35 @@
 
 <main class="nv1-main">
 
+  <!-- Filtro de humo para la nube holi de la portada -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="nvSmoke">
+      <feTurbulence type="fractalNoise" baseFrequency="0.009 0.013" numOctaves="2" seed="6" result="n">
+        <animate attributeName="baseFrequency" dur="30s" values="0.009 0.013; 0.015 0.009; 0.009 0.013" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="58" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
   <!-- 1. COVER -->
   <section class="nv1-cover" data-section-theme="dark">
     <div class="nv1-cover-bg"></div>
+    <!-- Nube holi (imagen real) detrás del contenido -->
+    <div class="holi" aria-hidden="true">
+      <div class="holi-stage">
+        <div class="holi-spread">
+          <img class="holi-img" src="assets/nube-holi.png" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="nv1-cover-vignette"></div>
+    <div class="nv1-cover-grain"></div>
     <div class="nv1-cover-inner">
       <span class="nv1-eyebrow">Julio 2026</span>
-      <h1 class="nv1-cover-title">InspirAcción <em>Nivel 1</em><span class="nv1-dot">.</span></h1>
-      <p class="nv1-cover-subtitle">"El entrenamiento del guerrero"</p>
-      <div class="nv1-cover-img-wrap">
-        <img src="assets/cover.jpg" alt="InspirAcción Nivel 1 — Julio 2026" loading="eager">
+      <div class="nv1-cover-logo">
+        <div class="nv1-cover-logo-shine" role="img" aria-label="InspirAcción Nivel 1"></div>
       </div>
+      <p class="nv1-cover-subtitle">Entrenamiento online guiado</p>
       <div class="nv1-cover-meta">
         <span>Entrenamiento en libertad emocional</span>
         <span class="nv1-sep">·</span>
@@ -519,32 +716,16 @@
     </div>
   </section>
 
-  <!-- 2. EL PROGRAMA / Pitch -->
-  <section class="nv1-section nv1-pitch" data-section-theme="light">
+  <!-- 2. EL PROGRAMA + VSL + PROMESA (sección unificada) -->
+  <section class="nv1-section nv1-pitch" data-section-theme="dark">
     <div class="nv1-eyebrow-small">El programa</div>
-    <h2 class="nv1-h2">Experimentá el poder creativo<br><em>de la verdadera libertad emocional.</em></h2>
+    <h2 class="nv1-h2">Comprendé la logica Contra-Intuitiva del vinculo entre <em>tu mente y tus emociones.</em></h2>
     <p class="nv1-lead">
-      Vas a aprender a tomar decisiones claras, reducir el sufrimiento y el estrés, y activar los mecanismos creativos e intuitivos que están directamente asociados a los estados de abundancia.
+      3 meses de entrenamiento aplicado directamente a todas las áreas de tu vida, usando tus situaciones cotidianas para ordenar tu mente, liberar tus emociones y desbloquear tu abundancia.
     </p>
-    <p class="nv1-body-text">
-      Este programa es el puente entre la inspiración y la Acción. Un proceso de 3 meses diseñado para que detectes tus <em>reacciones automáticas</em> y las reemplaces por <em>acciones intuitivas</em>. Es un proceso sencillo, práctico y profundo de despertar de consciencia.
-    </p>
-    <p class="nv1-body-text">
-      Lo vas a conseguir desarrollando <em>habilidades creativas y resolutivas</em> con prácticas fundamentadas en neurociencia, psicología y espiritualidad que te guiaré a aplicar en cada área de tu vida en el día a día.
-    </p>
-    <p class="nv1-body-text">
-      Me gusta decir que este programa tiene el propósito de pasar de <em>los problemas que te cansaste de tener</em> a los <em>problemas que siempre quisiste tener</em>.
-    </p>
-    <p class="nv1-body-text" style="border-left:2px solid #D6B06A;padding-left:18px;font-style:italic;color:rgba(10,20,15,0.65);">
-      Por poner un ejemplo personal: pasé de tener problemas de deudas y escasez económica durante más de 15 años a los "problemas" actuales de tener que armar equipo y delegar tareas debido al crecimiento de la escuela y tener que formar a los primeros guías del método para sumar profesores y sesiones a los programas.
-    </p>
-    <p class="nv1-body-text">
-      Otros casos que se ven en practicantes de este programa: <em>mejorar sus vínculos, su trabajo, su economía, descubrir su propósito, actualizar hábitos, y recuperar el disfrute</em>. Todo esto trabajando en el origen donde todo converge y donde todo se origina: tu sistema de percepción. El software con el que leés tu realidad.
-    </p>
-  </section>
 
-  <!-- 3. PROMESA + VSL -->
-  <section class="nv1-section nv1-promesa" data-section-theme="dark">
+    <div class="nv1p-vsl" aria-hidden="true">VSL · Video del programa</div>
+
     <div class="nv1-promesa-inner">
       <p class="nv1-promesa-text">
         Volvé a la abundancia de crear tu vida desde la <em>autenticidad</em> y la <em>determinación</em> de tu pensamiento intuitivo. Liberate de una vez de todos los condicionamientos espirituales de turno (técnicas, pasos, hábitos, prácticas).
@@ -559,7 +740,18 @@
           <span>practicantes ya transformados por el método</span>
         </span>
       </div>
-      <div class="nv1p-vsl" aria-hidden="true">VSL · Video del programa</div>
+    </div>
+
+    <div class="nv1-pitch-desc">
+      <p class="nv1-body-text">
+        Un proceso diseñado para que detectes tus <em>reacciones automáticas</em> y las reemplaces por <em>acciones intuitivas</em>. Es un proceso sencillo, práctico y profundo de despertar de consciencia.
+      </p>
+      <p class="nv1-body-text">
+        Lo vas a conseguir desarrollando <em>habilidades creativas y resolutivas</em> con prácticas fundamentadas en neurociencia, psicología, fisiologia, fisica cuantica y espiritualidad que te guiaré a aplicar en cada área de tu vida en el día a día.
+      </p>
+      <p class="nv1-body-text">
+        Me gusta decir que este programa tiene el propósito de pasar de <em>los problemas que te cansaste de tener</em> a los <em>problemas que siempre quisiste tener</em>.
+      </p>
     </div>
   </section>
 
@@ -594,20 +786,16 @@
     <div class="nv1-eyebrow-small">Quién es tu instructor</div>
     <div class="nv1-instructor-grid">
       <div class="nv1-instructor-img">
-        <img src="../../assets/agustin.jpg" alt="Agustín Trowell Kissam" loading="lazy">
+        <img src="../../assets/agustin.webp" alt="Agustín Trowell Kissam" loading="lazy">
       </div>
       <div class="nv1-instructor-text">
         <h2 class="nv1-h2">Agustín Trowell Kissam</h2>
-        <p class="nv1-h3" style="font-family:'Schibsted Grotesk',sans-serif;font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:#B8893E;margin-bottom:24px;">Creador del Método Contra-Intuitivo</p>
-        <p class="nv1-body-text">Fundador de la Escuela del Pensamiento Intuitivo y de Move Mentoring — Escuela de Movimiento junto con Martín López Grosman.</p>
-        <p class="nv1-body-text">Mi camino comenzó gracias al colapso y una suerte contra-intuitiva. Tenía 22 años, venía de un año de ataques de pánico y acababa de quebrar nuestra empresa familiar (una fábrica de camisas creada por mi abuelo). Ya no podía pagar mi alquiler, no existían propiedades ni ahorros en mi familia, y se vivía un ambiente de angustia y frustración, desbordados de estrés por no ver la salida.</p>
-        <p class="nv1-body-text">Ese era mi contexto el día en que comencé a experimentar una profunda experiencia de éxtasis que duró casi un año ininterrumpido (un estado interno de profunda paz, presencia y unidad).</p>
-        <p class="nv1-body-text">A esta experiencia le siguieron unos cuatro años de ansiedad, depresión, miedos y síntomas en los que me dediqué a practicar y estudiar en profundidad sobre psicología, neurociencia, fisiología, terapias complementarias, yoga, meditación, exposición en hielo, ayunos, dietas y hábitos. Entonces comprendí algo fundamental: ni la información intelectual ni la física, ni las experiencias previas de iluminación te van a liberar de una programación de códigos contra-intuitivos.</p>
-        <p class="nv1-body-text">Aprendí que, para tu mente, salir de su programa automático representa el peligro de muerte; por este motivo bloquea todas las posibilidades del verdadero cambio y las reemplaza por la idea de que existen cosas o prácticas externas a vos que pueden sanarte o liberarte.</p>
-        <p class="nv1-body-text">Esta fue la experiencia que me impulsó a guiar a más personas a la libertad emocional mediante un programa al que llamé InspirAcción, que dejó como resultado dos manuales (Nivel 1 y 2) donde vi nacer el sistema al que hoy dedico mi vida: el Método Contra-Intuitivo.</p>
-        <p class="nv1-body-text">Me formé con Enric Corbera y estudié Neurociencias con Nazareth Castellanos. También tuve la oportunidad de guiarme con mentores de negocios de un perfil espiritual como Laín García Calvo, Mariano Rodríguez y Sofía Contreras, gracias a los cuales creé Proyección, un programa de proyecto y abundancia.</p>
-        <p class="nv1-body-text">Hoy, además de dirigir la Escuela del Pensamiento Intuitivo y Move Mentoring, soy profesor de Neurociencia y Psicología en la escuela Soma Yoga y continúo dando sesiones 1-1.</p>
-        <p class="nv1-body-text" style="font-style:italic;border-left:2px solid #D6B06A;padding-left:18px;">Mi propósito es acompañar a otros a desprogramar sus mecanismos limitantes para que vuelvan a elegir quiénes quieren ser, y recuerden la abundancia que llevan dentro y su reflejo inevitable en el mundo material.</p>
+        <p class="nv1-h3" style="font-family:'Schibsted Grotesk',sans-serif;font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:#B8893E;margin-bottom:24px;">Creador del Método Contra-Intuitivo, fundador de la Escuela del Pensamiento Intuitivo y con-fundador de la escuela de movimiento Move Mentoring. Profesor en las formaciones de la escuela SomaYoga. </p>
+        <p class="nv1-body-text">A mis 22 años mi realidad colapsó entre ataques de pánico, la quiebra del negocio familiar, deudas, y ningun patrimonio a favor en la familia. En ese caos fue que experimenté de forma espontánea un estado expandido de conciencia que se sostuvo casi un año. No fue un bienestar pasajero, sino una vivencia trascendental de unidad absoluta que disolvió toda separación a la que describí como “extasis”. Me sentia realizado, completo y enamorado de absolutamente todo. Sentir esa plenitud en pleno caos me dejó nuevas preguntas: ¿Esto significa que siempre tuve la posibilidad de sentirme asi y no la veia? ¿Qué cambia internamente para que el afuera deje de condicionarnos?</p>
+        <p class="nv1-body-text">Pasé los siguientes cinco años obsesionado con hallar una respuesta científica. Me sumergí en la neurociencia y la fisiologia de la salud, pero caí en la neurosis de acumular comportamientos, hábitos, dietas y terapias logrando unicamente aumentar la obsesión, la frustración y la ansiedad. ¿Como salí del este loop? Comenzando por el final. Un ejemplo fue el día en que decidí renunciar a mi creencia de que estaba enfermo. Ese día me libere del peso de cientos de hábitos, condiciones especiales y miedos que me tenían atado. Paradójicamente me entere que nunca estuve enfermo y entonces los síntomas desaparecieron. Las ilusiones del ego pueden ser muy convincentes, Es contra-intuitivo. Otro ejemplo es cuando decidí resolver mi situación económica. Fue una odisea emocional el admitir que esto era importante para mi y que no necesitaba justificarlo. Llegue a tener ataques de pánico cuando por fin empezaron a ingresarme grandes cantidades de dinero y entonces pude ver con claridad todos los programas inconscientes a los que ni siquiera sabia que me enfrentaba. En ambos casos la transformación fue muy rapida y no tuve que hacer nada mas que dejar morir al personaje. Estar dispuesto a perder aquello que mas creia que anhelaba. Entonces por pirmera vez entendi lo que significa el amor incondicional y el inmenso poder de conlleva. </p>
+        <p class="nv1-body-text">De pronto todo comenzó a llegar a mi a una velocidad inimaginada, dinero, viajes, vínculos, mi cuerpo mejoro, la piel de mi cara cambió, mi autoestima aumento, mi reconocimiento y mis proyectos crecieron a medida que se volvían mas auténticos. Y entonces me encontre con dinero, tiempo y energia para empezar a ayudar a otras personas.</p>
+        <p class="nv1-body-text">Para dar rigor a este proceso, estudié Neurociencias con Nazareth Castellanos, Bioneuroemoción con Enric Corbera, y entonces nacio el programa InspirAcción. Tambien trabaje bajo la guia de mentores de negocios con visión espiritual como Lain Garcia Calvo, Sofia Contreras y Mariano Rodriguez, quienes me inspiraron a crear Proyección, una mentoria donde guio a las personas que aprendan a usar sus proyectos personales como un mapa para la evolución interna y la abundancia.</p>
+        <p class="nv1-body-text" style="font-style:italic;border-left:2px solid #D6B06A;padding-left:18px;">Mi propósito es guiar a las personas a desprogramar sus mecanismos limitantes para expresar su autenticidad y crear su vida sin miedos, culpas ni juicios. El camino es contra-intuitivo: cuando liberás la presión sobre tus metas, ellas solas te vienen a buscar.</p>
       </div>
     </div>
   </section>
@@ -615,10 +803,12 @@
   <!-- 6. EL PROGRAMA PASO A PASO -->
   <section class="nv1-section nv1-programa" data-section-theme="light">
     <div class="nv1-eyebrow-small">El programa paso a paso</div>
+    <!-- [REVISIÓN AGUSTÍN 20/05] Indicó: "Sacar esta parte, y dejar directamente
+         la sección de material de estudio que tiene lo mismo pero detallado".
+         Resumen de los 6 módulos OCULTADO (reversible: quitar este comentario).
     <h2 class="nv1-h2">El programa consta de <em>6 módulos</em><br>quincenales.</h2>
     <p class="nv1-lead">Cada 15 días se desbloquea un nuevo módulo de prácticas y de estudio.</p>
 
-    <!-- 6 módulos nativos -->
     <div class="nv1p-modulos-grid">
       <article class="nv1p-modulo">
         <div class="nv1p-modulo-num">1</div>
@@ -657,6 +847,7 @@
         <p class="nv1p-modulo-sub">El estado de la experiencia</p>
       </article>
     </div>
+    -->
 
     <!-- Certificación -->
     <div class="nv1p-cert">
@@ -688,12 +879,12 @@
       <div class="nv1-module">
         <div class="nv1-num">03</div>
         <h4>Sesión en vivo de Aplicación &amp; Consultoría</h4>
-        <p>Abordamos consultas de casos reales de quienes quieran participar, revisamos procesos y resolvemos dudas. Se entrega la grabación dentro de las 48hs para ver en diferido.</p>
+        <p>Abordamos consultas de casos reales de quienes quieran participar. Revidamos procesos y resolvemos dudas del programa y de los entrenamientos. Se entrega la grabacion dentro de las 48hs para ver en diferido.</p>
       </div>
       <div class="nv1-module">
         <div class="nv1-num">04</div>
         <h4>WhatsApp como extensión de las sesiones en vivo</h4>
-        <p>Nuestro punto de encuentro diario. Aquí transcurren los desafíos semanales, exposición de ejemplos y envío de audios respondiendo dudas. No es condición usarlo, pero es recomendable por el valor que aporta.</p>
+        <p>Es nuestro punto de encuentro diario. Aqui trancurren los desafios semanales. Exposicion de ejemplos. Envio audios respondiendo dudas y profunizando con explicaciones. No es condicion usarlo, pero es recomendable por el valor que aporta.</p>
       </div>
     </div>
 
@@ -704,8 +895,10 @@
 
   <!-- 7. BONOS EXTRAS -->
   <section class="nv1-section nv1-bonos" data-section-theme="dark">
-    <div class="nv1-eyebrow-small" style="color:#D6B06A;">Bonos extras</div>
-    <h2 class="nv1-h2">Por inscribirte a la 4ª generación<br><em>te llevás 5 bonos.</em></h2>
+    <div class="nv1p-bonos-head">
+      <h2 class="nv1-h2"><em>Bonos extras</em></h2>
+      <p class="nv1p-bonos-sub">Por inscribirte a la 4ª generación del Nivel 1 de InspirAcción.</p>
+    </div>
 
     <div class="nv1p-bonos-list">
       <article class="nv1p-bono">
@@ -849,7 +1042,7 @@
   <!-- 9. MATERIAL DE ESTUDIO -->
   <section class="nv1-section nv1-fundamentos" data-section-theme="light">
     <div class="nv1-eyebrow-small">Material de estudio</div>
-    <h2 class="nv1-h2"><em>Los 5 fundamentos</em><br>del programa.</h2>
+    <h2 class="nv1-h2">El programa consta de <em>6 módulos</em><br>quincenales.</h2>
     <p class="nv1-lead">Cada uno de los siguientes temas establece las bases sobre las que fueron creados los entrenamientos: Neurociencia, Psicología, Fisiología, Metafísica, Filosofía y Espiritualidad.</p>
 
     <div class="nv1p-fundamentos-grid">
@@ -859,8 +1052,8 @@
           <h3>El problema de la psique</h3>
           <ul class="nv1p-fundamento-bullets">
             <li><b>El caos del mundo de las ideas:</b> la naturaleza de la mente es caótica. Esto genera confusión y contradicciones internas.</li>
-            <li><b>La paradoja orden-desorden:</b> nuestro desorden interno suele nacer del esfuerzo por sostener un orden externo, y viceversa.</li>
-            <li><b>Órdenes de realidad:</b> no vemos las cosas como son, sino como somos. Aprendemos a desafiar las historias limitantes que condicionan nuestra percepción.</li>
+            <li><b>La paradoja orden-desorden:</b> Nuestro desorden interno suele nacer del esfuerzo (el "deber ser") por sostener un orden externo, y viceversa.</li>
+            <li><b>Órdenes de realidad:</b> No vemos las cosas como son, sino como somos. Aquí aprendemos a bajar a tierra y desafiar las historias limitantes que condicionan nuestra percepción.</li>
           </ul>
         </div>
       </div>
@@ -870,9 +1063,9 @@
         <div>
           <h3>El estado de incertidumbre</h3>
           <ul class="nv1p-fundamento-bullets">
-            <li><b>El camino contra-intuitivo:</b> al inicio, tu cuerpo se resistirá a habitar la incertidumbre. En ese punto exacto comienza tu verdadera libertad.</li>
-            <li><b>El guardián del umbral:</b> el ego protege este límite; atravesarlo requiere el valor de desafiar lo que creíamos que era nuestra "intuición".</li>
-            <li><b>Dejar ir:</b> "Solo podemos tener aquello que estamos dispuestos a perder".</li>
+            <li><b>El camino contra-intuitivo:</b> Al inicio, tu cuerpo se resistirá a habitar la incertidumbre o la idea de un vacío. Sin embargo, es en ese punto exacto donde comienza tu verdadera libertad.</li>
+            <li><b>El guardián del umbral:</b> El ego protege este límite; atravesarlo requiere el valor de desafiar lo que hasta entonces creíamos que era nuestra "intuición"</li>
+            <li><b>Dejar ir:</b> Partimos de la premisa: “Solo podemos tener aquello que estamos dispuestos a perder”.</li>
           </ul>
         </div>
       </div>
@@ -882,10 +1075,10 @@
         <div>
           <h3>El poder de la voluntad</h3>
           <ul class="nv1p-fundamento-bullets">
-            <li><b>Los 3 cerebros y sus motores:</b> diferencia fundamental entre Instinto, Impulso, Intención y Voluntad.</li>
-            <li><b>Meta-cognición:</b> desarrollamos la habilidad de observar cómo observamos.</li>
-            <li><b>Neurociencia de la voluntad:</b> no se trata de hábito ni fuerza bruta, sino de la presencia como motor del movimiento.</li>
-            <li><b>El momento clave:</b> entre el estímulo y la respuesta se encuentra nuestra libertad de elegir quiénes queremos ser.</li>
+            <li><b>Los 3 cerebros y sus motores:</b> Analizamos la diferencia fundamental entre Instinto, Impulso, Intención y Voluntad.</li>
+            <li><b>Meta-cognición:</b> Desarrollamos la habilidad de observar cómo observamos.</li>
+            <li><b>Neurociencia de la voluntad:</b> Entendemos que no se trata de hábito o fuerza bruta, sino de la presencia como motor del movimiento.</li>
+            <li><b>El momento clave:</b> Entre el estímulo y la respuesta se encuentra nuestra libertad de elegir quiénes queremos ser. Aprendemos a distinguir cuándo elegimos con libertad y cuándo por condicionamiento.</li>
           </ul>
         </div>
       </div>
@@ -895,9 +1088,9 @@
         <div>
           <h3>Ordenar con la palabra</h3>
           <ul class="nv1p-fundamento-bullets">
-            <li><b>Abracadabra (crear con la palabra):</b> el discurso actúa como delator de sistemas de creencias antiguos.</li>
-            <li><b>La cara oculta de la manifestación:</b> mientras el ego cree que crea con la palabra, las verdaderas creaciones nacen del vacío de la escucha.</li>
-            <li><b>Lenguaje condicionado:</b> a menudo buscamos las llaves de la evolución teniendo las llaves en la mano; no las vemos porque están demasiado a la vista.</li>
+            <li><b>Abracadabra (crear con la palabra):</b> El discurso actúa como delator de sistemas de creencias antiguos. Aprendemos a detectar bloqueos escuchando lo que decimos.</li>
+            <li><b>La cara oculta de la manifestación:</b> Mientras el ego cree que crea con la palabra, las verdaderas creaciones nacen del vacío de la escucha.</li>
+            <li><b>Lenguaje condicionado:</b> A menudo buscamos las llaves de la evolución teniendo las llaves en la mano; no las vemos porque están demasiado a la vista.</li>
           </ul>
         </div>
       </div>
@@ -905,14 +1098,14 @@
       <div class="nv1p-fundamento">
         <div class="nv1p-fundamento-num">V</div>
         <div>
-          <h3>Estado de flow</h3>
+          <h3>El obstaculo es el camino</h3>
           <ul class="nv1p-fundamento-bullets">
-            <li><b>Estoicismo:</b> la vida, las personas y las circunstancias como práctica espiritual cotidiana.</li>
-            <li><b>Enemigos y dragones:</b> entendemos que tus aparentes enemigos son, en realidad, tus maestros.</li>
-            <li><b>La ciencia de darse cuenta:</b> el miedo o el caos no significan que algo esté mal; a menudo indican que has empezado a ver lo que antes ignorabas, dándote la oportunidad de cambiarlo.</li>
-            <li><b>Estrategias ante el miedo:</b> el miedo suele ser un autocastigo para no vivir la vida que realmente resuena en nuestro interior.</li>
-            <li><b>Tomar riesgos:</b> un marcador de alto valor personal. Cuando la vida deja de ser una aventura, es momento de preguntarse qué riesgos venimos postergando.</li>
-            <li><b>Productividad y espiritualidad:</b> cómo programar objetivos materiales que contribuyan a tus objetivos internos.</li>
+            <li><b>Estoicismo:</b> La vida, las personas y las circunstancias como práctica espiritual cotidiana.</li>
+            <li><b>Enemigos y dragones:</b> Entendemos que tus aparentes enemigos son, en realidad, tus maestros.</li>
+            <li><b>La ciencia de darse cuenta:</b> El caos no significan que algo esté mal; a menudo indican que ahora vez lo que antes ignorabas.</li>
+            <li><b>Estrategias ante el miedo:</b> El miedo suele ser un autocastigo para no vivir la vida que realmente resuena en nuestro interior.</li>
+            <li><b>Tomar riesgos:</b> Un marcador de alto valor personal. Cuando la vida deja de ser una aventura, es momento de preguntarse qué riesgos venimos postergando.</li>
+            <li><b>Productividad y espiritualidad:</b> Cómo programar objetivos materiales que contribuyan a tus objetivos internos.</li>
           </ul>
         </div>
       </div>
@@ -956,119 +1149,226 @@
 
   <!-- 11. TRANSICIÓN: LO QUE CAMBIA -->
   <section class="nv1p-transicion">
-    <h2>Lo que cambia cuando<br>el <em>método te da libertad</em>.</h2>
+    <h2>Lo que cambia cuando<br><em>entrenas tu libertad</em>:</h2>
     <p class="nv1p-transicion-meta">Más de 100 personas ya pasaron por el programa</p>
   </section>
 
   <!-- 12. TESTIMONIOS Q&A LARGOS (páginas 22 y 23 del PDF) -->
   <section class="nv1p-testimonios-qa">
     <div class="nv1-inner">
-      <h2>Esto reportaron los <em>certificados del Nivel 1</em></h2>
+      <h2>Esto reportaron los <em>certificados del Nivel 1</em>:</h2>
       <p class="nv1p-qa-sub">De la última generación</p>
 
-      <p class="nv1p-qa-answer" style="text-align:center;max-width:760px;margin:0 auto 56px;font-style:italic;color:rgba(10,20,15,0.65);">
-        Para realizar este entrenamiento muchos de ustedes invirtieron la energía que apenas tenían, el tiempo que les faltaba y el dinero de sus ahorros o que pidieron prestado. Si es tu caso, siendo completamente honesto/a con vos: <strong>¿considerás que lo valió?</strong> <br>¿Qué le dirías a alguien que está en la misma situación en la que estabas antes de tomar la decisión?
-      </p>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Sí, vale la pena, vale la pena el esfuerzo, el dinero y la energía. Es agradecimiento y movilizante, por momentos dan ganas de huir pero creo que es necesario para poder hacer el proceso.</p>
+      <div class="nv1p-testi-intro">
+        <p>Les preguntamos:"Para realizar este entrenamiento muchos de ustedes invirtieron la energía que apenas tenían, el tiempo que les faltaba y el dinero de sus ahorros o que pidieron prestado. Si es tu caso, siendo completamente honesto/a con vos: <strong>¿considerás que lo valió?</strong> ¿Qué le dirías a alguien que está en la misma situación en la que estabas antes de tomar la decisión?"</p>
+        <p>Y también: "Si tuvieras que explicar qué hace a InspirAcción diferente a otras propuestas, ¿Qué dirías?"</p>
       </div>
 
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Me parece muy valiosa la formación, te abre puertas hacia tu interior, te abre a nuevos puntos de vista y eso lo convierte en una herramienta que te ayuda a sanar.</p>
+      <div class="nv1p-testi-wall">
+      <div class="nv1p-testi-col" style="--dur:50s">
+        <div class="nv1p-testi-set">
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Siento que lo valió completamente, todavía en el proceso del modulo 6 jejej. pero lo vale y lo valió y continua, porque es algo de toda la vida, y no de unos meses nada más. Es un aprendizaje, para volver a revisarlo y practicarlo, y entrenarlo y volverlo a ver y volver a entrenar. Le diría a esa persona que vaya para adelante, que confié en su fuego interno y que si la intuición lo pide, que la escuche y vaya. (Lo escribo y me río porque lo que le digo a esa persona me lo estoy diciendo a mi, muchas veces no lo aplico, pero cuando lo aplico, es por ahí)</p>
+            <p class="nv1p-qa-author">Alejandro Figueras</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Si lo super valió, lo dudé, pero en cuanto comenzo supe que estaba en el camino correcto y estoy muy feliz con todo el conocimiento aprendido y sobre todo la energia del grupo y todo lo leido! Sobre todo lo valió por que fue muy desafiante y siento que lo pasé por el cuerpo y ahora tengo otra creencia sobre quien soy y lo que puedo hacer y como ver situaciones y conflictos.</p>
+            <p class="nv1p-qa-author">Mariano Tombeur</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Sí, lo valió. Y creo recién comienza...</p>
+            <p class="nv1p-qa-answer">Le diría que hay decisiones en la vida que dependen de esa voluntad y de esa escucha interna que no vale a quedarnos en cada apoyo en la almohada, en cada momento en el indoloro, en cada minuto al azar.</p>
+            <p class="nv1p-qa-answer">Y que si esa voluntad y escucha están en duda o sufrimiento, necesitan sólo una decisión, sólo una, sólo un momento de inconsciencia para entrenar y transformar este Ser que nos acompaña con quien tenemos la inevitable conveniencia de cerrar la relación más honesta del mundo: experimentá InspirAcción.</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Lo valió muchisimo. Le diría que no tenga miedo, que no se va a arrepentir, que lo vea como una inversión en sí mismo, que no hay forma que nada cambie luego de esto. Y que confíe en que se dieron las condiciones perfectas para que llegue a este contenido, que se entregue al juego de lo que es, y se prepare para despertar porque esto es picantiiiisimooo</p>
+            <p class="nv1p-qa-author">Wanda Griffero</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">El contenido es el diferencial y la forma en la que Agus lo explica.</p>
+            <p class="nv1p-qa-author">Aldana López</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">El temario y los conceptos están muy por fuera de lo común, la propuesta te sumerge en un hábitar distinto con uno mismo</p>
+            <p class="nv1p-qa-author">David Nehuén Dos Santos Bauer</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">La coherencia de todo el proceso. El contenido teórico es excelente, los ejercicios con propósitos definidos, las clases presenciales donde abordamos ejemplos prácticos, y aplicables en las vidas de cada uno. Como todo se va intentando y va contando de mucho sentido.</p>
+            <p class="nv1p-qa-author">Natalia estela cecere</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Que es un entrenamiento de la mente - parece terapia (y en cierto punto lo es!) pero es una práctica para re programar , re conocer, re aprender, consciente mente Se aprende de cómo funciona el cerebro, la mente , el SNC, etc para luego desarticular o re articularlo para nuestro beneficio. No es fácil, y por momentos incómodo pero por ahí es.</p>
+            <p class="nv1p-qa-author">Patricia Ligia</p>
+          </div>
+        </div>
+        <div class="nv1p-testi-set nv1p-testi-clone" aria-hidden="true">
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Siento que lo valió completamente, todavía en el proceso del modulo 6 jejej. pero lo vale y lo valió y continua, porque es algo de toda la vida, y no de unos meses nada más. Es un aprendizaje, para volver a revisarlo y practicarlo, y entrenarlo y volverlo a ver y volver a entrenar. Le diría a esa persona que vaya para adelante, que confié en su fuego interno y que si la intuición lo pide, que la escuche y vaya. (Lo escribo y me río porque lo que le digo a esa persona me lo estoy diciendo a mi, muchas veces no lo aplico, pero cuando lo aplico, es por ahí)</p>
+            <p class="nv1p-qa-author">Alejandro Figueras</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Si lo super valió, lo dudé, pero en cuanto comenzo supe que estaba en el camino correcto y estoy muy feliz con todo el conocimiento aprendido y sobre todo la energia del grupo y todo lo leido! Sobre todo lo valió por que fue muy desafiante y siento que lo pasé por el cuerpo y ahora tengo otra creencia sobre quien soy y lo que puedo hacer y como ver situaciones y conflictos.</p>
+            <p class="nv1p-qa-author">Mariano Tombeur</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Sí, lo valió. Y creo recién comienza...</p>
+            <p class="nv1p-qa-answer">Le diría que hay decisiones en la vida que dependen de esa voluntad y de esa escucha interna que no vale a quedarnos en cada apoyo en la almohada, en cada momento en el indoloro, en cada minuto al azar.</p>
+            <p class="nv1p-qa-answer">Y que si esa voluntad y escucha están en duda o sufrimiento, necesitan sólo una decisión, sólo una, sólo un momento de inconsciencia para entrenar y transformar este Ser que nos acompaña con quien tenemos la inevitable conveniencia de cerrar la relación más honesta del mundo: experimentá InspirAcción.</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Lo valió muchisimo. Le diría que no tenga miedo, que no se va a arrepentir, que lo vea como una inversión en sí mismo, que no hay forma que nada cambie luego de esto. Y que confíe en que se dieron las condiciones perfectas para que llegue a este contenido, que se entregue al juego de lo que es, y se prepare para despertar porque esto es picantiiiisimooo</p>
+            <p class="nv1p-qa-author">Wanda Griffero</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">El contenido es el diferencial y la forma en la que Agus lo explica.</p>
+            <p class="nv1p-qa-author">Aldana López</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">El temario y los conceptos están muy por fuera de lo común, la propuesta te sumerge en un hábitar distinto con uno mismo</p>
+            <p class="nv1p-qa-author">David Nehuén Dos Santos Bauer</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">La coherencia de todo el proceso. El contenido teórico es excelente, los ejercicios con propósitos definidos, las clases presenciales donde abordamos ejemplos prácticos, y aplicables en las vidas de cada uno. Como todo se va intentando y va contando de mucho sentido.</p>
+            <p class="nv1p-qa-author">Natalia estela cecere</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Que es un entrenamiento de la mente - parece terapia (y en cierto punto lo es!) pero es una práctica para re programar , re conocer, re aprender, consciente mente Se aprende de cómo funciona el cerebro, la mente , el SNC, etc para luego desarticular o re articularlo para nuestro beneficio. No es fácil, y por momentos incómodo pero por ahí es.</p>
+            <p class="nv1p-qa-author">Patricia Ligia</p>
+          </div>
+        </div>
       </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Considero que sí, valió y más. Me agradezco por haber dicho sí en ese momento en el que mi cuenta bancaria no daba fe de que podamos pagarlo. Me agradezco haber saltado porque lo que siento que me llevo es realmente invaluable. Le diría que en este mundo, dónde casi todo invita a mirar afuera, este programa donde encontrás herramientas súper amorosas y prácticas para conocerte más, mejor, hacerte cargo de tu vida y sobre todo sufrir menos es para todo aquel que quiera cambios reales en su existencia. Que no hay forma de arrepentirse.</p>
+      <div class="nv1p-testi-col" style="--dur:60s">
+        <div class="nv1p-testi-set">
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Hacerse responsable de uno mismo tambien tiene que ver con explorar los lugares mas ocultos que a veces ni sabemos que los tenemos pero el grupo y la comunidad acompaña de forma amorosa y que cada uno va a su tiempo, no hay prisa.</p>
+            <p class="nv1p-qa-author">Camila Mansilla Maturana</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Depende desde donde nace esta decisión y tu capacidad de inpirarte, poner foco, voluntad, hacer el trabajo y porque no abandonarlo para sentir. Creo que el único requisito es saber que algo más grande que una situación te motiva, que tienes curiosidad, algo te impulsa y deseas saber lo que está dentro de ti.</p>
+            <p class="nv1p-qa-author">Maitena Asunción Pérez Echave</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Primero y más importante que es una inversión para tu salud mental , partiendo de esa base , invertir en uno mismo es lo más auténtico y placentero que harás. Le diría que se anime a preguntarse cosas, le diría que se atreva a un despertar diferente, a entrenar la cabeza para que pueda mejorar día a día y no preocuparse porque cosas que solo ocupan lugar con el ego de amigo y no resuelven nada de tu aquí y ahora.</p>
+            <p class="nv1p-qa-author">Mariano sacheri</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Considero que lo valió y más. Me agradezco por haber dicho sí en ese momento en el que mi cuenta bancaria no daba fé de que podamos pagarlo! Me agradezco haber saltado porque lo que siento que me llevo es realmente invaluable. Le diría que en este mundo, dónde casi todo invita a mirar afuera, este programa donde encontras herramientas súper amorosas y prácticas para conocerte más, mejor, hacerte cargo de tu vida y sobre todo sufrir menos es para todo aquel que quiera cambios reales en su existencia! Que no hay forma de arrepentirse.</p>
+            <p class="nv1p-qa-author">Yamila Melano</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">En cuanto al material y la propuesta en si, lo veo diferente en la variedad de info y material teórico, incluyendo los materiales complementarios y citas. Es bastante enriquecedor, poder tener otras referencias para continuar buceando en este mar de info hermoso. También lo veo diferente a otras propuestas, desde ya por la visión de Agus y la guía de él. Creo que, el no estar como un referente onda "Maestro o Gurú", o por lo menos percibiéndolo así, hace que sea más genuina la propuesta.</p>
+            <p class="nv1p-qa-author">Alejandro Figueras</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Cambio mi forma de ver la realidad, por ende de accionar y de vivir.</p>
+            <p class="nv1p-qa-author">Bernarda parra</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Inspiracción a diferencia de otros programas, te da herramientas REALES Y PRÁCTICAS para aplicar HOY en tu vida. No te pide nada que no tengas, no subestima, al contrario, te obliga amorosamente a ponerte en el lugar de creador que te corresponde como ser humano.</p>
+            <p class="nv1p-qa-author">Yamila Melano</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Como dijo Agus , te entrena , esto fue un entrenamiento intensivo de cómo entender cómo funciona la cabeza , la mente , las máscaras del ego. El formato que tiene este programa lo hace diferente a otras propuestas. Depende mucho del enfoque del orador y la consecuencia que le busque el receptor</p>
+            <p class="nv1p-qa-author">Mariano sacheri</p>
+          </div>
+        </div>
+        <div class="nv1p-testi-set nv1p-testi-clone" aria-hidden="true">
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Hacerse responsable de uno mismo tambien tiene que ver con explorar los lugares mas ocultos que a veces ni sabemos que los tenemos pero el grupo y la comunidad acompaña de forma amorosa y que cada uno va a su tiempo, no hay prisa.</p>
+            <p class="nv1p-qa-author">Camila Mansilla Maturana</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Depende desde donde nace esta decisión y tu capacidad de inpirarte, poner foco, voluntad, hacer el trabajo y porque no abandonarlo para sentir. Creo que el único requisito es saber que algo más grande que una situación te motiva, que tienes curiosidad, algo te impulsa y deseas saber lo que está dentro de ti.</p>
+            <p class="nv1p-qa-author">Maitena Asunción Pérez Echave</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Primero y más importante que es una inversión para tu salud mental , partiendo de esa base , invertir en uno mismo es lo más auténtico y placentero que harás. Le diría que se anime a preguntarse cosas, le diría que se atreva a un despertar diferente, a entrenar la cabeza para que pueda mejorar día a día y no preocuparse porque cosas que solo ocupan lugar con el ego de amigo y no resuelven nada de tu aquí y ahora.</p>
+            <p class="nv1p-qa-author">Mariano sacheri</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Considero que lo valió y más. Me agradezco por haber dicho sí en ese momento en el que mi cuenta bancaria no daba fé de que podamos pagarlo! Me agradezco haber saltado porque lo que siento que me llevo es realmente invaluable. Le diría que en este mundo, dónde casi todo invita a mirar afuera, este programa donde encontras herramientas súper amorosas y prácticas para conocerte más, mejor, hacerte cargo de tu vida y sobre todo sufrir menos es para todo aquel que quiera cambios reales en su existencia! Que no hay forma de arrepentirse.</p>
+            <p class="nv1p-qa-author">Yamila Melano</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">En cuanto al material y la propuesta en si, lo veo diferente en la variedad de info y material teórico, incluyendo los materiales complementarios y citas. Es bastante enriquecedor, poder tener otras referencias para continuar buceando en este mar de info hermoso. También lo veo diferente a otras propuestas, desde ya por la visión de Agus y la guía de él. Creo que, el no estar como un referente onda "Maestro o Gurú", o por lo menos percibiéndolo así, hace que sea más genuina la propuesta.</p>
+            <p class="nv1p-qa-author">Alejandro Figueras</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Cambio mi forma de ver la realidad, por ende de accionar y de vivir.</p>
+            <p class="nv1p-qa-author">Bernarda parra</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Inspiracción a diferencia de otros programas, te da herramientas REALES Y PRÁCTICAS para aplicar HOY en tu vida. No te pide nada que no tengas, no subestima, al contrario, te obliga amorosamente a ponerte en el lugar de creador que te corresponde como ser humano.</p>
+            <p class="nv1p-qa-author">Yamila Melano</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Como dijo Agus , te entrena , esto fue un entrenamiento intensivo de cómo entender cómo funciona la cabeza , la mente , las máscaras del ego. El formato que tiene este programa lo hace diferente a otras propuestas. Depende mucho del enfoque del orador y la consecuencia que le busque el receptor</p>
+            <p class="nv1p-qa-author">Mariano sacheri</p>
+          </div>
+        </div>
       </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Hacerse responsable de uno mismo también tiene que ver con explorar los lugares más ocultos que a veces ni sabemos que los tenemos, pero el grupo y la comunidad acompaña de forma amorosa y cada uno va a su tiempo, no hay prisa.</p>
+      <div class="nv1p-testi-col" style="--dur:55s">
+        <div class="nv1p-testi-set">
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Que no lo piense, es un antes y después la manera de ver y sentir la vida</p>
+            <p class="nv1p-qa-author">Daniela Weffer</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Vengo gastando mucha plata en formaciones pero esta es la más significativa. La que me dio las herramientas y me ayudo a ver que no soy el único loco que cree en todo esto. Ya que desde chico vengo pasando por varias filosofías a través del entrenamiento y los deportes de combate. Ahora todo se simplifica y me da poder de crado. En si entendi todo. Ahora es cuestión de seguir aplicando y disfrutando que era la parte que no estaba haciendo. Graciass!!!</p>
+            <p class="nv1p-qa-author">Leandro exequiel calleros</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Siii valió 100% la pena aunque aún no termino pero sé que eso tiene que ver conmigo pero ah valido la pena cada peso y segundo. Le diría que vale mucho la pena es una experiencia que LITERALMENTE te cambia la vida. De hoy para siempre</p>
+            <p class="nv1p-qa-author">Melissa Natalia palacios</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Si. Para mi fue un entrenamiento 100% recomendable. Me quedo con un montón de herramientas que incluso hoy llevo a mis prácticas, a mis alumn@s. Feliz de haber llegado a vos Agus y feliz de poder estar en Pipa en dos semanas. Solo agradecimiento por todo lo que enseñas, por tu forma de transmitir, por tu mirada.</p>
+            <p class="nv1p-qa-author">Zaira Selene Delsordo Núñez</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Estructura los diversos y múltiples accesos de información (filosofías, prácticas, estudios, etc) de una manera inteligente, ordenada y eficiente para aplicarlos en conjunto, tanto en el estudio y práctica mental/cognitiva/ inteligible como en la práctica somática y cuántica.</p>
+            <p class="nv1p-qa-author">Enrique Ezequiel Molina</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Que te permite observar y aprender a gestionar la mente el cuerpo la percepción y la modulación del tiempo, una herramienta de conocimiento muy profundo, desafiante y posible</p>
+            <p class="nv1p-qa-author">Camila fernanda mansilla maturana</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Combina todo lo que en otros lugares solo es info aislada y eso genera confusión y más ruido mental, el tener todo en un solo lugar ayuda darle mucho más sentido a todo y darnos cuenta que eso que pareciera ser “diferente” no es nada más que lo mismo dicho de otra forma</p>
+            <p class="nv1p-qa-author">Melissa Natalia palacios</p>
+          </div>
+        </div>
+        <div class="nv1p-testi-set nv1p-testi-clone" aria-hidden="true">
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Que no lo piense, es un antes y después la manera de ver y sentir la vida</p>
+            <p class="nv1p-qa-author">Daniela Weffer</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Vengo gastando mucha plata en formaciones pero esta es la más significativa. La que me dio las herramientas y me ayudo a ver que no soy el único loco que cree en todo esto. Ya que desde chico vengo pasando por varias filosofías a través del entrenamiento y los deportes de combate. Ahora todo se simplifica y me da poder de crado. En si entendi todo. Ahora es cuestión de seguir aplicando y disfrutando que era la parte que no estaba haciendo. Graciass!!!</p>
+            <p class="nv1p-qa-author">Leandro exequiel calleros</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Siii valió 100% la pena aunque aún no termino pero sé que eso tiene que ver conmigo pero ah valido la pena cada peso y segundo. Le diría que vale mucho la pena es una experiencia que LITERALMENTE te cambia la vida. De hoy para siempre</p>
+            <p class="nv1p-qa-author">Melissa Natalia palacios</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Si. Para mi fue un entrenamiento 100% recomendable. Me quedo con un montón de herramientas que incluso hoy llevo a mis prácticas, a mis alumn@s. Feliz de haber llegado a vos Agus y feliz de poder estar en Pipa en dos semanas. Solo agradecimiento por todo lo que enseñas, por tu forma de transmitir, por tu mirada.</p>
+            <p class="nv1p-qa-author">Zaira Selene Delsordo Núñez</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Estructura los diversos y múltiples accesos de información (filosofías, prácticas, estudios, etc) de una manera inteligente, ordenada y eficiente para aplicarlos en conjunto, tanto en el estudio y práctica mental/cognitiva/ inteligible como en la práctica somática y cuántica.</p>
+            <p class="nv1p-qa-author">Enrique Ezequiel Molina</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Que te permite observar y aprender a gestionar la mente el cuerpo la percepción y la modulación del tiempo, una herramienta de conocimiento muy profundo, desafiante y posible</p>
+            <p class="nv1p-qa-author">Camila fernanda mansilla maturana</p>
+          </div>
+          <div class="nv1p-testi-card">
+            <p class="nv1p-qa-answer">Combina todo lo que en otros lugares solo es info aislada y eso genera confusión y más ruido mental, el tener todo en un solo lugar ayuda darle mucho más sentido a todo y darnos cuenta que eso que pareciera ser “diferente” no es nada más que lo mismo dicho de otra forma</p>
+            <p class="nv1p-qa-author">Melissa Natalia palacios</p>
+          </div>
+        </div>
       </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Sí, totalmente. Este curso valió y seguirá valiendo mucho toda mi vida. El cambio interno y las nuevas perspectivas en constante entrenamiento son parte de mi cotidiano.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Les diría que si tienen la oportunidad, no lo dejen pasar y que las razones que los detienen de tomarlo son las siguientes:</p>
-        <ul style="font-family:'Schibsted Grotesk',sans-serif;font-size:15px;line-height:1.7;color:rgba(10,20,15,0.78);padding-left:24px;margin:8px 0 16px;">
-          <li>Falta de tiempo</li>
-          <li>Falta de dinero / Miedo a no poder pagarlo</li>
-          <li>Creen que no están listos o no es para ustedes</li>
-        </ul>
-        <p class="nv1p-qa-answer">Simplemente confíen porque es exactamente cuando más es necesario y cuando más notarán la diferencia.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Sí, lo valió. Y creo recién comienza...</p>
-        <p class="nv1p-qa-answer">Le diría que hay decisiones en la vida que dependen de esa voluntad y de esa escucha interna que no vale a quedarnos en cada apoyo en la almohada, en cada momento en el indoloro, en cada minuto al azar.</p>
-        <p class="nv1p-qa-answer">Y que si esa voluntad y escucha están en duda o sufrimiento, necesitan sólo una decisión, sólo una, sólo un momento de inconsciencia para entrenar y transformar este Ser que nos acompaña con quien tenemos la inevitable conveniencia de cerrar la relación más honesta del mundo: experimentá InspirAcción.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Primero y más importante que es una inversión para tu salud mental. Partiendo de esa base, invertir en uno mismo es lo más auténtico y placentero que hacés. Le diría que se anime a programar cosas, le diría que se atreva a un despertar diferente, a entrenar la cabeza para que pueda mejorar día a día y no preocuparse porque cosas que solo ocupan lugar al ego al inicio se vacían en su contento y ahora.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Sí valió totalmente, le diría que es por acá, que lo haga aún sin saber cómo pagarlo, el dinero aparece una vez que tomes la decisión de hacerlo. Todo se alinea y se activan los medios de la forma menos pensada.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Siento que es una inversión que vale la pena si es que sentís que querés pasar por la experiencia.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Que lo haga. Que haga lo posible porque vale cada peso que invertí en mí y en mi crecimiento personal con este programa.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Que lo hagan, porque a mí me ayuda a pensar y a tratar de no estar tan cerrada.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Vengo gastando mucha plata en formaciones pero esta es la más significativa. La que me dio las herramientas y me ayudó a ver que no soy el único loco que cree en todo esto. Ya que desde chico vengo pasando por varias filosofías a través del entrenamiento y los deportes de combate. Marca todo lo que simplifica y me da poder de crearlo.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Lo entendí todo. Ahora es cuestión de seguir aplicando y disfrutando, que era la parte que no estaba haciendo. ¡Gracias!</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Realmente sí. Es de muchísimo valor todo el proceso. Reconozco mis debilidades, mis resistencias, de algún modo mi falta de compromiso para conmigo. Me costó mucho sostener los días que me había pactado leer y entrenar, aún así es un camino y un viaje.</p>
-        <p class="nv1p-qa-answer">Depende dónde nace esta decisión y tu capacidad de inspirarte, poner foco, voluntad, hacer el trabajo y por qué no abandonarlo para sentir. Creo que el único requisito es saber foco, algo más grande que una situación de motiva, que tenés curiosidad, algo te impulsa y deseás saber lo que está dentro de ti.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Si te resuena, dale. Es por ahí.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Sí lo súper valió, lo dudé, pero en cuanto comenzó supe que estaba en el camino correcto y estoy muy feliz con todo el conocimiento aprendido y sobre todo la energía del grupo y todo lo leído. Sobre todo lo valió porque fue muy desafiante y siento que lo pasé por el cuerpo y ahora tengo otra creencia sobre quién soy y lo que puedo hacer y cómo ver situaciones y conflictos.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Lo valió. Porque la información queda para siempre. Que sí la está sintiendo, que la haga. Que la haga como sea, pero que la haga.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">No lo pienses. Es un antes y después la manera de ver y sentir la vida.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Sí. Para mí fue un entrenamiento 100% recomendable. Me quedo con un montón de herramientas que incluso hoy llevo a mis prácticas, a mis alumnos. Feliz de haber llegado a vos, Agus, y feliz de poder estar en Pipe en dos semanas. Solo agradecimiento por todo lo que enseñás, por tu forma de transmitir, por tu mirada.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Es un autorregalo maravilloso. Que lo vale, pero hay que hacerlo con actitud comprometida. Es una inversión.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Sí, considero que lo valió completamente, y ya hace tiempo lo recomiendo. Me encuentro a veces falta de palabras o explicaciones, porque no quiero que suene a un curso más, a un chantaje como se lo asocia a veces a lo relacionado a la "autoayuda". Y quiero dar a entender el gran valor que tiene, que es realmente la no ver víctima de la vida si no recordar que la decidimos, vivirla. Lo que suelo hacer es invitarlos a escuchar los podcast, y que se vayan a entrenarse.</p>
-      </div>
-
-      <div class="nv1p-qa-block">
-        <p class="nv1p-qa-answer">Siento que sí. A pesar de que ahora mismo no logro del todo mis estándares de ingresos y laborales, siento que lo sutil ya está despierto en mí y que voy proyectándolo en lo nuevo, comienzo de a poco. Al claro, lo recomiendo siempre, es fantástico, es fácil, accesible. Un paso hacia desmitificar nuestros propios límites, por ahí decirlo.</p>
       </div>
     </div>
   </section>
@@ -1077,30 +1377,30 @@
   <section class="nv1-section nv1-encuesta" data-section-theme="light">
     <div class="nv1-eyebrow-small">Los datos hablan</div>
     <h2 class="nv1-h2"><em>Resultados de la encuesta</em><br>a la última generación.</h2>
-    <p class="nv1-lead">28 respuestas · Última generación certificada del Nivel 1</p>
+    <p class="nv1-lead">Última generación certificada del Nivel 1</p>
 
     <div class="nv1p-encuesta-grid">
       <div class="nv1p-chart-card">
         <h4>¿Cuánto bajaron tus niveles de estrés / sufrimiento / resistencia desde que iniciaste el proceso?</h4>
-        <p class="nv1p-chart-respuestas">28 respuestas</p>
+        <p class="nv1p-chart-respuestas">-</p>
         <div class="nv1p-chart-wrap"><canvas data-chart="estres"></canvas></div>
       </div>
 
       <div class="nv1p-chart-card">
         <h4>Nivel de Entusiasmo: ¿Cuánto disfrutaste el material de lectura y estudio? <span>Escala 1 al 5</span></h4>
-        <p class="nv1p-chart-respuestas">28 respuestas</p>
+        <p class="nv1p-chart-respuestas">-</p>
         <div class="nv1p-chart-wrap"><canvas data-chart="entusiasmo"></canvas></div>
       </div>
 
       <div class="nv1p-chart-card">
         <h4>¿Qué tan probable es que recomiendes InspirAcción a otra persona?</h4>
-        <p class="nv1p-chart-respuestas">28 respuestas</p>
+        <p class="nv1p-chart-respuestas">-</p>
         <div class="nv1p-chart-wrap"><canvas data-chart="recomendacion"></canvas></div>
       </div>
 
       <div class="nv1p-chart-card">
         <h4>¿Cómo sentís el volumen de información y prácticas hasta ahora?</h4>
-        <p class="nv1p-chart-respuestas">28 respuestas</p>
+        <p class="nv1p-chart-respuestas">-</p>
         <div class="nv1p-chart-wrap"><canvas data-chart="volumen"></canvas></div>
       </div>
 
@@ -1165,6 +1465,9 @@
     if (window.gsap && window.ScrollTrigger) {
       gsap.registerPlugin(ScrollTrigger);
       gsap.utils.toArray('.nv1-section, .nv1p-transicion, .nv1p-testimonios-qa').forEach((sec) => {
+        // La sección unificada "El programa" es muy alta: se muestra sin fade
+        // para que el título y la bajada nunca queden ocultos.
+        if (sec.classList.contains('nv1-pitch')) return;
         const elems = sec.querySelectorAll('.nv1-eyebrow, .nv1-eyebrow-small, .nv1-h2, .nv1-h3, .nv1-lead, .nv1-cover-meta, .nv1-cover-cta, .nv1-cta-btn, .nv1p-vsl');
         gsap.from(elems, {
           y: 40, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: 0.08,

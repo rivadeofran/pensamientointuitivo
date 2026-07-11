@@ -1,0 +1,7 @@
+# robots.txt — Escuela del Pensamiento Intuitivo
+# Permite la indexación de todo el sitio.
+User-agent: *
+Allow: /
+
+# Cuando se fije el dominio final, agregar aquí:
+# Sitemap: https://TU-DOMINIO/sitemap.xml

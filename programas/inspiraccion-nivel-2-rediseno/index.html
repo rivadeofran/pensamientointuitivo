@@ -3,7 +3,24 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>InspirAcción · Nivel 2 — Laboratorio y grupo de estudio</title>
+<title>InspirAcción Nivel 2 — Laboratorio y grupo de estudio</title>
+<meta name="description" content="InspirAcción Nivel 2: laboratorio y grupo de estudio guiado para profundizar el método intuitivo con prácticas fisiológicas y metafísicas. Requiere Nivel 1."/>
+<meta name="author" content="Agustín Trowell"/>
+<meta name="robots" content="index, follow"/>
+<meta name="theme-color" content="#0f1f1a"/>
+<!-- Open Graph (og:url y og:image absoluta se completan al fijar el dominio) -->
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Escuela del Pensamiento Intuitivo"/>
+<meta property="og:locale" content="es_AR"/>
+<meta property="og:title" content="InspirAcción Nivel 2 — Laboratorio y grupo de estudio"/>
+<meta property="og:description" content="Laboratorio y grupo de estudio guiado para profundizar el método intuitivo con prácticas fisiológicas y metafísicas. Requiere Nivel 1."/>
+<meta property="og:image" content="/assets/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="InspirAcción Nivel 2 — Laboratorio y grupo de estudio"/>
+<meta name="twitter:description" content="Laboratorio y grupo de estudio guiado para profundizar el método intuitivo con prácticas fisiológicas y metafísicas. Requiere Nivel 1."/>
+<meta name="twitter:image" content="/assets/og-image.jpg"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=20260711" />
+<link rel="apple-touch-icon" href="/favicon-180.png?v=20260711" />
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@100..900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -71,7 +88,6 @@
     canvas[data-chart] { width:100% !important; height:auto !important; display:block; }
     .gold-border-glow { border:1px solid rgba(214,176,106,0.30); box-shadow:0 0 24px rgba(214,176,106,0.06); }
     .text-gradient-gold { background:linear-gradient(135deg,#E6C77E 0%,#D6B06A 60%,#B8893E 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
-    .prueba-bar { background:linear-gradient(90deg,#1B2820 0%,#13201A 100%); }
     /* Acordeón FAQ */
     details > summary { list-style:none; cursor:pointer; }
     details > summary::-webkit-details-marker { display:none; }
@@ -82,32 +98,107 @@
     .reveal { animation: revealIn .9s ease both; }
     @keyframes revealIn { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
     @media (prefers-reduced-motion: reduce){ .reveal{ animation:none; } }
+    /* ===== Cursor invertido + leyenda contextual (igual que la home) ===== */
+    #invertCursor{position:fixed;top:0;left:0;width:18px;height:18px;padding:0;border-radius:50%;background:#fff;pointer-events:none;z-index:99999;mix-blend-mode:difference;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;overflow:hidden;box-sizing:border-box;transition:width .35s cubic-bezier(.32,.72,0,1),height .35s cubic-bezier(.32,.72,0,1),padding .35s cubic-bezier(.32,.72,0,1),opacity .3s cubic-bezier(.32,.72,0,1),background-color .3s cubic-bezier(.32,.72,0,1),color .3s cubic-bezier(.32,.72,0,1);will-change:transform;}
+    #invertCursor.is-hover{width:56px;height:56px;opacity:.4;}
+    .cursor-label{font-family:'Geist',sans-serif;font-size:11px;font-weight:500;letter-spacing:.12em;white-space:nowrap;opacity:0;transition:opacity .25s ease;}
+    #invertCursor.has-label{mix-blend-mode:normal;background:rgba(10,20,15,.9);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#E9E3D7;border:1px solid rgba(214,176,106,.28);width:auto;height:auto;border-radius:6px;padding:6px 12px;overflow:visible;}
+    #invertCursor.has-label .cursor-label{opacity:1;}
+    body{cursor:default;} input,textarea,[contenteditable="true"]{cursor:text;} /* flecha sobre texto, no I-beam */
+    @media (pointer:coarse){ #invertCursor{ display:none; } }
+    /* ===== Muro de testimonios: 3 columnas con desplazamiento continuo (loop) ===== */
+    .js-testi-wall.is-marquee{ display:flex; gap:2rem; height:640px; overflow:hidden;
+      -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent 100%);
+      mask-image:linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent 100%); }
+    .testi-col{ flex:1; min-width:0; }
+    .testi-track{ display:flex; flex-direction:column; gap:2rem; will-change:transform; animation:testiScroll 60s linear infinite; }
+    .testi-col:nth-child(2) .testi-track{ animation-duration:78s; }
+    .testi-col:nth-child(3) .testi-track{ animation-duration:68s; }
+    .js-testi-wall.is-marquee:hover .testi-track{ animation-play-state:paused; }
+    @keyframes testiScroll{ from{ transform:translateY(0); } to{ transform:translateY(-50%); } }
+    @media (prefers-reduced-motion: reduce){ .testi-track{ animation:none; } }
+    /* ===== Globo de Agustín al pasar el mouse por el botón de comunidad ===== */
+    .fab-comunidad-sub{ position:relative; }
+    .sub-promo{ position:absolute; right:calc(100% + 14px); top:50%; transform:translateY(-50%) translateX(10px) scale(.96); transform-origin:right center; display:flex; align-items:center; gap:10px; white-space:nowrap; padding:6px 12px 6px 6px; border-radius:999px; background:rgba(18,30,25,.6); backdrop-filter:blur(16px) saturate(1.4); -webkit-backdrop-filter:blur(16px) saturate(1.4); border:1px solid rgba(230,194,122,.38); box-shadow:0 16px 40px -10px rgba(0,0,0,.5); opacity:0; pointer-events:none; transition:opacity .45s cubic-bezier(.32,.72,0,1), transform .45s cubic-bezier(.32,.72,0,1); }
+    .fab-slot-sub:hover .sub-promo, .sub-promo.show{ opacity:1; transform:translateY(-50%) translateX(0) scale(1); pointer-events:auto; }
+    .sub-promo-link{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .sub-promo-close{ flex:none; width:20px; height:20px; margin-left:8px; padding:0; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.08); border:none; border-radius:50%; color:rgba(233,227,215,.65); cursor:pointer; transition:background .3s, color .3s; }
+    .sub-promo-close:hover{ background:rgba(255,255,255,.16); color:#E9E3D7; }
+    @media (max-width:640px), (pointer:coarse){
+      .sub-promo{ right:calc(100% + 10px); padding:4px 8px 4px 4px; }
+      .sub-promo img{ width:32px; height:32px; }
+      .sub-promo .sp-title{ font-size:12px; }
+      .sub-promo .sp-eyebrow{ font-size:8px; }
+      .sub-promo-close{ width:22px; height:22px; margin-left:6px; }
+    }
+    /* ===== Menú móvil (panel glass) ===== */
+    .sub-mm{ position:fixed; inset:0; z-index:999; display:flex; flex-direction:column; justify-content:center; gap:30px; padding:80px 34px 44px; background:rgba(10,20,15,.97); backdrop-filter:blur(22px) saturate(1.2); -webkit-backdrop-filter:blur(22px) saturate(1.2); opacity:0; pointer-events:none; transition:opacity .45s cubic-bezier(.32,.72,0,1); }
+    .sub-mm.open{ opacity:1; pointer-events:auto; }
+    .sub-mm > *{ transform:translateY(14px); opacity:0; transition:transform .5s cubic-bezier(.32,.72,0,1), opacity .5s; }
+    .sub-mm.open > *{ transform:translateY(0); opacity:1; }
+    .sub-mm.open > *:nth-child(2){ transition-delay:.05s; }
+    .sub-mm.open > *:nth-child(3){ transition-delay:.12s; }
+    .sub-mm.open > *:nth-child(4){ transition-delay:.19s; }
+    .sub-mm-close{ position:absolute; top:22px; right:22px; width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.06); border:1px solid rgba(214,176,106,.25); border-radius:50%; color:#E9E3D7; cursor:pointer; }
+    .sub-mm-nav{ display:flex; flex-direction:column; gap:4px; }
+    .sub-mm-nav a{ font-family:'Geist',sans-serif; font-size:23px; font-weight:600; letter-spacing:.04em; color:#E9E3D7; text-decoration:none; padding:9px 0; }
+    .sub-mm-nav a:active{ color:#D6B06A; }
+    .sub-mm-cta{ display:flex; align-items:center; justify-content:center; padding:15px 22px; border-radius:999px; background:linear-gradient(135deg,#E6C27A,#d4af37); color:#0A140F; text-decoration:none; font-family:'Geist',sans-serif; font-size:14px; font-weight:700; letter-spacing:.06em; }
+    .sub-mm-com{ display:flex; align-items:center; justify-content:center; gap:9px; padding:13px 22px; border-radius:999px; border:1px solid rgba(214,176,106,.5); color:#D6B06A; text-decoration:none; font-family:'Geist',sans-serif; font-size:13px; font-weight:600; letter-spacing:.06em; }
+    @media (min-width:1024px){ .sub-mm{ display:none; } }
+    body.sub-mm-open{ overflow:hidden; }
+    .sub-promo::after{ content:''; position:absolute; right:-5px; top:50%; width:10px; height:10px; transform:translateY(-50%) rotate(45deg); background:rgba(18,30,25,.6); border-right:1px solid rgba(230,194,122,.38); border-top:1px solid rgba(230,194,122,.38); }
+    .sub-promo img{ width:40px; height:40px; border-radius:50%; object-fit:cover; border:1.5px solid #E6C27A; flex:none; }
+    .sub-promo .sp-text{ display:flex; flex-direction:column; gap:2px; }
+    .sub-promo .sp-eyebrow{ font-family:'Geist',sans-serif; font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:#E6C27A; font-weight:600; line-height:1.1; }
+    .sub-promo .sp-title{ font-family:'Geist',sans-serif; font-size:13.5px; font-weight:600; color:#E9E3D7; letter-spacing:.01em; line-height:1.1; }
 </style>
 </head>
 <body class="font-body-md overflow-x-hidden">
 
-<!-- Banner de prueba -->
-<div class="prueba-bar text-text-muted px-4 py-2 text-center text-[12px] tracking-wide z-[100] sticky top-0">
-    Versión de prueba · rediseño Nivel 2 basado en Canva oficial · copy original de InspirAcción
-</div>
+<!-- Cursor invertido + leyenda (igual que la home) -->
+<div id="invertCursor" aria-hidden="true"></div>
 
 <!-- Navegación -->
-<nav class="fixed top-9 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 transition-all" id="nav">
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 transition-all" id="nav">
     <div class="flex justify-between items-center px-container-padding py-4 max-w-max-width mx-auto">
         <a href="../../index.html" class="flex items-center" aria-label="InspirAcción · Inicio">
-            <img src="logo-inspiraccion.png" alt="InspirAcción" class="h-12 md:h-14 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+            <img src="logo-inspiraccion.webp" alt="InspirAcción" class="h-12 md:h-14 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
         </a>
-        <div class="hidden md:flex gap-8 items-center">
+        <div class="hidden lg:flex gap-6 items-center">
+            <a href="../../index.html" class="text-on-surface-variant hover:text-primary transition-colors text-body-md flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">home</span>Inicio</a>
             <a href="#programa" class="text-on-surface-variant hover:text-primary transition-colors text-body-md">El programa</a>
             <a href="#entrenamientos" class="text-on-surface-variant hover:text-primary transition-colors text-body-md">Módulos</a>
             <a href="#bonos" class="text-on-surface-variant hover:text-primary transition-colors text-body-md">Bonos</a>
             <a href="#testimonios" class="text-on-surface-variant hover:text-primary transition-colors text-body-md">Testimonios</a>
             <a href="#faq" class="text-on-surface-variant hover:text-primary transition-colors text-body-md">FAQ</a>
             <a href="#cta" class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold hover:brightness-110 transition">Quiero aplicar</a>
+            <a href="https://www.escueladelpensamientointuitivo.com/school/course/comunidad" target="_blank" rel="noopener" data-cursor="Unite a la comunidad" class="flex items-center gap-2 border border-primary/45 text-primary px-5 py-2 rounded-full font-bold hover:bg-primary/10 transition">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 5 18.5V20"/><circle cx="11" cy="8" r="3.2"/><path d="M18.5 20v-1.2a3 3 0 0 0-2.3-2.9M15.5 5.2a3 3 0 0 1 0 5.6"/></svg>
+                Comunidad
+            </a>
         </div>
-        <a href="#cta" class="md:hidden text-primary"><span class="material-symbols-outlined">menu</span></a>
+        <button id="mobileMenuBtn" type="button" class="lg:hidden text-primary" aria-label="Abrir menú" aria-expanded="false"><span class="material-symbols-outlined">menu</span></button>
     </div>
 </nav>
+
+<!-- Menú móvil (panel glass) -->
+<div id="mobileMenu" class="sub-mm" aria-hidden="true">
+    <button id="mobileMenuClose" type="button" class="sub-mm-close" aria-label="Cerrar menú"><span class="material-symbols-outlined">close</span></button>
+    <nav class="sub-mm-nav" aria-label="Secciones">
+        <a href="../../index.html">Inicio</a>
+        <a href="#programa">El programa</a>
+        <a href="#entrenamientos">Módulos</a>
+        <a href="#bonos">Bonos</a>
+        <a href="#testimonios">Testimonios</a>
+        <a href="#faq">FAQ</a>
+    </nav>
+    <a class="sub-mm-cta" href="#cta">Quiero aplicar</a>
+    <a class="sub-mm-com" href="https://www.escueladelpensamientointuitivo.com/school/course/comunidad" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 5 18.5V20"/><circle cx="11" cy="8" r="3.2"/><path d="M18.5 20v-1.2a3 3 0 0 0-2.3-2.9M15.5 5.2a3 3 0 0 1 0 5.6"/></svg>
+        Comunidad
+    </a>
+</div>
 
 <!-- HERO -->
 <section class="relative pt-40 pb-section-gap px-container-padding max-w-max-width mx-auto">
@@ -137,7 +228,7 @@
         <div class="relative group flex flex-col gap-6">
             <!-- Logo: capa flotante con espacio fijo, no empuja el video -->
             <div class="relative h-40 md:h-44" id="logoSlot">
-                <img src="logo-escuela-pensamiento-intuitivo.png" alt="Escuela del Pensamiento Intuitivo" id="schoolLogo" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-auto pointer-events-none drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]" style="height: 264px;">
+                <img src="logo-escuela-pensamiento-intuitivo.webp" alt="Escuela del Pensamiento Intuitivo" id="schoolLogo" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-auto pointer-events-none drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]" style="height: 264px;">
             </div>
             <!-- Video: ocupa el centro visual de la columna -->
             <div class="relative">
@@ -248,15 +339,15 @@
         <!-- Columna derecha: 3 ilustraciones reales del Canva -->
         <div class="lg:col-span-2 space-y-6 reveal lg:sticky lg:top-32">
             <figure class="bg-white rounded-xl overflow-hidden shadow-lg border border-outline-variant/20">
-                <img src="assets-temario/temario-coherencia.jpg" alt="Coherencia Cardíaca · Ondas caótica y coherente" loading="lazy" class="w-full block">
+                <img src="assets-temario/temario-coherencia.webp" alt="Coherencia Cardíaca · Ondas caótica y coherente" loading="lazy" class="w-full block">
                 <figcaption class="bg-surface-container-low text-text-muted text-xs italic px-3 py-2 text-center">Coherencia Cardíaca · Ondas mentales y emocionales</figcaption>
             </figure>
             <figure class="bg-white rounded-xl overflow-hidden shadow-lg border border-outline-variant/20">
-                <img src="assets-temario/temario-arquetipos-1.png" alt="Arquetipos: El Personaje vs El Jugador" loading="lazy" class="w-full block">
+                <img src="assets-temario/temario-arquetipos-1.webp" alt="Arquetipos: El Personaje vs El Jugador" loading="lazy" class="w-full block">
                 <figcaption class="bg-surface-container-low text-text-muted text-xs italic px-3 py-2 text-center">El Personaje &amp; El Jugador · Los pasos</figcaption>
             </figure>
             <figure class="bg-white rounded-xl overflow-hidden shadow-lg border border-outline-variant/20">
-                <img src="assets-temario/temario-arquetipos-2.png" alt="Tiempo de duelo · El Jugador vs El Personaje" loading="lazy" class="w-full block">
+                <img src="assets-temario/temario-arquetipos-2.webp" alt="Tiempo de duelo · El Jugador vs El Personaje" loading="lazy" class="w-full block">
                 <figcaption class="bg-surface-container-low text-text-muted text-xs italic px-3 py-2 text-center">Causa-efecto · Tiempo de duelo</figcaption>
             </figure>
         </div>
@@ -309,7 +400,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
         <div class="relative order-2 lg:order-1 lg:sticky lg:top-32 reveal">
             <div class="absolute -top-10 -left-10 w-40 h-40 bg-primary/20 rounded-full blur-3xl"></div>
-            <img src="agustin.jpg" alt="Agustín Trowell Kissam" class="w-full aspect-[2/3] object-cover rounded-2xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700" loading="lazy">
+            <img src="agustin.webp" alt="Agustín Trowell Kissam" class="w-full aspect-[2/3] object-cover rounded-2xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700" loading="lazy">
             <div class="absolute bottom-6 right-6 bg-surface p-4 rounded-xl gold-border-glow hidden md:block">
                 <p class="font-label-caps text-label-caps text-primary mb-1">CREADOR DEL MÉTODO</p>
                 <p class="font-title-lg text-lg">Contra-Intuitivo</p>
@@ -407,7 +498,7 @@
 
         <div class="space-y-10">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-outline-variant/10 pb-10 group">
-                <div class="md:col-span-3"><img src="assets-modulos/1.png" alt="Manual módulo 1 · El problema de la psique" loading="lazy" class="w-full transition-transform duration-500 group-hover:-translate-y-1 drop-shadow-[0_8px_20px_rgba(0,0,0,0.4)]"></div>
+                <div class="md:col-span-3"><img src="assets-modulos/1.webp" alt="Manual módulo 1 · El problema de la psique" loading="lazy" class="w-full transition-transform duration-500 group-hover:-translate-y-1 drop-shadow-[0_8px_20px_rgba(0,0,0,0.4)]"></div>
                 <div class="md:col-span-3">
                     <p class="font-label-caps text-label-caps text-primary-dim mb-2">MÓDULO 01</p>
                     <h3 class="font-title-lg text-title-lg">El problema de la psique</h3>
@@ -421,7 +512,7 @@
                 </ul>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-outline-variant/10 pb-10 group">
-                <div class="md:col-span-3"><img src="assets-modulos/2.png" alt="Manual módulo 2 · Neuroplasticidad" loading="lazy" class="w-full transition-transform duration-500 group-hover:-translate-y-1 drop-shadow-[0_8px_20px_rgba(0,0,0,0.4)]"></div>
+                <div class="md:col-span-3"><img src="assets-modulos/2.webp" alt="Manual módulo 2 · Neuroplasticidad" loading="lazy" class="w-full transition-transform duration-500 group-hover:-translate-y-1 drop-shadow-[0_8px_20px_rgba(0,0,0,0.4)]"></div>
                 <div class="md:col-span-3">
                     <p class="font-label-caps text-label-caps text-primary-dim mb-2">MÓDULO 02</p>
                     <h3 class="font-title-lg text-title-lg">Neuroplasticidad: <span class="italic">"La cartografía del sentido"</span></h3>
@@ -435,7 +526,7 @@
                 </ul>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-outline-variant/10 pb-10 group">
-                <div class="md:col-span-3"><img src="assets-modulos/3.png" alt="Manual módulo 3 · Estados expandidos" loading="lazy" class="w-full transition-transform duration-500 group-hover:-translate-y-1 drop-shadow-[0_8px_20px_rgba(0,0,0,0.4)]"></div>
+                <div class="md:col-span-3"><img src="assets-modulos/3.webp" alt="Manual módulo 3 · Estados expandidos" loading="lazy" class="w-full transition-transform duration-500 group-hover:-translate-y-1 drop-shadow-[0_8px_20px_rgba(0,0,0,0.4)]"></div>
                 <div class="md:col-span-3">
                     <p class="font-label-caps text-label-caps text-primary-dim mb-2">MÓDULO 03</p>
                     <h3 class="font-title-lg text-title-lg">Estados expandidos: <span class="italic">"Las ventanas al origen"</span></h3>
@@ -448,7 +539,7 @@
                 </ul>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-outline-variant/10 pb-10 group">
-                <div class="md:col-span-3"><img src="assets-modulos/4.png" alt="Manual módulo 4 · Arquetipos" loading="lazy" class="w-full transition-transform duration-500 group-hover:-translate-y-1 drop-shadow-[0_8px_20px_rgba(0,0,0,0.4)]"></div>
+                <div class="md:col-span-3"><img src="assets-modulos/4.webp" alt="Manual módulo 4 · Arquetipos" loading="lazy" class="w-full transition-transform duration-500 group-hover:-translate-y-1 drop-shadow-[0_8px_20px_rgba(0,0,0,0.4)]"></div>
                 <div class="md:col-span-3">
                     <p class="font-label-caps text-label-caps text-primary-dim mb-2">MÓDULO 04</p>
                     <h3 class="font-title-lg text-title-lg">Arquetipos: <span class="italic">"El elenco de Dios"</span></h3>
@@ -460,7 +551,7 @@
                 </ul>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-outline-variant/10 pb-10 group">
-                <div class="md:col-span-3"><img src="assets-modulos/5.png" alt="Manual módulo 5 · Cuerpo y emociones" loading="lazy" class="w-full transition-transform duration-500 group-hover:-translate-y-1 drop-shadow-[0_8px_20px_rgba(0,0,0,0.4)]"></div>
+                <div class="md:col-span-3"><img src="assets-modulos/5.webp" alt="Manual módulo 5 · Cuerpo y emociones" loading="lazy" class="w-full transition-transform duration-500 group-hover:-translate-y-1 drop-shadow-[0_8px_20px_rgba(0,0,0,0.4)]"></div>
                 <div class="md:col-span-3">
                     <p class="font-label-caps text-label-caps text-primary-dim mb-2">MÓDULO 05</p>
                     <h3 class="font-title-lg text-title-lg">Cuerpo y emociones: <span class="italic">"Donde habita el sentido"</span></h3>
@@ -474,7 +565,7 @@
                 </ul>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start group">
-                <div class="md:col-span-3"><img src="assets-modulos/6.png" alt="Manual módulo 6 · El juego" loading="lazy" class="w-full transition-transform duration-500 group-hover:-translate-y-1 drop-shadow-[0_8px_20px_rgba(0,0,0,0.4)]"></div>
+                <div class="md:col-span-3"><img src="assets-modulos/6.webp" alt="Manual módulo 6 · El juego" loading="lazy" class="w-full transition-transform duration-500 group-hover:-translate-y-1 drop-shadow-[0_8px_20px_rgba(0,0,0,0.4)]"></div>
                 <div class="md:col-span-3">
                     <p class="font-label-caps text-label-caps text-primary-dim mb-2">MÓDULO 06</p>
                     <h3 class="font-title-lg text-title-lg">El juego: <span class="italic">"Movimiento - Emoción - Amor"</span></h3>
@@ -507,7 +598,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div class="glass-card rounded-2xl overflow-hidden group flex flex-col">
-            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/1.png" alt="40% off en Sesiones 1-1" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/1.webp" alt="40% off en Sesiones 1-1" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
             <div class="p-6 flex-grow space-y-3">
                 <span class="text-primary font-label-caps text-[10px] bg-primary/10 px-3 py-1 rounded-full uppercase">Bono 1</span>
                 <h3 class="font-title-lg text-lg">40% off en Sesiones 1-1:</h3>
@@ -515,7 +606,7 @@
             </div>
         </div>
         <div class="glass-card rounded-2xl overflow-hidden group flex flex-col">
-            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/2.png" alt="Sesión en vivo con Martin Lopez Grosman" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/2.webp" alt="Sesión en vivo con Martin Lopez Grosman" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
             <div class="p-6 flex-grow space-y-3">
                 <span class="text-primary font-label-caps text-[10px] bg-primary/10 px-3 py-1 rounded-full uppercase">Bono 2</span>
                 <h3 class="font-title-lg text-lg">Sesion en vivo con Martin Lopez Grosman <em class="text-primary">(@Mada.Move)</em></h3>
@@ -523,7 +614,7 @@
             </div>
         </div>
         <div class="glass-card rounded-2xl overflow-hidden group flex flex-col">
-            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/3.png" alt="Sesión en vivo con Simón Rodrigué" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/3.webp" alt="Sesión en vivo con Simón Rodrigué" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
             <div class="p-6 flex-grow space-y-3">
                 <span class="text-primary font-label-caps text-[10px] bg-primary/10 px-3 py-1 rounded-full uppercase">Bono 3</span>
                 <h3 class="font-title-lg text-lg">Sesion en vivo con Simón Rodrigué <em class="text-primary">(@Yogaconsimon)</em></h3>
@@ -531,7 +622,7 @@
             </div>
         </div>
         <div class="glass-card rounded-2xl overflow-hidden group flex flex-col">
-            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/4.png" alt="Acceso de por vida a las clases grabadas y al manual" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/4.webp" alt="Acceso de por vida a las clases grabadas y al manual" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
             <div class="p-6 flex-grow space-y-3">
                 <span class="text-primary font-label-caps text-[10px] bg-primary/10 px-3 py-1 rounded-full uppercase">Bono 4</span>
                 <h3 class="font-title-lg text-lg">Acceso de por vida a todas las clases grabadas y al manual.</h3>
@@ -539,7 +630,7 @@
             </div>
         </div>
         <div class="glass-card rounded-2xl overflow-hidden group flex flex-col">
-            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/5.png" alt="Acceso a las sesiones del Nivel 1" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/5.webp" alt="Acceso a las sesiones del Nivel 1" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
             <div class="p-6 flex-grow space-y-3">
                 <span class="text-primary font-label-caps text-[10px] bg-primary/10 px-3 py-1 rounded-full uppercase">Bono 5</span>
                 <h3 class="font-title-lg text-lg">Acceso a las sesiones del Nivel 1</h3>
@@ -547,7 +638,7 @@
             </div>
         </div>
         <div class="glass-card rounded-2xl overflow-hidden group flex flex-col">
-            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/6.png" alt="Acceso a clases exclusivas" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="h-52 flex items-center justify-center p-5 bg-surface-container-lowest"><img src="assets-bonos/6.webp" alt="Acceso a clases exclusivas" loading="lazy" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"></div>
             <div class="p-6 flex-grow space-y-3">
                 <span class="text-primary font-label-caps text-[10px] bg-primary/10 px-3 py-1 rounded-full uppercase">Bono 6</span>
                 <h3 class="font-title-lg text-lg">Acceso a clases exclusivas:</h3>
@@ -571,7 +662,7 @@
             <p>Y también: "Si tuvieras que explicar qué hace a InspirAcción diferente a otras propuestas, ¿Qué dirías?"</p>
         </div>
 
-        <div class="columns-1 md:columns-2 lg:columns-3 gap-8 [&>*]:mb-8">
+        <div class="columns-1 md:columns-2 lg:columns-3 gap-8 [&>*]:mb-8 js-testi-wall">
             <!-- Cada testimonio -->
             <div class="glass-card p-7 rounded-2xl break-inside-avoid">
                 <div class="flex text-primary mb-4">★★★★★</div>
@@ -762,48 +853,61 @@
     </div>
 </footer>
 
-<!-- 🎛 DEV PANEL (solo localhost) -->
-<div id="devPanel" class="fixed top-24 right-4 z-[999] bg-surface-container-high border border-primary/40 rounded-xl p-5 shadow-2xl hidden font-body-md" style="width: 280px; backdrop-filter: blur(12px); background: rgba(27, 40, 32, 0.95);">
-    <div class="flex items-center justify-between mb-4 pb-3 border-b border-outline-variant/30">
-        <h4 class="text-primary font-bold text-sm tracking-wider">🎛 PANEL DISEÑO · DEV</h4>
-        <button id="devPanelToggle" class="text-on-surface-variant hover:text-primary text-xl leading-none">−</button>
-    </div>
-
-    <div id="devPanelBody" class="space-y-5">
-        <!-- Control: Tamaño del logo -->
-        <div class="space-y-2">
-            <label class="block">
-                <span class="text-xs text-text-muted font-label-caps tracking-wider block mb-2">Tamaño del logo (escuela)</span>
-                <input type="range" id="devLogoSize" min="48" max="320" value="160" step="4" class="w-full accent-primary">
-                <div class="flex justify-between items-center mt-2 text-xs">
-                    <span id="devLogoSizePx" class="text-on-surface font-mono">160px</span>
-                    <span id="devLogoSizeTw" class="text-primary font-bold font-mono">h-40</span>
-                </div>
-            </label>
-            <button id="devLogoCopy" class="w-full bg-primary text-on-primary py-2 rounded-lg text-xs font-bold hover:brightness-110 transition">
-                📋 Copiar valor (h-XX)
-            </button>
-        </div>
-
-        <!-- Hint -->
-        <div class="pt-3 border-t border-outline-variant/30">
-            <p class="text-[11px] text-text-muted leading-snug">
-                Movés el slider → ves el logo cambiar en vivo. Cuando te guste, hacé clic en <strong class="text-primary">Copiar</strong> y pasame el valor (ej: "h-44") para dejarlo fijo.
-            </p>
-            <p class="text-[11px] text-text-muted leading-snug mt-2">
-                <strong class="text-on-surface-variant">Solo visible en local</strong> — nunca en producción.
-            </p>
-        </div>
+<!-- Floating Action Buttons: Comunidad (arriba) + WhatsApp -->
+<div class="fixed bottom-8 right-8 z-[99] flex flex-col-reverse gap-4 items-center">
+    <!-- WhatsApp -->
+    <a href="https://wa.me/5584981811901?text=Hola%20Agust%C3%ADn%2C%20quiero%20m%C3%A1s%20info%20sobre%20InspirAcci%C3%B3n%20Nivel%202" target="_blank" rel="noopener" aria-label="WhatsApp" data-cursor="Escribinos" class="w-12 h-12 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center text-white" style="background:rgba(37,211,102,.68);backdrop-filter:blur(10px) saturate(1.3);-webkit-backdrop-filter:blur(10px) saturate(1.3);box-shadow:0 12px 32px -6px rgba(37,211,102,.42),0 0 0 1px rgba(37,211,102,.3);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.588-5.946 0-6.556 5.332-11.891 11.891-11.891 3.181 0 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.481 8.403 0 6.556-5.332 11.891-11.891 11.891-2.003 0-3.976-.505-5.723-1.465l-6.27 1.683zm5.891-3.373c1.554.921 3.084 1.403 4.692 1.403 5.397 0 9.791-4.394 9.791-9.791 0-2.618-1.02-5.081-2.872-6.934-1.852-1.852-4.311-2.872-6.919-2.872-5.398 0-9.791 4.394-9.791 9.791 0 1.708.451 3.251 1.341 4.646l-.88 3.216 3.638-.959zm10.149-6.425c-.276-.138-1.631-.804-1.884-.897-.253-.093-.438-.138-.623.138-.185.276-.715.897-.875 1.082-.16.185-.32.207-.597.069-.276-.138-1.168-.431-2.224-1.374-.822-.733-1.375-1.64-1.537-1.916-.162-.276-.017-.426.121-.563.124-.123.276-.323.415-.485.138-.162.185-.276.276-.462.092-.185.046-.347-.023-.485-.069-.138-.623-1.501-.854-2.057-.225-.548-.453-.473-.623-.482-.16-.009-.344-.011-.528-.011-.184 0-.485.069-.738.347-.253.276-.967.947-.967 2.308s.991 2.679 1.129 2.863c.138.185 1.95 2.977 4.722 4.172.659.284 1.174.453 1.576.581.661.21 1.263.18 1.739.109.531-.079 1.631-.666 1.861-1.312.23-.646.23-1.199.161-1.312-.069-.113-.253-.185-.529-.323z"/></svg>
+    </a>
+    <!-- Comunidad (slot: botón + globo hermanos, así la ✕ del globo es tocable) -->
+    <div class="fab-slot-sub relative flex items-center justify-center">
+        <a href="https://www.escueladelpensamientointuitivo.com/school/course/comunidad" target="_blank" rel="noopener" aria-label="Comunidad" class="fab-comunidad-sub w-12 h-12 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center" style="background:linear-gradient(135deg,rgba(230,194,122,.7),rgba(212,175,55,.7));backdrop-filter:blur(10px) saturate(1.3);-webkit-backdrop-filter:blur(10px) saturate(1.3);color:#0F1F1A;box-shadow:0 12px 32px -6px rgba(212,175,55,.42),0 0 0 1px rgba(212,175,55,.3);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 5 18.5V20"/><circle cx="11" cy="8" r="3.2"/><path d="M18.5 20v-1.2a3 3 0 0 0-2.3-2.9M15.5 5.2a3 3 0 0 1 0 5.6"/></svg>
+        </a>
+        <span class="sub-promo" id="subPromo">
+            <a class="sub-promo-link" href="https://www.escueladelpensamientointuitivo.com/school/course/comunidad" target="_blank" rel="noopener"><img src="../../assets/agustin-avatar.jpg" alt="Agustín Trowell" width="40" height="40"><span class="sp-text"><span class="sp-eyebrow">Agustín te invita</span><span class="sp-title">Unite a la comunidad</span></span></a>
+            <button class="sub-promo-close" id="subPromoClose" type="button" aria-label="Cerrar"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </span>
     </div>
 </div>
 
-<!-- WhatsApp FAB -->
-<a href="https://wa.me/5584981811901?text=Hola%20Agust%C3%ADn%2C%20quiero%20m%C3%A1s%20info%20sobre%20InspirAcci%C3%B3n%20Nivel%202" target="_blank" rel="noopener" class="fixed bottom-8 right-8 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all z-[99] flex items-center justify-center">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.588-5.946 0-6.556 5.332-11.891 11.891-11.891 3.181 0 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.481 8.403 0 6.556-5.332 11.891-11.891 11.891-2.003 0-3.976-.505-5.723-1.465l-6.27 1.683zm5.891-3.373c1.554.921 3.084 1.403 4.692 1.403 5.397 0 9.791-4.394 9.791-9.791 0-2.618-1.02-5.081-2.872-6.934-1.852-1.852-4.311-2.872-6.919-2.872-5.398 0-9.791 4.394-9.791 9.791 0 1.708.451 3.251 1.341 4.646l-.88 3.216 3.638-.959zm10.149-6.425c-.276-.138-1.631-.804-1.884-.897-.253-.093-.438-.138-.623.138-.185.276-.715.897-.875 1.082-.16.185-.32.207-.597.069-.276-.138-1.168-.431-2.224-1.374-.822-.733-1.375-1.64-1.537-1.916-.162-.276-.017-.426.121-.563.124-.123.276-.323.415-.485.138-.162.185-.276.276-.462.092-.185.046-.347-.023-.485-.069-.138-.623-1.501-.854-2.057-.225-.548-.453-.473-.623-.482-.16-.009-.344-.011-.528-.011-.184 0-.485.069-.738.347-.253.276-.967.947-.967 2.308s.991 2.679 1.129 2.863c.138.185 1.95 2.977 4.722 4.172.659.284 1.174.453 1.576.581.661.21 1.263.18 1.739.109.531-.079 1.631-.666 1.861-1.312.23-.646.23-1.199.161-1.312-.069-.113-.253-.185-.529-.323z"/></svg>
-</a>
-
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
 <script>
     document.documentElement.classList.add('js');
+
+    // Scroll flotante (Lenis) — deslizamiento con inercia, igual que la home
+    (function(){
+      if (typeof Lenis === 'undefined') return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const lenis = new Lenis({ lerp: 0.06, smooth: true, smoothTouch: false, wheelMultiplier: 1.05, mouseMultiplier: 1.05 });
+      function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+      // Anclas internas con scroll suave
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          const id = a.getAttribute('href');
+          if (id && id.length > 1) { const t = document.querySelector(id); if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -80 }); } }
+        });
+      });
+    })();
+
+    // Cursor invertido + leyenda contextual (igual que la home)
+    (function(){
+      const cursor = document.getElementById('invertCursor');
+      if(!cursor || window.matchMedia('(pointer: coarse)').matches) return;
+      const label = document.createElement('span'); label.className='cursor-label'; cursor.appendChild(label);
+      const labelMap = [['a[href*="wa.me"]','Escribinos']];
+      const interactive = 'a, button, [data-cursor]';
+      function resolveLabel(el){ if(!el||!el.closest) return null; const a=el.closest('[data-cursor]'); if(a) return a.getAttribute('data-cursor'); for(const p of labelMap){ if(el.closest(p[0])) return p[1]; } return null; }
+      function applyState(el){ const l=resolveLabel(el); if(l){ label.textContent=l; cursor.classList.add('has-label'); cursor.classList.remove('is-hover'); } else if(el&&el.closest&&el.closest(interactive)){ cursor.classList.add('is-hover'); cursor.classList.remove('has-label'); } else { cursor.classList.remove('has-label','is-hover'); } }
+      let mx=innerWidth/2,my=innerHeight/2,cx=mx,cy=my;
+      addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;},{passive:true});
+      document.addEventListener('mouseover',e=>applyState(e.target),{passive:true});
+      document.addEventListener('mouseout',e=>{ if(!e.relatedTarget) cursor.classList.remove('has-label','is-hover'); else applyState(e.relatedTarget); },{passive:true});
+      const GAP=22;
+      function loop(){ cx+=(mx-cx)*0.16; cy+=(my-cy)*0.16; let off='translate(-50%,-50%)'; if(cursor.classList.contains('has-label')){ const w=cursor.offsetWidth; const fitsR=mx+GAP+w<innerWidth-8; const fitsL=mx-GAP-w>8; off=(fitsR||!fitsL)?('translate('+GAP+'px,-50%)'):('translate(calc(-100% - '+GAP+'px),-50%)'); } cursor.style.transform='translate3d('+cx+'px,'+cy+'px,0) '+off; requestAnimationFrame(loop); }
+      loop();
+    })();
 
     // Nav shrink on scroll
     const nav = document.getElementById('nav');
@@ -853,80 +957,77 @@
         });
     })();
 
-    // ===== 🎛 DEV PANEL — solo localhost =====
-    (function initDevPanel(){
-        const isLocal = ['localhost','127.0.0.1','0.0.0.0',''].includes(window.location.hostname);
-        if (!isLocal) return;
+    // ===== Muro de testimonios: reparte las tarjetas en 3 columnas y las hace scrollear en loop =====
+    (function(){
+      const wall = document.querySelector('.js-testi-wall');
+      if (!wall) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; // se queda estático
+      if (!window.matchMedia('(min-width: 768px)').matches) return;               // en celular queda la lista normal
+      const cards = Array.from(wall.children).filter(el => el.classList.contains('glass-card'));
+      if (cards.length < 6) return;
+      const COLS = 3;
+      const tracks = [];
+      wall.classList.remove('columns-1','md:columns-2','lg:columns-3','gap-8','[&>*]:mb-8');
+      wall.classList.add('is-marquee');
+      wall.innerHTML = '';
+      for (let i = 0; i < COLS; i++){
+        const col = document.createElement('div'); col.className = 'testi-col';
+        const track = document.createElement('div'); track.className = 'testi-track';
+        col.appendChild(track); wall.appendChild(col); tracks.push(track);
+      }
+      cards.forEach((card, i) => tracks[i % COLS].appendChild(card));
+      tracks.forEach(tr => Array.from(tr.children).forEach(ch => tr.appendChild(ch.cloneNode(true))));
+    })();
 
-        const panel = document.getElementById('devPanel');
-        if (!panel) return;
-        panel.classList.remove('hidden');
+    // ===== Globo de comunidad: ciclo automático (igual que la home) =====
+    // Desktop: 10s visible / 4s oculto. Móvil: compacto y más espaciado (8s / 16s).
+    (function(){
+      const slot = document.querySelector('.fab-slot-sub');
+      const promo = document.getElementById('subPromo');
+      if (!slot || !promo) return;
+      if (sessionStorage.getItem('epiPromoDismissed') === '1') return;
 
-        // Mapa px → clase Tailwind h-N más cercana
-        const twMap = [
-            [48,'h-12'],[56,'h-14'],[64,'h-16'],[72,'h-18'],[80,'h-20'],[88,'h-22'],
-            [96,'h-24'],[112,'h-28'],[128,'h-32'],[144,'h-36'],[160,'h-40'],[176,'h-44'],
-            [192,'h-48'],[208,'h-52'],[224,'h-56'],[240,'h-60'],[256,'h-64'],[288,'h-72'],
-            [320,'h-80'],[384,'h-96']
-        ];
-        const closestTw = (px) => twMap.reduce((best, [p, cls]) =>
-            Math.abs(p - px) < Math.abs(best[0] - px) ? [p, cls] : best
-        )[1];
+      const isMobile = window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(max-width: 640px)').matches;
+      const FIRST_MS = isMobile ? 6000 : 3000;
+      const VISIBLE_MS = isMobile ? 8000 : 10000;
+      const HIDDEN_MS = isMobile ? 16000 : 4000;
+      let t = null, dismissed = false;
+      function stop(){ dismissed = true; clearTimeout(t); promo.classList.remove('show'); sessionStorage.setItem('epiPromoDismissed','1'); }
+      function cycleShow(){
+        if (dismissed) return;
+        if (document.hidden) { t = setTimeout(cycleShow, HIDDEN_MS); return; }
+        promo.classList.add('show');
+        t = setTimeout(cycleHide, VISIBLE_MS);
+      }
+      function cycleHide(){ promo.classList.remove('show'); t = setTimeout(cycleShow, HIDDEN_MS); }
+      setTimeout(cycleShow, FIRST_MS);
+      const closeBtn = document.getElementById('subPromoClose');
+      if (closeBtn) closeBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); stop(); });
+      // click en el botón o en el globo (va a la comunidad) → no insistimos más en esta visita
+      slot.querySelectorAll('a').forEach(a => a.addEventListener('click', stop));
+      document.addEventListener('visibilitychange', () => { if (document.hidden) promo.classList.remove('show'); });
+    })();
 
-        // El slider modifica la IMAGEN del logo (no el slot)
-        // El slot tiene altura fija → el video nunca se mueve
-        const logoImg = document.getElementById('schoolLogo');
-        if (!logoImg) return;
-
-        // Altura inicial del logo (inline)
-        const initialPx = parseInt(logoImg.style.height, 10) || 160;
-
-        const slider   = document.getElementById('devLogoSize');
-        const pxLabel  = document.getElementById('devLogoSizePx');
-        const twLabel  = document.getElementById('devLogoSizeTw');
-        const copyBtn  = document.getElementById('devLogoCopy');
-        const toggleBtn= document.getElementById('devPanelToggle');
-        const body     = document.getElementById('devPanelBody');
-
-        // Iniciar slider en el valor real
-        slider.value = initialPx;
-        pxLabel.textContent = initialPx + 'px';
-        twLabel.textContent = closestTw(initialPx);
-
-        // Aplicar tamaño en vivo SOLO sobre el logo (no el contenedor)
-        slider.addEventListener('input', (e) => {
-            const px = parseInt(e.target.value, 10);
-            logoImg.style.height = px + 'px';
-            pxLabel.textContent = px + 'px';
-            twLabel.textContent = closestTw(px);
-        });
-
-        // Copiar valor al portapapeles
-        copyBtn.addEventListener('click', async () => {
-            const cls = twLabel.textContent;
-            const px  = pxLabel.textContent;
-            const txt = `${cls} (${px})`;
-            try {
-                await navigator.clipboard.writeText(txt);
-                copyBtn.textContent = `✓ Copiado: ${cls}`;
-                copyBtn.style.background = '#4FA77D';
-                setTimeout(() => {
-                    copyBtn.textContent = '📋 Copiar valor (h-XX)';
-                    copyBtn.style.background = '';
-                }, 2000);
-            } catch (err) {
-                copyBtn.textContent = `→ Pasame: ${cls}`;
-                setTimeout(() => { copyBtn.textContent = '📋 Copiar valor (h-XX)'; }, 3000);
-            }
-        });
-
-        // Toggle minimizar
-        let minimized = false;
-        toggleBtn.addEventListener('click', () => {
-            minimized = !minimized;
-            body.style.display = minimized ? 'none' : '';
-            toggleBtn.textContent = minimized ? '+' : '−';
-        });
+    // ===== Menú móvil: ☰ → panel glass =====
+    (function(){
+      const btn = document.getElementById('mobileMenuBtn');
+      const menu = document.getElementById('mobileMenu');
+      if (!btn || !menu) return;
+      const closeBtn = document.getElementById('mobileMenuClose');
+      function open(){ menu.classList.add('open'); document.body.classList.add('sub-mm-open'); menu.setAttribute('aria-hidden','false'); btn.setAttribute('aria-expanded','true'); }
+      function close(){ menu.classList.remove('open'); document.body.classList.remove('sub-mm-open'); menu.setAttribute('aria-hidden','true'); btn.setAttribute('aria-expanded','false'); }
+      btn.addEventListener('click', () => menu.classList.contains('open') ? close() : open());
+      if (closeBtn) closeBtn.addEventListener('click', close);
+      menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        close();
+        const href = a.getAttribute('href');
+        // anchors internos: re-disparar el scroll tras cerrar (el handler global corre con el scroll bloqueado)
+        if (href && href.startsWith('#')) {
+          const target = document.querySelector(href);
+          if (target) setTimeout(() => { window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' }); }, 80);
+        }
+      }));
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
     })();
 </script>
 </body>
